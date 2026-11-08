@@ -1,4 +1,4 @@
-// Small editor helpers (duplicated from bookmarks on purpose: features share nothing).
+// Small editor helpers.
 import * as vscode from 'vscode';
 import { LineChange } from './lineShift';
 

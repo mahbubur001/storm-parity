@@ -23,7 +23,6 @@ Language support, the HTTP client and database tools are left to dedicated exten
 - **Toggle Compact Terminal Tabs**: hides VS Code's side list of terminals and switches through a dropdown in the panel title, so the terminal uses the full width (closest to PhpStorm's tab row; the extension API can't add real tabs to the panel).
 
 ### Navigation
-- **Bookmarks with mnemonics**: anonymous or 0-9 / A-Z bookmarks, gutter icons, a Bookmarks view, and positions that follow your edits.
 - **Recent Locations**: recently viewed or edited spots with a code preview. Press the shortcut again to switch to *changed only*.
 - **Search Everywhere**: files, symbols, actions and settings in one picker. Prefixes: `f ` files, `#` symbols, `>` actions, `@set ` settings.
 - **Select In** (Opt+F1): reveal the current file in the Explorer, Finder, a new terminal at its folder, Outline, Timeline or Source Control.
@@ -43,8 +42,6 @@ Language support, the HTTP client and database tools are left to dedicated exten
 ### Tools
 - **Scratch files**: files in any language, stored outside the project, listed in a **Scratches** folder at the end of the External Libraries view, like PhpStorm's Scratches and Consoles (a standalone Scratches view takes over when External Libraries is off).
 - **Changelists**: group working-tree changes into named lists in the Source Control view and commit one list at a time.
-- **Shelf**: shelve a changelist or chosen files as a patch and unshelve it later, independent of `git stash`.
-- **TODO view**: TODO/FIXME/HACK/XXX across the workspace, with filters for the current file and by tag.
 - **Local History**: a snapshot on every save, *Put Label*, *Show History*, *Show History for Selection* and restore.
 
 ## Keymap
@@ -55,11 +52,6 @@ The keys follow PhpStorm on macOS. On Windows and Linux they are the closest Ctr
 |---|---|---|---|
 | Open Folder (Ask Where) | Cmd+O | Ctrl+K Ctrl+O | Open File/Folder (mac), Open Folder (win/linux) |
 | Open Recent (Ask Where) | Ctrl+R | Ctrl+R | Open Recent |
-| Toggle Bookmark | F3 | F11 | Find Next (mac), Toggle Full Screen (win/linux) |
-| Toggle Bookmark with Mnemonic | Opt+F3 | Ctrl+F11 | - |
-| Show All Bookmarks | Cmd+F3 | Shift+F11 | Find Next Selection (mac), Debug Step Out (win/linux) |
-| Go to Mnemonic Bookmark 0-9 | Ctrl+0..9 | Ctrl+0..9 | Open Editor at Index (mac), Focus Editor Group (win/linux) |
-| Toggle Numeric Mnemonic 0-9 | Ctrl+Shift+0..9 | Ctrl+Shift+0..9 | - |
 | Recent Locations | Cmd+Shift+E | Ctrl+Shift+E | Show Explorer |
 | Search Everywhere | Cmd+Shift+A | Ctrl+Shift+A | Toggle Block Comment (linux) |
 | Select In | Opt+F1 | Alt+F1 | Accessibility Help (only outside screen reader mode) |

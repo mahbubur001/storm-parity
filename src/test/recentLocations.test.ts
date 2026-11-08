@@ -9,7 +9,7 @@ const opts = { mergeDistance: 5, maxEntries: 3 };
 const loc = (uri: string, line: number, changed = false): RecentLocation => ({ uri, line, character: 0, changed, timestamp: 0 });
 
 suite('recentLocations: model', () => {
-  test('line shifting matches bookmarks semantics', () => {
+  test('line shifting keeps locations on their line through edits', () => {
     assert.strictEqual(shiftLine(10, { startLine: 2, startCharacter: 0, endLine: 4, text: '' }), 8);
     assert.strictEqual(shiftLine(3, { startLine: 2, startCharacter: 1, endLine: 4, text: '' }), 2);
   });

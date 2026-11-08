@@ -1,4 +1,4 @@
-// Pure line-tracking logic (duplicated from bookmarks on purpose: features share nothing).
+// Pure line-tracking logic: keeps recorded locations on the right line while the document is edited.
 
 export interface LineChange {
   startLine: number;

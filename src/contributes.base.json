@@ -40,8 +40,8 @@
         },
         {
           "id": "navigation",
-          "title": "Bookmarks and navigation",
-          "description": "Mnemonic bookmarks, recent locations and Search Everywhere.\n[Search Everywhere](command:stormParity.searchEverywhere.open)",
+          "title": "Navigation",
+          "description": "Recent locations, Search Everywhere and Copy Reference.\n[Search Everywhere](command:stormParity.searchEverywhere.open)",
           "media": {
             "markdown": "media/walkthrough/navigation.md"
           },
@@ -62,7 +62,7 @@
         },
         {
           "id": "tools",
-          "title": "Scratches, changelists, shelf",
+          "title": "Scratches and changelists",
           "description": "Tools that live outside your project files.\n[New Scratch File](command:stormParity.scratches.new)",
           "media": {
             "markdown": "media/walkthrough/tools.md"

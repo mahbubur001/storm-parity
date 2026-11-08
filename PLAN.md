@@ -36,7 +36,7 @@ Installed locally as a `.vsix` file; nothing is published to the marketplace.
 4. Setting `stormParity.openFolder.defaultAction` = `ask | thisWindow | newWindow` (+ "remember my choice" checkbox in the prompt).
 
 ### Phase 2: navigation (done 2026-11-08)
-1. **Bookmarks with mnemonics** (F3 toggle, Opt+F3 mnemonic 0-9/A-Z, Ctrl+<digit> jump, Cmd+F3 list), gutter icons, persisted per workspace, survive line edits.
+1. ~~**Bookmarks with mnemonics**~~: built, then removed (not used).
 2. **Recent Locations** (Cmd+Shift+E): list of recently viewed/edited code snippets with preview, "changed only" toggle.
 3. **Search Everywhere-lite** (Cmd+Shift+A style unified picker): files + symbols + commands + settings in one quick pick with tab-like prefix filters.
 4. **Copy Reference** (Cmd+Opt+Shift+C): copy `path/to/file.php:42` or PHP FQN `App\Http\Foo::bar` (via document symbols).
@@ -50,8 +50,8 @@ Installed locally as a `.vsix` file; nothing is published to the marketplace.
 ### Phase 4: tools (done 2026-11-08)
 1. **Scratch files** (Cmd+Shift+N): any-language scratch files stored in global storage, Scratches tree view, not part of the project.
 2. **Changelists**: group working-tree changes into named lists, commit one list at a time (SCM view contribution + `git` extension API). Biggest effort.
-3. **Shelf**: shelve/unshelve patches per changelist (stored patches, independent of git stash).
-4. **TODO tool window**: TODO/FIXME scan with patterns + filters (only if existing extensions disappoint).
+3. ~~**Shelf**~~: built, then removed; VS Code's Source Control Stash covers it.
+4. ~~**TODO tool window**~~: built, then removed in favour of the Todo Tree extension (gruntfuggly.todo-tree).
 5. **Local History++**: label/put-label + "show history for selection" on top of VS Code's timeline.
 
 ### Phase 4b: External Libraries (done 2026-11-08)

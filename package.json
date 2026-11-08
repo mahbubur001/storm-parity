@@ -1,8 +1,8 @@
 {
   "name": "storm-parity",
   "displayName": "Storm Parity",
-  "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent projects, mnemonic bookmarks, recent locations, clipboard history, surround with, scratch files, external libraries (include paths), changelists, shelf, local history and more.",
-  "version": "0.4.0",
+  "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent projects, recent locations, Search Everywhere, clipboard history, surround with, PHP postfix completion, scratch files, external libraries (include paths), changelists, local history, run widget, Composer view and more.",
+  "version": "0.5.0",
   "publisher": "itemcoder",
   "license": "MIT",
   "repository": {
@@ -55,16 +55,16 @@
   "keywords": [
     "phpstorm",
     "jetbrains",
-    "bookmarks",
     "clipboard history",
     "changelists",
     "scratch",
     "recent projects",
-    "shelf",
     "local history",
     "include path",
     "external libraries",
-    "intelephense"
+    "intelephense",
+    "composer",
+    "postfix"
   ],
   "bugs": {
     "url": "https://github.com/mahbubur001/storm-parity/issues"
@@ -72,65 +72,6 @@
   "homepage": "https://github.com/mahbubur001/storm-parity#readme",
   "contributes": {
     "commands": [
-      {
-        "command": "stormParity.bookmarks.toggle",
-        "title": "Toggle Bookmark",
-        "category": "Storm"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleMnemonic",
-        "title": "Toggle Bookmark with Mnemonic...",
-        "category": "Storm"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "title": "Toggle Numeric Mnemonic Bookmark...",
-        "category": "Storm"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "title": "Go to Mnemonic Bookmark...",
-        "category": "Storm"
-      },
-      {
-        "command": "stormParity.bookmarks.showAll",
-        "title": "Show All Bookmarks",
-        "category": "Storm",
-        "icon": "$(list-flat)"
-      },
-      {
-        "command": "stormParity.bookmarks.next",
-        "title": "Next Bookmark in File",
-        "category": "Storm"
-      },
-      {
-        "command": "stormParity.bookmarks.previous",
-        "title": "Previous Bookmark in File",
-        "category": "Storm"
-      },
-      {
-        "command": "stormParity.bookmarks.editDescription",
-        "title": "Edit Bookmark Description...",
-        "category": "Storm",
-        "icon": "$(edit)"
-      },
-      {
-        "command": "stormParity.bookmarks.delete",
-        "title": "Delete Bookmark",
-        "category": "Storm",
-        "icon": "$(trash)"
-      },
-      {
-        "command": "stormParity.bookmarks.clearAll",
-        "title": "Delete All Bookmarks",
-        "category": "Storm",
-        "icon": "$(clear-all)"
-      },
-      {
-        "command": "stormParity.bookmarks.reveal",
-        "title": "Reveal Bookmark",
-        "category": "Storm"
-      },
       {
         "command": "stormParity.changelists.new",
         "title": "New Changelist...",
@@ -539,58 +480,6 @@
         "category": "Storm"
       },
       {
-        "command": "stormParity.shelf.shelve",
-        "title": "Shelve Changes...",
-        "category": "Storm",
-        "icon": "$(archive)"
-      },
-      {
-        "command": "stormParity.shelf.shelveChangelist",
-        "title": "Shelve Changelist...",
-        "category": "Storm",
-        "icon": "$(archive)"
-      },
-      {
-        "command": "stormParity.shelf.shelveFiles",
-        "title": "Shelve Files...",
-        "category": "Storm",
-        "icon": "$(archive)"
-      },
-      {
-        "command": "stormParity.shelf.unshelve",
-        "title": "Unshelve...",
-        "category": "Storm",
-        "icon": "$(debug-step-out)"
-      },
-      {
-        "command": "stormParity.shelf.unshelveSilently",
-        "title": "Unshelve Silently",
-        "category": "Storm"
-      },
-      {
-        "command": "stormParity.shelf.delete",
-        "title": "Delete Shelved Changes",
-        "category": "Storm",
-        "icon": "$(trash)"
-      },
-      {
-        "command": "stormParity.shelf.showPatch",
-        "title": "Show Shelved Patch",
-        "category": "Storm",
-        "icon": "$(diff)"
-      },
-      {
-        "command": "stormParity.shelf.rename",
-        "title": "Rename Shelved Changes...",
-        "category": "Storm"
-      },
-      {
-        "command": "stormParity.shelf.refresh",
-        "title": "Refresh Shelf",
-        "category": "Storm",
-        "icon": "$(refresh)"
-      },
-      {
         "command": "stormParity.surroundWith.surround",
         "title": "Surround With...",
         "category": "Storm"
@@ -624,36 +513,6 @@
         "command": "stormParity.terminal.restoreTabs",
         "title": "Restore Terminal Tabs",
         "category": "Storm"
-      },
-      {
-        "command": "stormParity.todo.refresh",
-        "title": "Rescan TODO Items",
-        "category": "Storm",
-        "icon": "$(refresh)"
-      },
-      {
-        "command": "stormParity.todo.currentFileOnly",
-        "title": "TODO: Show Current File Only",
-        "category": "Storm",
-        "icon": "$(file)"
-      },
-      {
-        "command": "stormParity.todo.allFiles",
-        "title": "TODO: Show All Files",
-        "category": "Storm",
-        "icon": "$(files)"
-      },
-      {
-        "command": "stormParity.todo.filterTags",
-        "title": "TODO: Filter by Pattern...",
-        "category": "Storm",
-        "icon": "$(filter)"
-      },
-      {
-        "command": "stormParity.todo.clearFilters",
-        "title": "TODO: Clear Filters",
-        "category": "Storm",
-        "icon": "$(clear-all)"
       },
       {
         "command": "stormParity.toggleCase.toggleCase",
@@ -692,164 +551,6 @@
       }
     ],
     "keybindings": [
-      {
-        "command": "stormParity.bookmarks.toggle",
-        "key": "f11",
-        "mac": "f3",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleMnemonic",
-        "key": "ctrl+f11",
-        "mac": "alt+f3",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.showAll",
-        "key": "shift+f11",
-        "mac": "cmd+f3",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+0",
-        "mac": "ctrl+0",
-        "args": "0",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+1",
-        "mac": "ctrl+1",
-        "args": "1",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+2",
-        "mac": "ctrl+2",
-        "args": "2",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+3",
-        "mac": "ctrl+3",
-        "args": "3",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+4",
-        "mac": "ctrl+4",
-        "args": "4",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+5",
-        "mac": "ctrl+5",
-        "args": "5",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+6",
-        "mac": "ctrl+6",
-        "args": "6",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+7",
-        "mac": "ctrl+7",
-        "args": "7",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+8",
-        "mac": "ctrl+8",
-        "args": "8",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.jumpToMnemonic",
-        "key": "ctrl+9",
-        "mac": "ctrl+9",
-        "args": "9",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled)"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+0",
-        "mac": "ctrl+shift+0",
-        "args": "0",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+1",
-        "mac": "ctrl+shift+1",
-        "args": "1",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+2",
-        "mac": "ctrl+shift+2",
-        "args": "2",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+3",
-        "mac": "ctrl+shift+3",
-        "args": "3",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+4",
-        "mac": "ctrl+shift+4",
-        "args": "4",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+5",
-        "mac": "ctrl+shift+5",
-        "args": "5",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+6",
-        "mac": "ctrl+shift+6",
-        "args": "6",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+7",
-        "mac": "ctrl+shift+7",
-        "args": "7",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+8",
-        "mac": "ctrl+shift+8",
-        "args": "8",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
-      {
-        "command": "stormParity.bookmarks.toggleNumeric",
-        "key": "ctrl+shift+9",
-        "mac": "ctrl+shift+9",
-        "args": "9",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.bookmarks.enabled && (editorTextFocus))"
-      },
       {
         "command": "stormParity.changelists.moveFiles",
         "mac": "alt+shift+m",
@@ -1034,30 +735,6 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "stormParity.bookmarks.reveal",
-          "when": "false"
-        },
-        {
-          "command": "stormParity.bookmarks.toggle",
-          "when": "editorIsOpen"
-        },
-        {
-          "command": "stormParity.bookmarks.toggleMnemonic",
-          "when": "editorIsOpen"
-        },
-        {
-          "command": "stormParity.bookmarks.toggleNumeric",
-          "when": "editorIsOpen"
-        },
-        {
-          "command": "stormParity.bookmarks.next",
-          "when": "editorIsOpen"
-        },
-        {
-          "command": "stormParity.bookmarks.previous",
-          "when": "editorIsOpen"
-        },
-        {
           "command": "stormParity.changelists.openChange",
           "when": "false"
         },
@@ -1166,18 +843,6 @@
           "when": "false"
         },
         {
-          "command": "stormParity.shelf.shelveChangelist",
-          "when": "false"
-        },
-        {
-          "command": "stormParity.shelf.shelveFiles",
-          "when": "false"
-        },
-        {
-          "command": "stormParity.shelf.refresh",
-          "when": "false"
-        },
-        {
           "command": "stormParity.surroundWith.surround",
           "when": "editorIsOpen && !editorReadonly"
         },
@@ -1226,17 +891,127 @@
           "when": "editorIsOpen && !editorReadonly"
         }
       ],
+      "scm/title": [
+        {
+          "command": "stormParity.changelists.commitActive",
+          "group": "navigation@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.new",
+          "group": "navigation@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.refresh",
+          "group": "navigation@3",
+          "when": "scmProvider == stormParity.changelists"
+        }
+      ],
+      "scm/resourceGroup/context": [
+        {
+          "command": "stormParity.changelists.commit",
+          "group": "inline@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.setActive",
+          "group": "inline@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.commit",
+          "group": "1_commit@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.commitAndPush",
+          "group": "1_commit@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.setActive",
+          "group": "2_list@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.rename",
+          "group": "2_list@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.editComment",
+          "group": "2_list@3",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.moveAll",
+          "group": "2_list@4",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.delete",
+          "group": "2_list@5",
+          "when": "scmProvider == stormParity.changelists && scmResourceGroup != default"
+        }
+      ],
+      "scm/resourceState/context": [
+        {
+          "command": "stormParity.changelists.openFile",
+          "group": "inline@1",
+          "when": "scmProvider == stormParity.changelists && scmResourceState != deleted"
+        },
+        {
+          "command": "stormParity.changelists.moveFiles",
+          "group": "inline@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.openChange",
+          "group": "1_open@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.openFile",
+          "group": "1_open@2",
+          "when": "scmProvider == stormParity.changelists && scmResourceState != deleted"
+        },
+        {
+          "command": "stormParity.changelists.moveFiles",
+          "group": "2_list@1",
+          "when": "scmProvider == stormParity.changelists"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "stormParity.compareClipboard.compare",
+          "group": "9_cutcopypaste@20"
+        },
+        {
+          "command": "stormParity.copyReference.copyReference",
+          "group": "9_cutcopypaste@10"
+        },
+        {
+          "command": "stormParity.copyReference.copyReferenceAs",
+          "group": "9_cutcopypaste@11"
+        },
+        {
+          "command": "stormParity.localHistory.showHistory",
+          "when": "resourceScheme == file",
+          "group": "z_storm@10"
+        },
+        {
+          "command": "stormParity.localHistory.showHistoryForSelection",
+          "when": "resourceScheme == file && editorHasSelection",
+          "group": "z_storm@11"
+        },
+        {
+          "command": "stormParity.scratches.newFromSelection",
+          "when": "editorHasSelection",
+          "group": "9_cutcopypaste@9"
+        }
+      ],
       "view/title": [
-        {
-          "command": "stormParity.bookmarks.showAll",
-          "when": "view == stormParity.bookmarks",
-          "group": "navigation@1"
-        },
-        {
-          "command": "stormParity.bookmarks.clearAll",
-          "when": "view == stormParity.bookmarks",
-          "group": "navigation@2"
-        },
         {
           "command": "stormParity.composer.require",
           "when": "view == stormParity.composer",
@@ -1311,64 +1086,9 @@
           "command": "stormParity.scratches.reveal",
           "when": "view == stormParity.scratches",
           "group": "more@1"
-        },
-        {
-          "command": "stormParity.shelf.shelve",
-          "group": "navigation@1",
-          "when": "view == stormParity.shelf"
-        },
-        {
-          "command": "stormParity.shelf.refresh",
-          "group": "navigation@2",
-          "when": "view == stormParity.shelf"
-        },
-        {
-          "command": "stormParity.todo.currentFileOnly",
-          "when": "view == stormParity.todo && !stormParity.todo.currentFileOnly",
-          "group": "navigation@1"
-        },
-        {
-          "command": "stormParity.todo.allFiles",
-          "when": "view == stormParity.todo && stormParity.todo.currentFileOnly",
-          "group": "navigation@1"
-        },
-        {
-          "command": "stormParity.todo.filterTags",
-          "when": "view == stormParity.todo",
-          "group": "navigation@2"
-        },
-        {
-          "command": "stormParity.todo.refresh",
-          "when": "view == stormParity.todo",
-          "group": "navigation@3"
-        },
-        {
-          "command": "stormParity.todo.clearFilters",
-          "when": "view == stormParity.todo && (stormParity.todo.currentFileOnly || stormParity.todo.tagFiltered)",
-          "group": "more@1"
         }
       ],
       "view/item/context": [
-        {
-          "command": "stormParity.bookmarks.editDescription",
-          "when": "view == stormParity.bookmarks && viewItem == stormParity.bookmark",
-          "group": "inline@1"
-        },
-        {
-          "command": "stormParity.bookmarks.delete",
-          "when": "view == stormParity.bookmarks && viewItem =~ /^stormParity\\.bookmark/",
-          "group": "inline@2"
-        },
-        {
-          "command": "stormParity.bookmarks.editDescription",
-          "when": "view == stormParity.bookmarks && viewItem == stormParity.bookmark",
-          "group": "1_edit@1"
-        },
-        {
-          "command": "stormParity.bookmarks.delete",
-          "when": "view == stormParity.bookmarks && viewItem =~ /^stormParity\\.bookmark/",
-          "group": "1_edit@2"
-        },
         {
           "command": "stormParity.composer.runScript",
           "when": "view == stormParity.composer && viewItem == composerScript",
@@ -1513,176 +1233,6 @@
           "command": "stormParity.scratches.reveal",
           "when": "view == stormParity.externalLibraries && viewItem == scratchFolder",
           "group": "2_reveal@1"
-        },
-        {
-          "command": "stormParity.shelf.unshelve",
-          "group": "inline@1",
-          "when": "view == stormParity.shelf && viewItem == shelf"
-        },
-        {
-          "command": "stormParity.shelf.showPatch",
-          "group": "inline@2",
-          "when": "view == stormParity.shelf && viewItem == shelf"
-        },
-        {
-          "command": "stormParity.shelf.unshelve",
-          "group": "1_apply@1",
-          "when": "view == stormParity.shelf && viewItem == shelf"
-        },
-        {
-          "command": "stormParity.shelf.unshelveSilently",
-          "group": "1_apply@2",
-          "when": "view == stormParity.shelf && viewItem == shelf"
-        },
-        {
-          "command": "stormParity.shelf.showPatch",
-          "group": "2_view@1",
-          "when": "view == stormParity.shelf && viewItem =~ /^shelf/"
-        },
-        {
-          "command": "stormParity.shelf.rename",
-          "group": "3_edit@1",
-          "when": "view == stormParity.shelf && viewItem == shelf"
-        },
-        {
-          "command": "stormParity.shelf.delete",
-          "group": "3_edit@2",
-          "when": "view == stormParity.shelf && viewItem == shelf"
-        }
-      ],
-      "scm/title": [
-        {
-          "command": "stormParity.changelists.commitActive",
-          "group": "navigation@1",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.new",
-          "group": "navigation@2",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.refresh",
-          "group": "navigation@3",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.shelf.shelve",
-          "group": "2_shelf@1",
-          "when": "scmProvider == stormParity.changelists"
-        }
-      ],
-      "scm/resourceGroup/context": [
-        {
-          "command": "stormParity.changelists.commit",
-          "group": "inline@2",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.setActive",
-          "group": "inline@1",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.commit",
-          "group": "1_commit@1",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.commitAndPush",
-          "group": "1_commit@2",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.setActive",
-          "group": "2_list@1",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.rename",
-          "group": "2_list@2",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.editComment",
-          "group": "2_list@3",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.moveAll",
-          "group": "2_list@4",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.delete",
-          "group": "2_list@5",
-          "when": "scmProvider == stormParity.changelists && scmResourceGroup != default"
-        },
-        {
-          "command": "stormParity.shelf.shelveChangelist",
-          "group": "3_shelf@1",
-          "when": "scmProvider == stormParity.changelists"
-        }
-      ],
-      "scm/resourceState/context": [
-        {
-          "command": "stormParity.changelists.openFile",
-          "group": "inline@1",
-          "when": "scmProvider == stormParity.changelists && scmResourceState != deleted"
-        },
-        {
-          "command": "stormParity.changelists.moveFiles",
-          "group": "inline@2",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.openChange",
-          "group": "1_open@1",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.changelists.openFile",
-          "group": "1_open@2",
-          "when": "scmProvider == stormParity.changelists && scmResourceState != deleted"
-        },
-        {
-          "command": "stormParity.changelists.moveFiles",
-          "group": "2_list@1",
-          "when": "scmProvider == stormParity.changelists"
-        },
-        {
-          "command": "stormParity.shelf.shelveFiles",
-          "group": "3_shelf@1",
-          "when": "scmProvider == stormParity.changelists || scmProvider == git"
-        }
-      ],
-      "editor/context": [
-        {
-          "command": "stormParity.compareClipboard.compare",
-          "group": "9_cutcopypaste@20"
-        },
-        {
-          "command": "stormParity.copyReference.copyReference",
-          "group": "9_cutcopypaste@10"
-        },
-        {
-          "command": "stormParity.copyReference.copyReferenceAs",
-          "group": "9_cutcopypaste@11"
-        },
-        {
-          "command": "stormParity.localHistory.showHistory",
-          "when": "resourceScheme == file",
-          "group": "z_storm@10"
-        },
-        {
-          "command": "stormParity.localHistory.showHistoryForSelection",
-          "when": "resourceScheme == file && editorHasSelection",
-          "group": "z_storm@11"
-        },
-        {
-          "command": "stormParity.scratches.newFromSelection",
-          "when": "editorHasSelection",
-          "group": "9_cutcopypaste@9"
         }
       ],
       "explorer/context": [
@@ -1711,11 +1261,6 @@
     "views": {
       "stormParity": [
         {
-          "id": "stormParity.bookmarks",
-          "name": "Bookmarks",
-          "icon": "$(bookmark)"
-        },
-        {
           "id": "stormParity.composer",
           "name": "Composer",
           "icon": "$(package)",
@@ -1726,17 +1271,6 @@
           "name": "Recent Projects",
           "icon": "$(history)",
           "contextualTitle": "Storm"
-        },
-        {
-          "id": "stormParity.shelf",
-          "name": "Shelf",
-          "icon": "$(archive)",
-          "contextualTitle": "Storm"
-        },
-        {
-          "id": "stormParity.todo",
-          "name": "TODO",
-          "icon": "$(checklist)"
         }
       ],
       "explorer": [
@@ -1790,21 +1324,6 @@
       {
         "view": "stormParity.scratches",
         "contents": "No scratch files yet.\n[New Scratch File](command:stormParity.scratches.new)"
-      },
-      {
-        "view": "stormParity.shelf",
-        "contents": "No shelved changes for the open repositories.\n[Shelve Changes...](command:stormParity.shelf.shelve)"
-      }
-    ],
-    "colors": [
-      {
-        "id": "stormParity.bookmarks.overviewRuler",
-        "description": "Overview ruler mark for Storm bookmarks.",
-        "defaults": {
-          "dark": "#3B82C4",
-          "light": "#3B82C4",
-          "highContrast": "#4FA3E8"
-        }
       }
     ],
     "configuration": [
@@ -1820,20 +1339,8 @@
         }
       },
       {
-        "title": "Bookmarks",
-        "order": 10,
-        "properties": {
-          "stormParity.bookmarks.enabled": {
-            "type": "boolean",
-            "default": true,
-            "order": 0,
-            "description": "Enable the Bookmarks feature (reload required)."
-          }
-        }
-      },
-      {
         "title": "Changelists",
-        "order": 11,
+        "order": 10,
         "properties": {
           "stormParity.changelists.enabled": {
             "type": "boolean",
@@ -1860,7 +1367,7 @@
       },
       {
         "title": "Clipboard History",
-        "order": 12,
+        "order": 11,
         "properties": {
           "stormParity.clipboardHistory.enabled": {
             "type": "boolean",
@@ -1884,7 +1391,7 @@
       },
       {
         "title": "compareClipboard",
-        "order": 13,
+        "order": 12,
         "properties": {
           "stormParity.compareClipboard.enabled": {
             "type": "boolean",
@@ -1896,7 +1403,7 @@
       },
       {
         "title": "Composer",
-        "order": 14,
+        "order": 13,
         "properties": {
           "stormParity.composer.enabled": {
             "type": "boolean",
@@ -1913,7 +1420,7 @@
       },
       {
         "title": "copyReference",
-        "order": 15,
+        "order": 14,
         "properties": {
           "stormParity.copyReference.enabled": {
             "type": "boolean",
@@ -1925,7 +1432,7 @@
       },
       {
         "title": "External Libraries",
-        "order": 16,
+        "order": 15,
         "properties": {
           "stormParity.externalLibraries.enabled": {
             "type": "boolean",
@@ -1952,7 +1459,7 @@
       },
       {
         "title": "Local History",
-        "order": 17,
+        "order": 16,
         "properties": {
           "stormParity.localHistory.enabled": {
             "type": "boolean",
@@ -1993,7 +1500,7 @@
       },
       {
         "title": "Open Folder",
-        "order": 18,
+        "order": 17,
         "properties": {
           "stormParity.openFolder.enabled": {
             "type": "boolean",
@@ -2021,7 +1528,7 @@
       },
       {
         "title": "Postfix Completion (PHP)",
-        "order": 19,
+        "order": 18,
         "properties": {
           "stormParity.postfix.enabled": {
             "type": "boolean",
@@ -2033,7 +1540,7 @@
       },
       {
         "title": "Project Color",
-        "order": 20,
+        "order": 19,
         "properties": {
           "stormParity.projectColor.enabled": {
             "type": "boolean",
@@ -2050,7 +1557,7 @@
       },
       {
         "title": "Recent Locations",
-        "order": 21,
+        "order": 20,
         "properties": {
           "stormParity.recentLocations.enabled": {
             "type": "boolean",
@@ -2076,7 +1583,7 @@
       },
       {
         "title": "recentProjects",
-        "order": 22,
+        "order": 21,
         "properties": {
           "stormParity.recentProjects.enabled": {
             "type": "boolean",
@@ -2088,7 +1595,7 @@
       },
       {
         "title": "Run Widget",
-        "order": 23,
+        "order": 22,
         "properties": {
           "stormParity.run.enabled": {
             "type": "boolean",
@@ -2100,7 +1607,7 @@
       },
       {
         "title": "Scratch Files",
-        "order": 24,
+        "order": 23,
         "properties": {
           "stormParity.scratches.enabled": {
             "type": "boolean",
@@ -2112,7 +1619,7 @@
       },
       {
         "title": "searchEverywhere",
-        "order": 25,
+        "order": 24,
         "properties": {
           "stormParity.searchEverywhere.enabled": {
             "type": "boolean",
@@ -2124,7 +1631,7 @@
       },
       {
         "title": "Select In",
-        "order": 26,
+        "order": 25,
         "properties": {
           "stormParity.selectIn.enabled": {
             "type": "boolean",
@@ -2135,25 +1642,8 @@
         }
       },
       {
-        "title": "Shelf",
-        "order": 27,
-        "properties": {
-          "stormParity.shelf.enabled": {
-            "type": "boolean",
-            "default": true,
-            "order": 0,
-            "description": "Enable the Shelf feature (reload required)."
-          },
-          "stormParity.shelf.removeAfterUnshelve": {
-            "type": "boolean",
-            "default": true,
-            "description": "Remove a shelf entry after it was unshelved without conflicts (default choice in Unshelve, always used by Unshelve Silently)."
-          }
-        }
-      },
-      {
         "title": "Surround With",
-        "order": 28,
+        "order": 26,
         "properties": {
           "stormParity.surroundWith.enabled": {
             "type": "boolean",
@@ -2165,7 +1655,7 @@
       },
       {
         "title": "Terminal",
-        "order": 29,
+        "order": 27,
         "properties": {
           "stormParity.terminal.enabled": {
             "type": "boolean",
@@ -2181,62 +1671,8 @@
         }
       },
       {
-        "title": "TODO",
-        "order": 30,
-        "properties": {
-          "stormParity.todo.enabled": {
-            "type": "boolean",
-            "default": true,
-            "order": 0,
-            "description": "Enable the TODO feature (reload required)."
-          },
-          "stormParity.todo.patterns": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": [
-              "TODO",
-              "FIXME",
-              "HACK",
-              "XXX"
-            ],
-            "description": "Case-sensitive words recognised as TODO items when they appear after a comment opener (//, #, /*, *, <!--, --, ;)."
-          },
-          "stormParity.todo.regex": {
-            "type": "string",
-            "default": "",
-            "description": "Custom JavaScript regular expression applied per line, overriding `patterns`. Capture group 1 (if present) is used as the pattern name."
-          },
-          "stormParity.todo.exclude": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "default": [
-              "**/node_modules/**",
-              "**/vendor/**",
-              "**/*.min.*"
-            ],
-            "description": "Glob patterns excluded from the TODO scan, in addition to files.exclude and search.exclude."
-          },
-          "stormParity.todo.maxFiles": {
-            "type": "integer",
-            "default": 5000,
-            "minimum": 1,
-            "description": "Maximum number of files scanned."
-          },
-          "stormParity.todo.maxFileSizeKB": {
-            "type": "integer",
-            "default": 512,
-            "minimum": 1,
-            "description": "Files larger than this (in KB) are skipped."
-          }
-        }
-      },
-      {
         "title": "toggleCase",
-        "order": 31,
+        "order": 28,
         "properties": {
           "stormParity.toggleCase.enabled": {
             "type": "boolean",
@@ -2266,8 +1702,8 @@
           },
           {
             "id": "navigation",
-            "title": "Bookmarks and navigation",
-            "description": "Mnemonic bookmarks, recent locations and Search Everywhere.\n[Search Everywhere](command:stormParity.searchEverywhere.open)",
+            "title": "Navigation",
+            "description": "Recent locations, Search Everywhere and Copy Reference.\n[Search Everywhere](command:stormParity.searchEverywhere.open)",
             "media": {
               "markdown": "media/walkthrough/navigation.md"
             },
@@ -2288,7 +1724,7 @@
           },
           {
             "id": "tools",
-            "title": "Scratches, changelists, shelf",
+            "title": "Scratches and changelists",
             "description": "Tools that live outside your project files.\n[New Scratch File](command:stormParity.scratches.new)",
             "media": {
               "markdown": "media/walkthrough/tools.md"

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+- Removed **Bookmarks** (F3, Opt+F3, Ctrl+0..9, Cmd+F3 are back to VS Code's defaults) and **Shelf** (use Source Control → Stash, or GitLens). Their `stormParity.bookmarks.*` / `stormParity.shelf.*` settings no longer have any effect.
+
+- Removed the TODO view: use the [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree) extension, which does it better (editor highlights, ripgrep, custom tags). The `stormParity.todo.*` settings no longer have any effect.
+
 ## 0.4.0
 
 - **Run widget**: status bar selector of run configurations (launch.json, compounds, tasks, npm and composer scripts) with Run, Debug and Stop buttons; *Run...* Ctrl+Opt+R, *Debug...* Ctrl+Opt+D, Stop Cmd+F2 while running.

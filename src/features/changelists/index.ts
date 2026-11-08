@@ -5,9 +5,6 @@ import { Changelist } from './store';
 
 const cmd = (action: string): string => `stormParity.changelists.${action}`;
 
-/** Internal command used by other features (shelf): assign repo files to a list by name, creating it if needed. */
-export const ASSIGN_FILES_COMMAND = cmd('assignFiles');
-
 export function activate(ctx: vscode.ExtensionContext): void {
   const controllers = new Map<string, RepoChangelists>();
   let api: GitAPI | undefined;
@@ -361,15 +358,6 @@ export function activate(ctx: vscode.ExtensionContext): void {
   });
 
   ctx.subscriptions.push(
-    vscode.commands.registerCommand(ASSIGN_FILES_COMMAND, async (root: string, paths: string[], listName: string) => {
-      const c = controllers.get(root);
-      if (!c || !Array.isArray(paths) || typeof listName !== 'string' || !listName.trim()) return false;
-      const list = c.model.findByName(listName) ?? c.model.add(listName);
-      c.model.assign(paths, list.id);
-      await c.commitModel();
-      await c.refresh();
-      return true;
-    }),
     vscode.window.onDidChangeActiveTextEditor(updateStatusBar),
     vscode.workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration('stormParity.changelists')) {

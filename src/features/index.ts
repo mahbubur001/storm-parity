@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import * as openFolder from './openFolder';
 import * as recentProjects from './recentProjects';
-import * as bookmarks from './bookmarks';
 import * as recentLocations from './recentLocations';
 import * as searchEverywhere from './searchEverywhere';
 import * as copyReference from './copyReference';
@@ -11,8 +10,6 @@ import * as toggleCase from './toggleCase';
 import * as compareClipboard from './compareClipboard';
 import * as scratches from './scratches';
 import * as changelists from './changelists';
-import * as shelf from './shelf';
-import * as todo from './todo';
 import * as localHistory from './localHistory';
 import * as externalLibraries from './externalLibraries';
 import * as terminal from './terminal';
@@ -31,7 +28,6 @@ interface Feature {
 const features: Feature[] = [
   { id: 'openFolder', activate: openFolder.activate },
   { id: 'recentProjects', activate: recentProjects.activate },
-  { id: 'bookmarks', activate: bookmarks.activate },
   { id: 'recentLocations', activate: recentLocations.activate },
   { id: 'searchEverywhere', activate: searchEverywhere.activate },
   { id: 'copyReference', activate: copyReference.activate },
@@ -41,8 +37,6 @@ const features: Feature[] = [
   { id: 'compareClipboard', activate: compareClipboard.activate },
   { id: 'scratches', activate: scratches.activate },
   { id: 'changelists', activate: changelists.activate },
-  { id: 'shelf', activate: shelf.activate },
-  { id: 'todo', activate: todo.activate },
   { id: 'localHistory', activate: localHistory.activate },
   { id: 'externalLibraries', activate: externalLibraries.activate },
   { id: 'terminal', activate: terminal.activate },
