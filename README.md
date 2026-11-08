@@ -16,6 +16,10 @@ Language support, the HTTP client and database tools are left to dedicated exten
 - **Import from PhpStorm**: reads include paths from `.idea/php.xml`.
 - Formerly the standalone *iExternal Libraries* extension. Existing `iextlibraries.*` settings keep working until you change the list here.
 
+### Terminal
+- **PhpStorm terminal keys**: Opt+F12 toggles the terminal, Cmd+T / Cmd+W open and close a session, Shift+F6 renames it, Cmd+Shift+] / [ switch sessions.
+- **Toggle Compact Terminal Tabs**: hides VS Code's side list of terminals and switches through a dropdown in the panel title, so the terminal uses the full width (closest to PhpStorm's tab row; the extension API can't add real tabs to the panel).
+
 ### Navigation
 - **Bookmarks with mnemonics**: anonymous or 0-9 / A-Z bookmarks, gutter icons, a Bookmarks view, and positions that follow your edits.
 - **Recent Locations**: recently viewed or edited spots with a code preview. Press the shortcut again to switch to *changed only*.
@@ -58,8 +62,13 @@ The keys follow PhpStorm on macOS. On Windows and Linux they are the closest Ctr
 | Cycle Case | Ctrl+Opt+U | Ctrl+Alt+U | - |
 | New Scratch File | Cmd+Shift+N | Ctrl+Shift+N | New Window |
 | Move to Another Changelist | Opt+Shift+M | Alt+Shift+M | - |
+| Toggle Terminal | Opt+F12 | Alt+F12 | Peek Definition |
+| New Terminal (terminal focused) | Cmd+T | Ctrl+Shift+T | Go to Symbol in Workspace (only while the terminal is focused) |
+| Close Terminal (terminal focused) | Cmd+W | Ctrl+F4 | - |
+| Rename Terminal (terminal focused) | Shift+F6 | Shift+F6 | - |
+| Next / Previous Terminal (terminal focused) | Cmd+Shift+] / [ | Alt+Right / Alt+Left | - |
 
-Turn off `stormParity.keymap.enabled` to keep every command but drop all of these shortcuts. Each feature can also be switched off with `stormParity.<feature>.enabled`.
+Turn off `stormParity.keymap.enabled` to keep every command but drop all of these shortcuts. Each feature can also be switched off with `stormParity.<feature>.enabled`, which also drops that feature's shortcuts.
 
 ## Known limits
 

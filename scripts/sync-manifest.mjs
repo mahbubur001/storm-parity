@@ -35,7 +35,9 @@ for (const id of featureIds) {
   if (!existsSync(join(root, file))) continue;
   const f = read(file);
   out.commands.push(...(f.commands ?? []));
-  out.keybindings.push(...(f.keybindings ?? []));
+  // A feature's keys only apply while the feature is enabled.
+  const gate = `config.stormParity.${id}.enabled`;
+  out.keybindings.push(...(f.keybindings ?? []).map((kb) => ({ ...kb, when: kb.when ? `${gate} && (${kb.when})` : gate })));
   out.viewsWelcome.push(...(f.viewsWelcome ?? []));
   out.colors.push(...(f.colors ?? []));
   mergeMap(out.menus, f.menus);

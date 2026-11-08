@@ -15,6 +15,7 @@ import * as shelf from './shelf';
 import * as todo from './todo';
 import * as localHistory from './localHistory';
 import * as externalLibraries from './externalLibraries';
+import * as terminal from './terminal';
 
 interface Feature {
   id: string;
@@ -39,6 +40,7 @@ const features: Feature[] = [
   { id: 'todo', activate: todo.activate },
   { id: 'localHistory', activate: localHistory.activate },
   { id: 'externalLibraries', activate: externalLibraries.activate },
+  { id: 'terminal', activate: terminal.activate },
 ];
 
 export async function activateFeatures(ctx: vscode.ExtensionContext): Promise<void> {

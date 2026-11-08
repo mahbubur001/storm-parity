@@ -1,0 +1,49 @@
+{
+  "commands": [
+    {
+      "command": "stormParity.terminal.toggleCompactTabs",
+      "title": "Toggle Compact Terminal Tabs",
+      "category": "Storm"
+    }
+  ],
+  "keybindings": [
+    {
+      "command": "workbench.action.terminal.toggleTerminal",
+      "mac": "alt+f12",
+      "key": "alt+f12"
+    },
+    {
+      "command": "workbench.action.terminal.new",
+      "mac": "cmd+t",
+      "key": "ctrl+shift+t",
+      "when": "terminalFocus"
+    },
+    {
+      "command": "workbench.action.terminal.kill",
+      "mac": "cmd+w",
+      "key": "ctrl+f4",
+      "when": "terminalFocus && terminalEditorFocus == false"
+    },
+    {
+      "command": "workbench.action.terminal.rename",
+      "mac": "shift+f6",
+      "key": "shift+f6",
+      "when": "terminalFocus"
+    },
+    {
+      "command": "workbench.action.terminal.focusNext",
+      "mac": "cmd+shift+]",
+      "key": "alt+right",
+      "when": "terminalFocus"
+    },
+    {
+      "command": "workbench.action.terminal.focusPrevious",
+      "mac": "cmd+shift+[",
+      "key": "alt+left",
+      "when": "terminalFocus"
+    }
+  ],
+  "configuration": {
+    "title": "Terminal"
+  }
+}
