@@ -1,0 +1,36 @@
+{
+  "commands": [
+    { "command": "stormParity.toggleCase.toggleCase", "title": "Toggle Case (lower/UPPER)", "category": "Storm" },
+    { "command": "stormParity.toggleCase.cycleCase", "title": "Cycle Case (camel/snake/kebab/Pascal/SCREAMING)", "category": "Storm" },
+    { "command": "stormParity.toggleCase.toCamelCase", "title": "Convert to camelCase", "category": "Storm" },
+    { "command": "stormParity.toggleCase.toSnakeCase", "title": "Convert to snake_case", "category": "Storm" },
+    { "command": "stormParity.toggleCase.toKebabCase", "title": "Convert to kebab-case", "category": "Storm" },
+    { "command": "stormParity.toggleCase.toPascalCase", "title": "Convert to PascalCase", "category": "Storm" },
+    { "command": "stormParity.toggleCase.toScreamingSnakeCase", "title": "Convert to SCREAMING_SNAKE_CASE", "category": "Storm" }
+  ],
+  "keybindings": [
+    {
+      "command": "stormParity.toggleCase.toggleCase",
+      "mac": "cmd+shift+u",
+      "key": "ctrl+shift+u",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "command": "stormParity.toggleCase.cycleCase",
+      "mac": "ctrl+alt+u",
+      "key": "ctrl+alt+u",
+      "when": "editorTextFocus && !editorReadonly"
+    }
+  ],
+  "menus": {
+    "commandPalette": [
+      { "command": "stormParity.toggleCase.toggleCase", "when": "editorIsOpen && !editorReadonly" },
+      { "command": "stormParity.toggleCase.cycleCase", "when": "editorIsOpen && !editorReadonly" },
+      { "command": "stormParity.toggleCase.toCamelCase", "when": "editorIsOpen && !editorReadonly" },
+      { "command": "stormParity.toggleCase.toSnakeCase", "when": "editorIsOpen && !editorReadonly" },
+      { "command": "stormParity.toggleCase.toKebabCase", "when": "editorIsOpen && !editorReadonly" },
+      { "command": "stormParity.toggleCase.toPascalCase", "when": "editorIsOpen && !editorReadonly" },
+      { "command": "stormParity.toggleCase.toScreamingSnakeCase", "when": "editorIsOpen && !editorReadonly" }
+    ]
+  }
+}

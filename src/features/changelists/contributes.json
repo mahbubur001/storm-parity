@@ -1,0 +1,74 @@
+{
+  "commands": [
+    { "command": "stormParity.changelists.new", "title": "New Changelist...", "category": "Storm", "icon": "$(add)" },
+    { "command": "stormParity.changelists.rename", "title": "Rename Changelist...", "category": "Storm" },
+    { "command": "stormParity.changelists.editComment", "title": "Edit Changelist Comment...", "category": "Storm" },
+    { "command": "stormParity.changelists.delete", "title": "Delete Changelist", "category": "Storm" },
+    { "command": "stormParity.changelists.setActive", "title": "Set Active Changelist", "category": "Storm", "icon": "$(pass)" },
+    { "command": "stormParity.changelists.moveFiles", "title": "Move to Another Changelist...", "category": "Storm", "icon": "$(arrow-swap)" },
+    { "command": "stormParity.changelists.moveAll", "title": "Move All Files to Another Changelist...", "category": "Storm" },
+    { "command": "stormParity.changelists.commit", "title": "Commit Changelist...", "category": "Storm", "icon": "$(check)" },
+    { "command": "stormParity.changelists.commitAndPush", "title": "Commit and Push Changelist...", "category": "Storm" },
+    { "command": "stormParity.changelists.commitActive", "title": "Commit Active Changelist", "category": "Storm", "icon": "$(check)" },
+    { "command": "stormParity.changelists.refresh", "title": "Refresh Changelists", "category": "Storm", "icon": "$(refresh)" },
+    { "command": "stormParity.changelists.openChange", "title": "Open Changes", "category": "Storm", "icon": "$(compare-changes)" },
+    { "command": "stormParity.changelists.openFile", "title": "Open File", "category": "Storm", "icon": "$(go-to-file)" }
+  ],
+  "keybindings": [
+    {
+      "command": "stormParity.changelists.moveFiles",
+      "mac": "alt+shift+m",
+      "key": "alt+shift+m",
+      "when": "editorTextFocus && !editorReadonly"
+    }
+  ],
+  "menus": {
+    "commandPalette": [
+      { "command": "stormParity.changelists.openChange", "when": "false" },
+      { "command": "stormParity.changelists.openFile", "when": "false" }
+    ],
+    "scm/title": [
+      { "command": "stormParity.changelists.commitActive", "group": "navigation@1", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.new", "group": "navigation@2", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.refresh", "group": "navigation@3", "when": "scmProvider == stormParity.changelists" }
+    ],
+    "scm/resourceGroup/context": [
+      { "command": "stormParity.changelists.commit", "group": "inline@2", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.setActive", "group": "inline@1", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.commit", "group": "1_commit@1", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.commitAndPush", "group": "1_commit@2", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.setActive", "group": "2_list@1", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.rename", "group": "2_list@2", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.editComment", "group": "2_list@3", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.moveAll", "group": "2_list@4", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.delete", "group": "2_list@5", "when": "scmProvider == stormParity.changelists && scmResourceGroup != default" }
+    ],
+    "scm/resourceState/context": [
+      { "command": "stormParity.changelists.openFile", "group": "inline@1", "when": "scmProvider == stormParity.changelists && scmResourceState != deleted" },
+      { "command": "stormParity.changelists.moveFiles", "group": "inline@2", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.openChange", "group": "1_open@1", "when": "scmProvider == stormParity.changelists" },
+      { "command": "stormParity.changelists.openFile", "group": "1_open@2", "when": "scmProvider == stormParity.changelists && scmResourceState != deleted" },
+      { "command": "stormParity.changelists.moveFiles", "group": "2_list@1", "when": "scmProvider == stormParity.changelists" }
+    ]
+  },
+  "configuration": {
+    "title": "Changelists",
+    "properties": {
+      "stormParity.changelists.showStatusBar": {
+        "type": "boolean",
+        "default": true,
+        "description": "Show the active changelist in the status bar."
+      },
+      "stormParity.changelists.makeNewListActive": {
+        "type": "boolean",
+        "default": false,
+        "description": "Make a newly created changelist the active one."
+      },
+      "stormParity.changelists.showCount": {
+        "type": "boolean",
+        "default": false,
+        "description": "Show the number of changed files as a badge on the Changelists provider (off by default to avoid double counting with Git)."
+      }
+    }
+  }
+}

@@ -1,60 +1,38 @@
 {
   "name": "storm-parity",
   "displayName": "Storm Parity",
-  "description": "PhpStorm workflow features for VS Code.",
-  "version": "0.0.1",
-  "publisher": "mahbubur",
-  "private": true,
-  "license": "UNLICENSED",
+  "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent projects, mnemonic bookmarks, recent locations, clipboard history, surround with, scratch files, changelists, shelf, local history and more.",
+  "version": "0.1.0",
+  "publisher": "itemcoder",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "local"
+    "url": "https://github.com/mahbubur001/storm-parity.git"
   },
   "engines": {
     "vscode": "^1.95.0"
   },
   "categories": [
-    "Other"
+    "Keymaps",
+    "Other",
+    "SCM Providers"
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
     "onStartupFinished"
   ],
-  "contributes": {
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "stormParity",
-          "title": "Storm",
-          "icon": "media/storm.svg"
-        }
-      ]
-    },
-    "configuration": [
-      {
-        "title": "General",
-        "order": 1,
-        "properties": {
-          "stormParity.keymap.enabled": {
-            "type": "boolean",
-            "default": true,
-            "description": "Enable the PhpStorm-style keybindings contributed by Storm Parity. Commands stay available in the Command Palette when off."
-          }
-        }
-      }
-    ]
-  },
   "scripts": {
     "build": "bun run sync && bun run typecheck && node esbuild.mjs --production",
     "build:dev": "bun run sync && node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
     "typecheck": "tsc --noEmit",
-    "package": "bun run build && vsce package --no-dependencies --allow-missing-repository --skip-license",
+    "package": "bun run build && vsce package --no-dependencies",
     "install:local": "code --install-extension storm-parity-$(node -p \"require('./package.json').version\").vsix --force",
-    "pretest": "bun run typecheck && node esbuild.mjs --tests",
+    "pretest": "node -e \"require('fs').rmSync('out',{recursive:true,force:true})\" && bun run sync && bun run typecheck && node esbuild.mjs --tests",
     "test": "vscode-test",
     "vscode:prepublish": "node esbuild.mjs --production",
-    "sync": "node scripts/sync-manifest.mjs"
+    "sync": "node scripts/sync-manifest.mjs",
+    "publish": "bun run build && vsce publish --no-dependencies"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -66,5 +44,1665 @@
     "esbuild": "^0.28.2",
     "mocha": "^12.0.3",
     "typescript": "^7.0.2"
+  },
+  "author": {
+    "name": "Mahbubur Rahman"
+  },
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#3B3F9E",
+    "theme": "dark"
+  },
+  "keywords": [
+    "phpstorm",
+    "jetbrains",
+    "bookmarks",
+    "clipboard history",
+    "changelists",
+    "scratch",
+    "recent projects",
+    "shelf",
+    "local history"
+  ],
+  "bugs": {
+    "url": "https://github.com/mahbubur001/storm-parity/issues"
+  },
+  "homepage": "https://github.com/mahbubur001/storm-parity#readme",
+  "contributes": {
+    "commands": [
+      {
+        "command": "stormParity.bookmarks.toggle",
+        "title": "Toggle Bookmark",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleMnemonic",
+        "title": "Toggle Bookmark with Mnemonic...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "title": "Toggle Numeric Mnemonic Bookmark...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "title": "Go to Mnemonic Bookmark...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.bookmarks.showAll",
+        "title": "Show All Bookmarks",
+        "category": "Storm",
+        "icon": "$(list-flat)"
+      },
+      {
+        "command": "stormParity.bookmarks.next",
+        "title": "Next Bookmark in File",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.bookmarks.previous",
+        "title": "Previous Bookmark in File",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.bookmarks.editDescription",
+        "title": "Edit Bookmark Description...",
+        "category": "Storm",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "stormParity.bookmarks.delete",
+        "title": "Delete Bookmark",
+        "category": "Storm",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "stormParity.bookmarks.clearAll",
+        "title": "Delete All Bookmarks",
+        "category": "Storm",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "stormParity.bookmarks.reveal",
+        "title": "Reveal Bookmark",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.changelists.new",
+        "title": "New Changelist...",
+        "category": "Storm",
+        "icon": "$(add)"
+      },
+      {
+        "command": "stormParity.changelists.rename",
+        "title": "Rename Changelist...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.changelists.editComment",
+        "title": "Edit Changelist Comment...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.changelists.delete",
+        "title": "Delete Changelist",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.changelists.setActive",
+        "title": "Set Active Changelist",
+        "category": "Storm",
+        "icon": "$(pass)"
+      },
+      {
+        "command": "stormParity.changelists.moveFiles",
+        "title": "Move to Another Changelist...",
+        "category": "Storm",
+        "icon": "$(arrow-swap)"
+      },
+      {
+        "command": "stormParity.changelists.moveAll",
+        "title": "Move All Files to Another Changelist...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.changelists.commit",
+        "title": "Commit Changelist...",
+        "category": "Storm",
+        "icon": "$(check)"
+      },
+      {
+        "command": "stormParity.changelists.commitAndPush",
+        "title": "Commit and Push Changelist...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.changelists.commitActive",
+        "title": "Commit Active Changelist",
+        "category": "Storm",
+        "icon": "$(check)"
+      },
+      {
+        "command": "stormParity.changelists.refresh",
+        "title": "Refresh Changelists",
+        "category": "Storm",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "stormParity.changelists.openChange",
+        "title": "Open Changes",
+        "category": "Storm",
+        "icon": "$(compare-changes)"
+      },
+      {
+        "command": "stormParity.changelists.openFile",
+        "title": "Open File",
+        "category": "Storm",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "stormParity.clipboardHistory.copy",
+        "title": "Copy (Record in History)",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.clipboardHistory.cut",
+        "title": "Cut (Record in History)",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.clipboardHistory.pasteFromHistory",
+        "title": "Paste from History...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.clipboardHistory.clear",
+        "title": "Clear Clipboard History",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.compareClipboard.compare",
+        "title": "Compare with Clipboard",
+        "category": "Storm",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "stormParity.copyReference.copyReference",
+        "title": "Copy Reference",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.copyReference.copyReferenceAs",
+        "title": "Copy Reference As...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.localHistory.putLabel",
+        "title": "Local History: Put Label...",
+        "category": "Storm",
+        "icon": "$(tag)"
+      },
+      {
+        "command": "stormParity.localHistory.showHistory",
+        "title": "Local History: Show History",
+        "category": "Storm",
+        "icon": "$(history)"
+      },
+      {
+        "command": "stormParity.localHistory.showHistoryForSelection",
+        "title": "Local History: Show History for Selection",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.localHistory.restore",
+        "title": "Local History: Restore Version...",
+        "category": "Storm",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "stormParity.openFolder.openFolder",
+        "title": "Open Folder or Workspace (Ask Where)",
+        "category": "Storm",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "stormParity.openFolder.openRecent",
+        "title": "Open Recent Project (Ask Where)",
+        "category": "Storm",
+        "icon": "$(history)"
+      },
+      {
+        "command": "stormParity.recentLocations.show",
+        "title": "Recent Locations",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.recentLocations.toggleChangedOnly",
+        "title": "Recent Locations: Toggle Changed Only",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.recentLocations.clear",
+        "title": "Clear Recent Locations",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.recentProjects.refresh",
+        "title": "Refresh Recent Projects",
+        "category": "Storm",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "stormParity.recentProjects.newGroup",
+        "title": "New Project Group",
+        "category": "Storm",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "stormParity.recentProjects.open",
+        "title": "Open Project",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.recentProjects.openInNewWindow",
+        "title": "Open in New Window",
+        "category": "Storm",
+        "icon": "$(empty-window)"
+      },
+      {
+        "command": "stormParity.recentProjects.openInThisWindow",
+        "title": "Open in This Window",
+        "category": "Storm",
+        "icon": "$(window)"
+      },
+      {
+        "command": "stormParity.recentProjects.rename",
+        "title": "Rename Project...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.recentProjects.moveToGroup",
+        "title": "Move to Group...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.recentProjects.remove",
+        "title": "Remove from Recent Projects",
+        "category": "Storm",
+        "icon": "$(close)"
+      },
+      {
+        "command": "stormParity.recentProjects.revealInOS",
+        "title": "Reveal in Finder",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.recentProjects.renameGroup",
+        "title": "Rename Group...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.recentProjects.deleteGroup",
+        "title": "Delete Group",
+        "category": "Storm",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "stormParity.scratches.new",
+        "title": "New Scratch File...",
+        "category": "Storm",
+        "icon": "$(add)"
+      },
+      {
+        "command": "stormParity.scratches.newFromSelection",
+        "title": "New Scratch File from Selection",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.scratches.refresh",
+        "title": "Refresh Scratches",
+        "category": "Storm",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "stormParity.scratches.rename",
+        "title": "Rename Scratch File...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.scratches.delete",
+        "title": "Delete Scratch File",
+        "category": "Storm",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "stormParity.scratches.reveal",
+        "title": "Reveal Scratch in File Manager",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.searchEverywhere.open",
+        "title": "Search Everywhere",
+        "category": "Storm",
+        "icon": "$(search)"
+      },
+      {
+        "command": "stormParity.shelf.shelve",
+        "title": "Shelve Changes...",
+        "category": "Storm",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "stormParity.shelf.shelveChangelist",
+        "title": "Shelve Changelist...",
+        "category": "Storm",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "stormParity.shelf.shelveFiles",
+        "title": "Shelve Files...",
+        "category": "Storm",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "stormParity.shelf.unshelve",
+        "title": "Unshelve...",
+        "category": "Storm",
+        "icon": "$(debug-step-out)"
+      },
+      {
+        "command": "stormParity.shelf.unshelveSilently",
+        "title": "Unshelve Silently",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.shelf.delete",
+        "title": "Delete Shelved Changes",
+        "category": "Storm",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "stormParity.shelf.showPatch",
+        "title": "Show Shelved Patch",
+        "category": "Storm",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "stormParity.shelf.rename",
+        "title": "Rename Shelved Changes...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.shelf.refresh",
+        "title": "Refresh Shelf",
+        "category": "Storm",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "stormParity.surroundWith.surround",
+        "title": "Surround With...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.todo.refresh",
+        "title": "Rescan TODO Items",
+        "category": "Storm",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "stormParity.todo.currentFileOnly",
+        "title": "TODO: Show Current File Only",
+        "category": "Storm",
+        "icon": "$(file)"
+      },
+      {
+        "command": "stormParity.todo.allFiles",
+        "title": "TODO: Show All Files",
+        "category": "Storm",
+        "icon": "$(files)"
+      },
+      {
+        "command": "stormParity.todo.filterTags",
+        "title": "TODO: Filter by Pattern...",
+        "category": "Storm",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "stormParity.todo.clearFilters",
+        "title": "TODO: Clear Filters",
+        "category": "Storm",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "stormParity.toggleCase.toggleCase",
+        "title": "Toggle Case (lower/UPPER)",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.toggleCase.cycleCase",
+        "title": "Cycle Case (camel/snake/kebab/Pascal/SCREAMING)",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.toggleCase.toCamelCase",
+        "title": "Convert to camelCase",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.toggleCase.toSnakeCase",
+        "title": "Convert to snake_case",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.toggleCase.toKebabCase",
+        "title": "Convert to kebab-case",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.toggleCase.toPascalCase",
+        "title": "Convert to PascalCase",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.toggleCase.toScreamingSnakeCase",
+        "title": "Convert to SCREAMING_SNAKE_CASE",
+        "category": "Storm"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "stormParity.bookmarks.toggle",
+        "key": "f11",
+        "mac": "f3",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleMnemonic",
+        "key": "ctrl+f11",
+        "mac": "alt+f3",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.showAll",
+        "key": "shift+f11",
+        "mac": "cmd+f3",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+0",
+        "mac": "ctrl+0",
+        "args": "0",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+1",
+        "mac": "ctrl+1",
+        "args": "1",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+2",
+        "mac": "ctrl+2",
+        "args": "2",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+3",
+        "mac": "ctrl+3",
+        "args": "3",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+4",
+        "mac": "ctrl+4",
+        "args": "4",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+5",
+        "mac": "ctrl+5",
+        "args": "5",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+6",
+        "mac": "ctrl+6",
+        "args": "6",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+7",
+        "mac": "ctrl+7",
+        "args": "7",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+8",
+        "mac": "ctrl+8",
+        "args": "8",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.jumpToMnemonic",
+        "key": "ctrl+9",
+        "mac": "ctrl+9",
+        "args": "9",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+0",
+        "mac": "ctrl+shift+0",
+        "args": "0",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+1",
+        "mac": "ctrl+shift+1",
+        "args": "1",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+2",
+        "mac": "ctrl+shift+2",
+        "args": "2",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+3",
+        "mac": "ctrl+shift+3",
+        "args": "3",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+4",
+        "mac": "ctrl+shift+4",
+        "args": "4",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+5",
+        "mac": "ctrl+shift+5",
+        "args": "5",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+6",
+        "mac": "ctrl+shift+6",
+        "args": "6",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+7",
+        "mac": "ctrl+shift+7",
+        "args": "7",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+8",
+        "mac": "ctrl+shift+8",
+        "args": "8",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.bookmarks.toggleNumeric",
+        "key": "ctrl+shift+9",
+        "mac": "ctrl+shift+9",
+        "args": "9",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.changelists.moveFiles",
+        "mac": "alt+shift+m",
+        "key": "alt+shift+m",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus && !editorReadonly)"
+      },
+      {
+        "command": "stormParity.clipboardHistory.copy",
+        "key": "ctrl+c",
+        "mac": "cmd+c",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.clipboardHistory.cut",
+        "key": "ctrl+x",
+        "mac": "cmd+x",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus && !editorReadonly)"
+      },
+      {
+        "command": "stormParity.clipboardHistory.pasteFromHistory",
+        "key": "ctrl+shift+v",
+        "mac": "cmd+shift+v",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus && !editorReadonly)"
+      },
+      {
+        "command": "stormParity.copyReference.copyReference",
+        "mac": "cmd+alt+shift+c",
+        "key": "ctrl+alt+shift+c",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus)"
+      },
+      {
+        "command": "stormParity.openFolder.openFolder",
+        "mac": "cmd+o",
+        "key": "ctrl+k ctrl+o",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.openFolder.openRecent",
+        "mac": "ctrl+r",
+        "key": "ctrl+r",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.recentLocations.show",
+        "key": "ctrl+shift+e",
+        "mac": "cmd+shift+e",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.recentLocations.toggleChangedOnly",
+        "key": "ctrl+shift+e",
+        "mac": "cmd+shift+e",
+        "when": "config.stormParity.keymap.enabled && (inQuickOpen && stormParity.recentLocations.pickerOpen)"
+      },
+      {
+        "command": "stormParity.scratches.new",
+        "key": "ctrl+shift+n",
+        "mac": "cmd+shift+n",
+        "when": "config.stormParity.keymap.enabled"
+      },
+      {
+        "command": "stormParity.searchEverywhere.open",
+        "mac": "cmd+shift+a",
+        "key": "ctrl+shift+a",
+        "when": "config.stormParity.keymap.enabled && (!inQuickOpen)"
+      },
+      {
+        "command": "stormParity.surroundWith.surround",
+        "key": "ctrl+alt+t",
+        "mac": "cmd+alt+t",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus && !editorReadonly)"
+      },
+      {
+        "command": "stormParity.toggleCase.toggleCase",
+        "mac": "cmd+shift+u",
+        "key": "ctrl+shift+u",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus && !editorReadonly)"
+      },
+      {
+        "command": "stormParity.toggleCase.cycleCase",
+        "mac": "ctrl+alt+u",
+        "key": "ctrl+alt+u",
+        "when": "config.stormParity.keymap.enabled && (editorTextFocus && !editorReadonly)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "stormParity.bookmarks.reveal",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.bookmarks.toggle",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.bookmarks.toggleMnemonic",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.bookmarks.toggleNumeric",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.bookmarks.next",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.bookmarks.previous",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.changelists.openChange",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.changelists.openFile",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.clipboardHistory.copy",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.clipboardHistory.cut",
+          "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.compareClipboard.compare",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.copyReference.copyReference",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.copyReference.copyReferenceAs",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.localHistory.showHistory",
+          "when": "resourceScheme == file"
+        },
+        {
+          "command": "stormParity.localHistory.showHistoryForSelection",
+          "when": "resourceScheme == file && editorHasSelection"
+        },
+        {
+          "command": "stormParity.localHistory.restore",
+          "when": "resourceScheme == file"
+        },
+        {
+          "command": "stormParity.recentLocations.toggleChangedOnly",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.open",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.openInNewWindow",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.openInThisWindow",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.rename",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.moveToGroup",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.remove",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.revealInOS",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.renameGroup",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.recentProjects.deleteGroup",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.shelf.shelveChangelist",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.shelf.shelveFiles",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.shelf.refresh",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.surroundWith.surround",
+          "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.toggleCase.toggleCase",
+          "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.toggleCase.cycleCase",
+          "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.toggleCase.toCamelCase",
+          "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.toggleCase.toSnakeCase",
+          "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.toggleCase.toKebabCase",
+          "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.toggleCase.toPascalCase",
+          "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.toggleCase.toScreamingSnakeCase",
+          "when": "editorIsOpen && !editorReadonly"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "stormParity.bookmarks.showAll",
+          "when": "view == stormParity.bookmarks",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stormParity.bookmarks.clearAll",
+          "when": "view == stormParity.bookmarks",
+          "group": "navigation@2"
+        },
+        {
+          "command": "stormParity.recentProjects.newGroup",
+          "when": "view == stormParity.recentProjects",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stormParity.recentProjects.refresh",
+          "when": "view == stormParity.recentProjects",
+          "group": "navigation@2"
+        },
+        {
+          "command": "stormParity.scratches.new",
+          "when": "view == stormParity.scratches",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stormParity.scratches.refresh",
+          "when": "view == stormParity.scratches",
+          "group": "navigation@2"
+        },
+        {
+          "command": "stormParity.scratches.reveal",
+          "when": "view == stormParity.scratches",
+          "group": "more@1"
+        },
+        {
+          "command": "stormParity.shelf.shelve",
+          "group": "navigation@1",
+          "when": "view == stormParity.shelf"
+        },
+        {
+          "command": "stormParity.shelf.refresh",
+          "group": "navigation@2",
+          "when": "view == stormParity.shelf"
+        },
+        {
+          "command": "stormParity.todo.currentFileOnly",
+          "when": "view == stormParity.todo && !stormParity.todo.currentFileOnly",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stormParity.todo.allFiles",
+          "when": "view == stormParity.todo && stormParity.todo.currentFileOnly",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stormParity.todo.filterTags",
+          "when": "view == stormParity.todo",
+          "group": "navigation@2"
+        },
+        {
+          "command": "stormParity.todo.refresh",
+          "when": "view == stormParity.todo",
+          "group": "navigation@3"
+        },
+        {
+          "command": "stormParity.todo.clearFilters",
+          "when": "view == stormParity.todo && (stormParity.todo.currentFileOnly || stormParity.todo.tagFiltered)",
+          "group": "more@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "stormParity.bookmarks.editDescription",
+          "when": "view == stormParity.bookmarks && viewItem == stormParity.bookmark",
+          "group": "inline@1"
+        },
+        {
+          "command": "stormParity.bookmarks.delete",
+          "when": "view == stormParity.bookmarks && viewItem =~ /^stormParity\\.bookmark/",
+          "group": "inline@2"
+        },
+        {
+          "command": "stormParity.bookmarks.editDescription",
+          "when": "view == stormParity.bookmarks && viewItem == stormParity.bookmark",
+          "group": "1_edit@1"
+        },
+        {
+          "command": "stormParity.bookmarks.delete",
+          "when": "view == stormParity.bookmarks && viewItem =~ /^stormParity\\.bookmark/",
+          "group": "1_edit@2"
+        },
+        {
+          "command": "stormParity.recentProjects.openInNewWindow",
+          "when": "view == stormParity.recentProjects && viewItem == project",
+          "group": "inline@1"
+        },
+        {
+          "command": "stormParity.recentProjects.openInThisWindow",
+          "when": "view == stormParity.recentProjects && viewItem == project",
+          "group": "1_open@1"
+        },
+        {
+          "command": "stormParity.recentProjects.openInNewWindow",
+          "when": "view == stormParity.recentProjects && viewItem == project",
+          "group": "1_open@2"
+        },
+        {
+          "command": "stormParity.recentProjects.revealInOS",
+          "when": "view == stormParity.recentProjects && viewItem =~ /^project/",
+          "group": "2_reveal@1"
+        },
+        {
+          "command": "stormParity.recentProjects.rename",
+          "when": "view == stormParity.recentProjects && viewItem =~ /^project/",
+          "group": "3_edit@1"
+        },
+        {
+          "command": "stormParity.recentProjects.moveToGroup",
+          "when": "view == stormParity.recentProjects && viewItem =~ /^project/",
+          "group": "3_edit@2"
+        },
+        {
+          "command": "stormParity.recentProjects.remove",
+          "when": "view == stormParity.recentProjects && viewItem =~ /^project/",
+          "group": "4_remove@1"
+        },
+        {
+          "command": "stormParity.recentProjects.renameGroup",
+          "when": "view == stormParity.recentProjects && viewItem == group",
+          "group": "1_edit@1"
+        },
+        {
+          "command": "stormParity.recentProjects.deleteGroup",
+          "when": "view == stormParity.recentProjects && viewItem == group",
+          "group": "1_edit@2"
+        },
+        {
+          "command": "stormParity.scratches.delete",
+          "when": "view == stormParity.scratches && viewItem == scratchFile",
+          "group": "inline"
+        },
+        {
+          "command": "stormParity.scratches.rename",
+          "when": "view == stormParity.scratches && viewItem == scratchFile",
+          "group": "1_edit@1"
+        },
+        {
+          "command": "stormParity.scratches.delete",
+          "when": "view == stormParity.scratches && viewItem == scratchFile",
+          "group": "1_edit@2"
+        },
+        {
+          "command": "stormParity.scratches.reveal",
+          "when": "view == stormParity.scratches && viewItem == scratchFile",
+          "group": "2_reveal@1"
+        },
+        {
+          "command": "stormParity.shelf.unshelve",
+          "group": "inline@1",
+          "when": "view == stormParity.shelf && viewItem == shelf"
+        },
+        {
+          "command": "stormParity.shelf.showPatch",
+          "group": "inline@2",
+          "when": "view == stormParity.shelf && viewItem == shelf"
+        },
+        {
+          "command": "stormParity.shelf.unshelve",
+          "group": "1_apply@1",
+          "when": "view == stormParity.shelf && viewItem == shelf"
+        },
+        {
+          "command": "stormParity.shelf.unshelveSilently",
+          "group": "1_apply@2",
+          "when": "view == stormParity.shelf && viewItem == shelf"
+        },
+        {
+          "command": "stormParity.shelf.showPatch",
+          "group": "2_view@1",
+          "when": "view == stormParity.shelf && viewItem =~ /^shelf/"
+        },
+        {
+          "command": "stormParity.shelf.rename",
+          "group": "3_edit@1",
+          "when": "view == stormParity.shelf && viewItem == shelf"
+        },
+        {
+          "command": "stormParity.shelf.delete",
+          "group": "3_edit@2",
+          "when": "view == stormParity.shelf && viewItem == shelf"
+        }
+      ],
+      "scm/title": [
+        {
+          "command": "stormParity.changelists.commitActive",
+          "group": "navigation@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.new",
+          "group": "navigation@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.refresh",
+          "group": "navigation@3",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.shelf.shelve",
+          "group": "2_shelf@1",
+          "when": "scmProvider == stormParity.changelists"
+        }
+      ],
+      "scm/resourceGroup/context": [
+        {
+          "command": "stormParity.changelists.commit",
+          "group": "inline@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.setActive",
+          "group": "inline@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.commit",
+          "group": "1_commit@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.commitAndPush",
+          "group": "1_commit@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.setActive",
+          "group": "2_list@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.rename",
+          "group": "2_list@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.editComment",
+          "group": "2_list@3",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.moveAll",
+          "group": "2_list@4",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.delete",
+          "group": "2_list@5",
+          "when": "scmProvider == stormParity.changelists && scmResourceGroup != default"
+        },
+        {
+          "command": "stormParity.shelf.shelveChangelist",
+          "group": "3_shelf@1",
+          "when": "scmProvider == stormParity.changelists"
+        }
+      ],
+      "scm/resourceState/context": [
+        {
+          "command": "stormParity.changelists.openFile",
+          "group": "inline@1",
+          "when": "scmProvider == stormParity.changelists && scmResourceState != deleted"
+        },
+        {
+          "command": "stormParity.changelists.moveFiles",
+          "group": "inline@2",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.openChange",
+          "group": "1_open@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.changelists.openFile",
+          "group": "1_open@2",
+          "when": "scmProvider == stormParity.changelists && scmResourceState != deleted"
+        },
+        {
+          "command": "stormParity.changelists.moveFiles",
+          "group": "2_list@1",
+          "when": "scmProvider == stormParity.changelists"
+        },
+        {
+          "command": "stormParity.shelf.shelveFiles",
+          "group": "3_shelf@1",
+          "when": "scmProvider == stormParity.changelists || scmProvider == git"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "stormParity.compareClipboard.compare",
+          "group": "9_cutcopypaste@20"
+        },
+        {
+          "command": "stormParity.copyReference.copyReference",
+          "group": "9_cutcopypaste@10"
+        },
+        {
+          "command": "stormParity.copyReference.copyReferenceAs",
+          "group": "9_cutcopypaste@11"
+        },
+        {
+          "command": "stormParity.localHistory.showHistory",
+          "when": "resourceScheme == file",
+          "group": "z_storm@10"
+        },
+        {
+          "command": "stormParity.localHistory.showHistoryForSelection",
+          "when": "resourceScheme == file && editorHasSelection",
+          "group": "z_storm@11"
+        },
+        {
+          "command": "stormParity.scratches.newFromSelection",
+          "when": "editorHasSelection",
+          "group": "9_cutcopypaste@9"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "stormParity.localHistory.showHistory",
+          "when": "resourceScheme == file && !explorerResourceIsFolder",
+          "group": "z_storm@10"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "stormParity",
+          "title": "Storm",
+          "icon": "media/storm.svg"
+        }
+      ]
+    },
+    "views": {
+      "stormParity": [
+        {
+          "id": "stormParity.bookmarks",
+          "name": "Bookmarks",
+          "icon": "$(bookmark)"
+        },
+        {
+          "id": "stormParity.recentProjects",
+          "name": "Recent Projects",
+          "icon": "$(history)",
+          "contextualTitle": "Storm"
+        },
+        {
+          "id": "stormParity.scratches",
+          "name": "Scratches",
+          "icon": "$(notebook)"
+        },
+        {
+          "id": "stormParity.shelf",
+          "name": "Shelf",
+          "icon": "$(archive)",
+          "contextualTitle": "Storm"
+        },
+        {
+          "id": "stormParity.todo",
+          "name": "TODO",
+          "icon": "$(checklist)"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "stormParity.recentProjects",
+        "contents": "No recent projects yet.\n[Open Folder](command:stormParity.openFolder.openFolder)",
+        "when": "config.stormParity.openFolder.enabled"
+      },
+      {
+        "view": "stormParity.recentProjects",
+        "contents": "No recent projects yet.\n[Open Folder](command:workbench.action.files.openFolder)",
+        "when": "!config.stormParity.openFolder.enabled"
+      },
+      {
+        "view": "stormParity.scratches",
+        "contents": "No scratch files yet.\n[New Scratch File](command:stormParity.scratches.new)"
+      },
+      {
+        "view": "stormParity.shelf",
+        "contents": "No shelved changes for the open repositories.\n[Shelve Changes...](command:stormParity.shelf.shelve)"
+      }
+    ],
+    "colors": [
+      {
+        "id": "stormParity.bookmarks.overviewRuler",
+        "description": "Overview ruler mark for Storm bookmarks.",
+        "defaults": {
+          "dark": "#3B82C4",
+          "light": "#3B82C4",
+          "highContrast": "#4FA3E8"
+        }
+      }
+    ],
+    "configuration": [
+      {
+        "title": "General",
+        "order": 1,
+        "properties": {
+          "stormParity.keymap.enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable the PhpStorm-style keybindings contributed by Storm Parity. Commands stay available in the Command Palette when off."
+          }
+        }
+      },
+      {
+        "title": "Bookmarks",
+        "order": 10,
+        "properties": {
+          "stormParity.bookmarks.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Bookmarks feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "Changelists",
+        "order": 11,
+        "properties": {
+          "stormParity.changelists.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Changelists feature (reload required)."
+          },
+          "stormParity.changelists.showStatusBar": {
+            "type": "boolean",
+            "default": true,
+            "description": "Show the active changelist in the status bar."
+          },
+          "stormParity.changelists.makeNewListActive": {
+            "type": "boolean",
+            "default": false,
+            "description": "Make a newly created changelist the active one."
+          },
+          "stormParity.changelists.showCount": {
+            "type": "boolean",
+            "default": false,
+            "description": "Show the number of changed files as a badge on the Changelists provider (off by default to avoid double counting with Git)."
+          }
+        }
+      },
+      {
+        "title": "Clipboard History",
+        "order": 12,
+        "properties": {
+          "stormParity.clipboardHistory.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Clipboard History feature (reload required)."
+          },
+          "stormParity.clipboardHistory.maxItems": {
+            "type": "integer",
+            "default": 30,
+            "minimum": 1,
+            "maximum": 500,
+            "description": "Number of entries kept in the clipboard history."
+          },
+          "stormParity.clipboardHistory.persist": {
+            "type": "boolean",
+            "default": true,
+            "description": "Keep the clipboard history across VS Code restarts (stored in extension global state)."
+          }
+        }
+      },
+      {
+        "title": "compareClipboard",
+        "order": 13,
+        "properties": {
+          "stormParity.compareClipboard.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the compareClipboard feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "copyReference",
+        "order": 14,
+        "properties": {
+          "stormParity.copyReference.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the copyReference feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "Local History",
+        "order": 15,
+        "properties": {
+          "stormParity.localHistory.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Local History feature (reload required)."
+          },
+          "stormParity.localHistory.retentionDays": {
+            "type": "number",
+            "default": 7,
+            "minimum": 1,
+            "description": "Days to keep local history snapshots. Older snapshots are removed on startup and on save."
+          },
+          "stormParity.localHistory.maxSnapshotsPerFile": {
+            "type": "number",
+            "default": 50,
+            "minimum": 1,
+            "description": "Maximum number of snapshots kept per file (oldest are dropped first)."
+          },
+          "stormParity.localHistory.maxFileSizeKB": {
+            "type": "number",
+            "default": 1024,
+            "minimum": 1,
+            "description": "Files larger than this (in KB of text) are not snapshotted."
+          },
+          "stormParity.localHistory.exclude": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [
+              "**/node_modules/**",
+              "**/.git/**"
+            ],
+            "description": "Glob patterns of files that never get local history snapshots."
+          }
+        }
+      },
+      {
+        "title": "Open Folder",
+        "order": 16,
+        "properties": {
+          "stormParity.openFolder.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Open Folder feature (reload required)."
+          },
+          "stormParity.openFolder.defaultAction": {
+            "type": "string",
+            "enum": [
+              "ask",
+              "thisWindow",
+              "newWindow"
+            ],
+            "enumDescriptions": [
+              "Ask every time (This Window / New Window / Attach).",
+              "Always open in the current window.",
+              "Always open in a new window."
+            ],
+            "default": "ask",
+            "order": 1,
+            "description": "What Storm Open Folder / Open Recent do with the chosen project. Also set by the \"Remember my choice\" toggle in the prompt."
+          }
+        }
+      },
+      {
+        "title": "Recent Locations",
+        "order": 17,
+        "properties": {
+          "stormParity.recentLocations.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Recent Locations feature (reload required)."
+          },
+          "stormParity.recentLocations.maxEntries": {
+            "type": "integer",
+            "default": 50,
+            "minimum": 5,
+            "maximum": 500,
+            "description": "Maximum number of recent locations kept per workspace."
+          },
+          "stormParity.recentLocations.mergeDistance": {
+            "type": "integer",
+            "default": 5,
+            "minimum": 0,
+            "maximum": 100,
+            "description": "A visit or edit within this many lines of an existing entry in the same file updates that entry instead of adding a new one."
+          }
+        }
+      },
+      {
+        "title": "recentProjects",
+        "order": 18,
+        "properties": {
+          "stormParity.recentProjects.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the recentProjects feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "Scratch Files",
+        "order": 19,
+        "properties": {
+          "stormParity.scratches.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Scratch Files feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "searchEverywhere",
+        "order": 20,
+        "properties": {
+          "stormParity.searchEverywhere.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the searchEverywhere feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "Shelf",
+        "order": 21,
+        "properties": {
+          "stormParity.shelf.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Shelf feature (reload required)."
+          },
+          "stormParity.shelf.removeAfterUnshelve": {
+            "type": "boolean",
+            "default": true,
+            "description": "Remove a shelf entry after it was unshelved without conflicts (default choice in Unshelve, always used by Unshelve Silently)."
+          }
+        }
+      },
+      {
+        "title": "Surround With",
+        "order": 22,
+        "properties": {
+          "stormParity.surroundWith.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Surround With feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "TODO",
+        "order": 23,
+        "properties": {
+          "stormParity.todo.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the TODO feature (reload required)."
+          },
+          "stormParity.todo.patterns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [
+              "TODO",
+              "FIXME",
+              "HACK",
+              "XXX"
+            ],
+            "description": "Case-sensitive words recognised as TODO items when they appear after a comment opener (//, #, /*, *, <!--, --, ;)."
+          },
+          "stormParity.todo.regex": {
+            "type": "string",
+            "default": "",
+            "description": "Custom JavaScript regular expression applied per line, overriding `patterns`. Capture group 1 (if present) is used as the pattern name."
+          },
+          "stormParity.todo.exclude": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [
+              "**/node_modules/**",
+              "**/vendor/**",
+              "**/*.min.*"
+            ],
+            "description": "Glob patterns excluded from the TODO scan, in addition to files.exclude and search.exclude."
+          },
+          "stormParity.todo.maxFiles": {
+            "type": "integer",
+            "default": 5000,
+            "minimum": 1,
+            "description": "Maximum number of files scanned."
+          },
+          "stormParity.todo.maxFileSizeKB": {
+            "type": "integer",
+            "default": 512,
+            "minimum": 1,
+            "description": "Files larger than this (in KB) are skipped."
+          }
+        }
+      },
+      {
+        "title": "toggleCase",
+        "order": 24,
+        "properties": {
+          "stormParity.toggleCase.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the toggleCase feature (reload required)."
+          }
+        }
+      }
+    ],
+    "walkthroughs": [
+      {
+        "id": "stormParity.welcome",
+        "title": "Get Started with Storm Parity",
+        "description": "PhpStorm workflow features for VS Code.",
+        "steps": [
+          {
+            "id": "projects",
+            "title": "Open projects",
+            "description": "Open a folder with the where-to-open prompt.\n[Open Folder](command:stormParity.openFolder.openFolder)",
+            "media": {
+              "markdown": "media/walkthrough/projects.md"
+            },
+            "completionEvents": [
+              "onCommand:stormParity.openFolder.openFolder"
+            ]
+          },
+          {
+            "id": "navigation",
+            "title": "Bookmarks and navigation",
+            "description": "Mnemonic bookmarks, recent locations and Search Everywhere.\n[Search Everywhere](command:stormParity.searchEverywhere.open)",
+            "media": {
+              "markdown": "media/walkthrough/navigation.md"
+            },
+            "completionEvents": [
+              "onCommand:stormParity.searchEverywhere.open"
+            ]
+          },
+          {
+            "id": "editing",
+            "title": "Editing helpers",
+            "description": "Clipboard history, Surround With, case tools.\n[Paste from History](command:stormParity.clipboardHistory.pasteFromHistory)",
+            "media": {
+              "markdown": "media/walkthrough/editing.md"
+            },
+            "completionEvents": [
+              "onCommand:stormParity.clipboardHistory.pasteFromHistory"
+            ]
+          },
+          {
+            "id": "tools",
+            "title": "Scratches, changelists, shelf",
+            "description": "Tools that live outside your project files.\n[New Scratch File](command:stormParity.scratches.new)",
+            "media": {
+              "markdown": "media/walkthrough/tools.md"
+            },
+            "completionEvents": [
+              "onCommand:stormParity.scratches.new"
+            ]
+          },
+          {
+            "id": "keymap",
+            "title": "Keymap",
+            "description": "Review or disable the PhpStorm shortcuts.\n[Open Keymap Setting](command:workbench.action.openSettings?%5B%22stormParity.keymap.enabled%22%5D)",
+            "media": {
+              "markdown": "media/walkthrough/keymap.md"
+            },
+            "completionEvents": [
+              "onSettingChanged:stormParity.keymap.enabled"
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

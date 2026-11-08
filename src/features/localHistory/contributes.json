@@ -1,0 +1,51 @@
+{
+  "commands": [
+    { "command": "stormParity.localHistory.putLabel", "title": "Local History: Put Label...", "category": "Storm", "icon": "$(tag)" },
+    { "command": "stormParity.localHistory.showHistory", "title": "Local History: Show History", "category": "Storm", "icon": "$(history)" },
+    { "command": "stormParity.localHistory.showHistoryForSelection", "title": "Local History: Show History for Selection", "category": "Storm" },
+    { "command": "stormParity.localHistory.restore", "title": "Local History: Restore Version...", "category": "Storm", "icon": "$(discard)" }
+  ],
+  "menus": {
+    "editor/context": [
+      { "command": "stormParity.localHistory.showHistory", "when": "resourceScheme == file", "group": "z_storm@10" },
+      { "command": "stormParity.localHistory.showHistoryForSelection", "when": "resourceScheme == file && editorHasSelection", "group": "z_storm@11" }
+    ],
+    "explorer/context": [
+      { "command": "stormParity.localHistory.showHistory", "when": "resourceScheme == file && !explorerResourceIsFolder", "group": "z_storm@10" }
+    ],
+    "commandPalette": [
+      { "command": "stormParity.localHistory.showHistory", "when": "resourceScheme == file" },
+      { "command": "stormParity.localHistory.showHistoryForSelection", "when": "resourceScheme == file && editorHasSelection" },
+      { "command": "stormParity.localHistory.restore", "when": "resourceScheme == file" }
+    ]
+  },
+  "configuration": {
+    "title": "Local History",
+    "properties": {
+      "stormParity.localHistory.retentionDays": {
+        "type": "number",
+        "default": 7,
+        "minimum": 1,
+        "description": "Days to keep local history snapshots. Older snapshots are removed on startup and on save."
+      },
+      "stormParity.localHistory.maxSnapshotsPerFile": {
+        "type": "number",
+        "default": 50,
+        "minimum": 1,
+        "description": "Maximum number of snapshots kept per file (oldest are dropped first)."
+      },
+      "stormParity.localHistory.maxFileSizeKB": {
+        "type": "number",
+        "default": 1024,
+        "minimum": 1,
+        "description": "Files larger than this (in KB of text) are not snapshotted."
+      },
+      "stormParity.localHistory.exclude": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": ["**/node_modules/**", "**/.git/**"],
+        "description": "Glob patterns of files that never get local history snapshots."
+      }
+    }
+  }
+}

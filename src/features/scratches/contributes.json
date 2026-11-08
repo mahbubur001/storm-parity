@@ -1,0 +1,41 @@
+{
+  "commands": [
+    { "command": "stormParity.scratches.new", "title": "New Scratch File...", "category": "Storm", "icon": "$(add)" },
+    { "command": "stormParity.scratches.newFromSelection", "title": "New Scratch File from Selection", "category": "Storm" },
+    { "command": "stormParity.scratches.refresh", "title": "Refresh Scratches", "category": "Storm", "icon": "$(refresh)" },
+    { "command": "stormParity.scratches.rename", "title": "Rename Scratch File...", "category": "Storm" },
+    { "command": "stormParity.scratches.delete", "title": "Delete Scratch File", "category": "Storm", "icon": "$(trash)" },
+    { "command": "stormParity.scratches.reveal", "title": "Reveal Scratch in File Manager", "category": "Storm" }
+  ],
+  "keybindings": [
+    { "command": "stormParity.scratches.new", "key": "ctrl+shift+n", "mac": "cmd+shift+n" }
+  ],
+  "views": {
+    "stormParity": [
+      { "id": "stormParity.scratches", "name": "Scratches", "icon": "$(notebook)" }
+    ]
+  },
+  "viewsWelcome": [
+    { "view": "stormParity.scratches", "contents": "No scratch files yet.\n[New Scratch File](command:stormParity.scratches.new)" }
+  ],
+  "menus": {
+    "view/title": [
+      { "command": "stormParity.scratches.new", "when": "view == stormParity.scratches", "group": "navigation@1" },
+      { "command": "stormParity.scratches.refresh", "when": "view == stormParity.scratches", "group": "navigation@2" },
+      { "command": "stormParity.scratches.reveal", "when": "view == stormParity.scratches", "group": "more@1" }
+    ],
+    "view/item/context": [
+      { "command": "stormParity.scratches.delete", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "inline" },
+      { "command": "stormParity.scratches.rename", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "1_edit@1" },
+      { "command": "stormParity.scratches.delete", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "1_edit@2" },
+      { "command": "stormParity.scratches.reveal", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "2_reveal@1" }
+    ],
+    "editor/context": [
+      { "command": "stormParity.scratches.newFromSelection", "when": "editorHasSelection", "group": "9_cutcopypaste@9" }
+    ]
+  },
+  "configuration": {
+    "title": "Scratch Files",
+    "properties": {}
+  }
+}

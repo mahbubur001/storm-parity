@@ -1,0 +1,13 @@
+{
+  "commands": [
+    { "command": "stormParity.searchEverywhere.open", "title": "Search Everywhere", "category": "Storm", "icon": "$(search)" }
+  ],
+  "keybindings": [
+    {
+      "command": "stormParity.searchEverywhere.open",
+      "mac": "cmd+shift+a",
+      "key": "ctrl+shift+a",
+      "when": "!inQuickOpen"
+    }
+  ]
+}

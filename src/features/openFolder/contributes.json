@@ -1,0 +1,27 @@
+{
+  "commands": [
+    { "command": "stormParity.openFolder.openFolder", "title": "Open Folder or Workspace (Ask Where)", "category": "Storm", "icon": "$(folder-opened)" },
+    { "command": "stormParity.openFolder.openRecent", "title": "Open Recent Project (Ask Where)", "category": "Storm", "icon": "$(history)" }
+  ],
+  "keybindings": [
+    { "command": "stormParity.openFolder.openFolder", "mac": "cmd+o", "key": "ctrl+k ctrl+o" },
+    { "command": "stormParity.openFolder.openRecent", "mac": "ctrl+r", "key": "ctrl+r" }
+  ],
+  "configuration": {
+    "title": "Open Folder",
+    "properties": {
+      "stormParity.openFolder.defaultAction": {
+        "type": "string",
+        "enum": ["ask", "thisWindow", "newWindow"],
+        "enumDescriptions": [
+          "Ask every time (This Window / New Window / Attach).",
+          "Always open in the current window.",
+          "Always open in a new window."
+        ],
+        "default": "ask",
+        "order": 1,
+        "description": "What Storm Open Folder / Open Recent do with the chosen project. Also set by the \"Remember my choice\" toggle in the prompt."
+      }
+    }
+  }
+}

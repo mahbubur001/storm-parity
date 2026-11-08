@@ -1,0 +1,38 @@
+{
+  "commands": [
+    { "command": "stormParity.recentLocations.show", "title": "Recent Locations", "category": "Storm" },
+    { "command": "stormParity.recentLocations.toggleChangedOnly", "title": "Recent Locations: Toggle Changed Only", "category": "Storm" },
+    { "command": "stormParity.recentLocations.clear", "title": "Clear Recent Locations", "category": "Storm" }
+  ],
+  "keybindings": [
+    { "command": "stormParity.recentLocations.show", "key": "ctrl+shift+e", "mac": "cmd+shift+e" },
+    {
+      "command": "stormParity.recentLocations.toggleChangedOnly",
+      "key": "ctrl+shift+e",
+      "mac": "cmd+shift+e",
+      "when": "inQuickOpen && stormParity.recentLocations.pickerOpen"
+    }
+  ],
+  "menus": {
+    "commandPalette": [{ "command": "stormParity.recentLocations.toggleChangedOnly", "when": "false" }]
+  },
+  "configuration": {
+    "title": "Recent Locations",
+    "properties": {
+      "stormParity.recentLocations.maxEntries": {
+        "type": "integer",
+        "default": 50,
+        "minimum": 5,
+        "maximum": 500,
+        "description": "Maximum number of recent locations kept per workspace."
+      },
+      "stormParity.recentLocations.mergeDistance": {
+        "type": "integer",
+        "default": 5,
+        "minimum": 0,
+        "maximum": 100,
+        "description": "A visit or edit within this many lines of an existing entry in the same file updates that entry instead of adding a new one."
+      }
+    }
+  }
+}

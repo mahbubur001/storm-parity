@@ -1,0 +1,13 @@
+{
+  "commands": [
+    { "command": "stormParity.compareClipboard.compare", "title": "Compare with Clipboard", "category": "Storm", "icon": "$(diff)" }
+  ],
+  "menus": {
+    "editor/context": [
+      { "command": "stormParity.compareClipboard.compare", "group": "9_cutcopypaste@20" }
+    ],
+    "commandPalette": [
+      { "command": "stormParity.compareClipboard.compare", "when": "editorIsOpen" }
+    ]
+  }
+}

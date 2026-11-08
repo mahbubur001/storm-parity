@@ -1,0 +1,57 @@
+{
+  "commands": [
+    { "command": "stormParity.todo.refresh", "title": "Rescan TODO Items", "category": "Storm", "icon": "$(refresh)" },
+    { "command": "stormParity.todo.currentFileOnly", "title": "TODO: Show Current File Only", "category": "Storm", "icon": "$(file)" },
+    { "command": "stormParity.todo.allFiles", "title": "TODO: Show All Files", "category": "Storm", "icon": "$(files)" },
+    { "command": "stormParity.todo.filterTags", "title": "TODO: Filter by Pattern...", "category": "Storm", "icon": "$(filter)" },
+    { "command": "stormParity.todo.clearFilters", "title": "TODO: Clear Filters", "category": "Storm", "icon": "$(clear-all)" }
+  ],
+  "views": {
+    "stormParity": [
+      { "id": "stormParity.todo", "name": "TODO", "icon": "$(checklist)" }
+    ]
+  },
+  "menus": {
+    "view/title": [
+      { "command": "stormParity.todo.currentFileOnly", "when": "view == stormParity.todo && !stormParity.todo.currentFileOnly", "group": "navigation@1" },
+      { "command": "stormParity.todo.allFiles", "when": "view == stormParity.todo && stormParity.todo.currentFileOnly", "group": "navigation@1" },
+      { "command": "stormParity.todo.filterTags", "when": "view == stormParity.todo", "group": "navigation@2" },
+      { "command": "stormParity.todo.refresh", "when": "view == stormParity.todo", "group": "navigation@3" },
+      { "command": "stormParity.todo.clearFilters", "when": "view == stormParity.todo && (stormParity.todo.currentFileOnly || stormParity.todo.tagFiltered)", "group": "more@1" }
+    ]
+  },
+  "configuration": {
+    "title": "TODO",
+    "properties": {
+      "stormParity.todo.patterns": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": ["TODO", "FIXME", "HACK", "XXX"],
+        "description": "Case-sensitive words recognised as TODO items when they appear after a comment opener (//, #, /*, *, <!--, --, ;)."
+      },
+      "stormParity.todo.regex": {
+        "type": "string",
+        "default": "",
+        "description": "Custom JavaScript regular expression applied per line, overriding `patterns`. Capture group 1 (if present) is used as the pattern name."
+      },
+      "stormParity.todo.exclude": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": ["**/node_modules/**", "**/vendor/**", "**/*.min.*"],
+        "description": "Glob patterns excluded from the TODO scan, in addition to files.exclude and search.exclude."
+      },
+      "stormParity.todo.maxFiles": {
+        "type": "integer",
+        "default": 5000,
+        "minimum": 1,
+        "description": "Maximum number of files scanned."
+      },
+      "stormParity.todo.maxFileSizeKB": {
+        "type": "integer",
+        "default": 512,
+        "minimum": 1,
+        "description": "Files larger than this (in KB) are skipped."
+      }
+    }
+  }
+}

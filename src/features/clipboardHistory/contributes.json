@@ -1,0 +1,36 @@
+{
+  "commands": [
+    { "command": "stormParity.clipboardHistory.copy", "title": "Copy (Record in History)", "category": "Storm" },
+    { "command": "stormParity.clipboardHistory.cut", "title": "Cut (Record in History)", "category": "Storm" },
+    { "command": "stormParity.clipboardHistory.pasteFromHistory", "title": "Paste from History...", "category": "Storm" },
+    { "command": "stormParity.clipboardHistory.clear", "title": "Clear Clipboard History", "category": "Storm" }
+  ],
+  "keybindings": [
+    { "command": "stormParity.clipboardHistory.copy", "key": "ctrl+c", "mac": "cmd+c", "when": "editorTextFocus" },
+    { "command": "stormParity.clipboardHistory.cut", "key": "ctrl+x", "mac": "cmd+x", "when": "editorTextFocus && !editorReadonly" },
+    { "command": "stormParity.clipboardHistory.pasteFromHistory", "key": "ctrl+shift+v", "mac": "cmd+shift+v", "when": "editorTextFocus && !editorReadonly" }
+  ],
+  "menus": {
+    "commandPalette": [
+      { "command": "stormParity.clipboardHistory.copy", "when": "editorIsOpen" },
+      { "command": "stormParity.clipboardHistory.cut", "when": "editorIsOpen && !editorReadonly" }
+    ]
+  },
+  "configuration": {
+    "title": "Clipboard History",
+    "properties": {
+      "stormParity.clipboardHistory.maxItems": {
+        "type": "integer",
+        "default": 30,
+        "minimum": 1,
+        "maximum": 500,
+        "description": "Number of entries kept in the clipboard history."
+      },
+      "stormParity.clipboardHistory.persist": {
+        "type": "boolean",
+        "default": true,
+        "description": "Keep the clipboard history across VS Code restarts (stored in extension global state)."
+      }
+    }
+  }
+}

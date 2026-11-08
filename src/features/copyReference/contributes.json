@@ -1,0 +1,24 @@
+{
+  "commands": [
+    { "command": "stormParity.copyReference.copyReference", "title": "Copy Reference", "category": "Storm" },
+    { "command": "stormParity.copyReference.copyReferenceAs", "title": "Copy Reference As...", "category": "Storm" }
+  ],
+  "keybindings": [
+    {
+      "command": "stormParity.copyReference.copyReference",
+      "mac": "cmd+alt+shift+c",
+      "key": "ctrl+alt+shift+c",
+      "when": "editorTextFocus"
+    }
+  ],
+  "menus": {
+    "editor/context": [
+      { "command": "stormParity.copyReference.copyReference", "group": "9_cutcopypaste@10" },
+      { "command": "stormParity.copyReference.copyReferenceAs", "group": "9_cutcopypaste@11" }
+    ],
+    "commandPalette": [
+      { "command": "stormParity.copyReference.copyReference", "when": "editorIsOpen" },
+      { "command": "stormParity.copyReference.copyReferenceAs", "when": "editorIsOpen" }
+    ]
+  }
+}

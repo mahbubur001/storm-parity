@@ -1,0 +1,17 @@
+{
+  "commands": [
+    { "command": "stormParity.surroundWith.surround", "title": "Surround With...", "category": "Storm" }
+  ],
+  "keybindings": [
+    { "command": "stormParity.surroundWith.surround", "key": "ctrl+alt+t", "mac": "cmd+alt+t", "when": "editorTextFocus && !editorReadonly" }
+  ],
+  "menus": {
+    "commandPalette": [
+      { "command": "stormParity.surroundWith.surround", "when": "editorIsOpen && !editorReadonly" }
+    ]
+  },
+  "configuration": {
+    "title": "Surround With",
+    "properties": {}
+  }
+}

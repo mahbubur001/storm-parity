@@ -1,0 +1,60 @@
+{
+  "commands": [
+    { "command": "stormParity.recentProjects.refresh", "title": "Refresh Recent Projects", "category": "Storm", "icon": "$(refresh)" },
+    { "command": "stormParity.recentProjects.newGroup", "title": "New Project Group", "category": "Storm", "icon": "$(new-folder)" },
+    { "command": "stormParity.recentProjects.open", "title": "Open Project", "category": "Storm" },
+    { "command": "stormParity.recentProjects.openInNewWindow", "title": "Open in New Window", "category": "Storm", "icon": "$(empty-window)" },
+    { "command": "stormParity.recentProjects.openInThisWindow", "title": "Open in This Window", "category": "Storm", "icon": "$(window)" },
+    { "command": "stormParity.recentProjects.rename", "title": "Rename Project...", "category": "Storm" },
+    { "command": "stormParity.recentProjects.moveToGroup", "title": "Move to Group...", "category": "Storm" },
+    { "command": "stormParity.recentProjects.remove", "title": "Remove from Recent Projects", "category": "Storm", "icon": "$(close)" },
+    { "command": "stormParity.recentProjects.revealInOS", "title": "Reveal in Finder", "category": "Storm" },
+    { "command": "stormParity.recentProjects.renameGroup", "title": "Rename Group...", "category": "Storm" },
+    { "command": "stormParity.recentProjects.deleteGroup", "title": "Delete Group", "category": "Storm", "icon": "$(trash)" }
+  ],
+  "views": {
+    "stormParity": [
+      { "id": "stormParity.recentProjects", "name": "Recent Projects", "icon": "$(history)", "contextualTitle": "Storm" }
+    ]
+  },
+  "viewsWelcome": [
+    {
+      "view": "stormParity.recentProjects",
+      "contents": "No recent projects yet.\n[Open Folder](command:stormParity.openFolder.openFolder)",
+      "when": "config.stormParity.openFolder.enabled"
+    },
+    {
+      "view": "stormParity.recentProjects",
+      "contents": "No recent projects yet.\n[Open Folder](command:workbench.action.files.openFolder)",
+      "when": "!config.stormParity.openFolder.enabled"
+    }
+  ],
+  "menus": {
+    "view/title": [
+      { "command": "stormParity.recentProjects.newGroup", "when": "view == stormParity.recentProjects", "group": "navigation@1" },
+      { "command": "stormParity.recentProjects.refresh", "when": "view == stormParity.recentProjects", "group": "navigation@2" }
+    ],
+    "view/item/context": [
+      { "command": "stormParity.recentProjects.openInNewWindow", "when": "view == stormParity.recentProjects && viewItem == project", "group": "inline@1" },
+      { "command": "stormParity.recentProjects.openInThisWindow", "when": "view == stormParity.recentProjects && viewItem == project", "group": "1_open@1" },
+      { "command": "stormParity.recentProjects.openInNewWindow", "when": "view == stormParity.recentProjects && viewItem == project", "group": "1_open@2" },
+      { "command": "stormParity.recentProjects.revealInOS", "when": "view == stormParity.recentProjects && viewItem =~ /^project/", "group": "2_reveal@1" },
+      { "command": "stormParity.recentProjects.rename", "when": "view == stormParity.recentProjects && viewItem =~ /^project/", "group": "3_edit@1" },
+      { "command": "stormParity.recentProjects.moveToGroup", "when": "view == stormParity.recentProjects && viewItem =~ /^project/", "group": "3_edit@2" },
+      { "command": "stormParity.recentProjects.remove", "when": "view == stormParity.recentProjects && viewItem =~ /^project/", "group": "4_remove@1" },
+      { "command": "stormParity.recentProjects.renameGroup", "when": "view == stormParity.recentProjects && viewItem == group", "group": "1_edit@1" },
+      { "command": "stormParity.recentProjects.deleteGroup", "when": "view == stormParity.recentProjects && viewItem == group", "group": "1_edit@2" }
+    ],
+    "commandPalette": [
+      { "command": "stormParity.recentProjects.open", "when": "false" },
+      { "command": "stormParity.recentProjects.openInNewWindow", "when": "false" },
+      { "command": "stormParity.recentProjects.openInThisWindow", "when": "false" },
+      { "command": "stormParity.recentProjects.rename", "when": "false" },
+      { "command": "stormParity.recentProjects.moveToGroup", "when": "false" },
+      { "command": "stormParity.recentProjects.remove", "when": "false" },
+      { "command": "stormParity.recentProjects.revealInOS", "when": "false" },
+      { "command": "stormParity.recentProjects.renameGroup", "when": "false" },
+      { "command": "stormParity.recentProjects.deleteGroup", "when": "false" }
+    ]
+  }
+}

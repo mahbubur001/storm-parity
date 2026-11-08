@@ -6,7 +6,7 @@ Guidance for Claude Code in this repository.
 
 `storm-parity`: a personal VS Code extension that adds PhpStorm workflow features VS Code lacks
 (open-folder prompt, recent projects, bookmarks with mnemonics, clipboard history, scratch files,
-changelists, ...). **Roadmap and resume point: `PLAN.md`.** Installed locally as a `.vsix`; never published.
+changelists, ...). **Roadmap and resume point: `PLAN.md`.** Installed locally as a `.vsix` and published to the VS Code Marketplace under publisher `itemcoder`.
 
 ## Stack
 
@@ -15,7 +15,7 @@ changelists, ...). **Roadmap and resume point: `PLAN.md`.** Installed locally as
 - `@vscode/vsce` packages the `.vsix`; `@vscode/test-electron` for integration tests.
 - Use Context7 for VS Code API docs (`/microsoft/vscode-docs` or similar) before using an unfamiliar API.
 
-## Commands (after Phase 0 scaffold)
+## Commands
 
 ```bash
 bun install
@@ -24,11 +24,14 @@ bun run build
 bun run package          # → storm-parity-<version>.vsix
 bun run install:local    # code --install-extension <vsix> --force
 bun run test
+bun run publish          # vsce publish (needs `bunx vsce login itemcoder` once)
 ```
 
 ## Layout & conventions
 
-- `src/extension.ts`: activates the feature registry only.
+- `src/extension.ts`: activates the feature registry only (`src/features/index.ts`).
+- Manifest: each feature declares its contributions in `src/features/<feature>/contributes.json`; `bun run sync` (part of build) regenerates `package.json` `contributes` from those plus `src/contributes.base.json`. Never hand-edit `contributes` in package.json.
+- All keybindings are auto-gated by `stormParity.keymap.enabled`.
 - `src/features/<feature>/index.ts`: exports `activate(ctx: vscode.ExtensionContext)`; everything the feature registers goes into `ctx.subscriptions`.
 - Every feature has a `stormParity.<feature>.enabled` setting (default true) checked at activation.
 - Command IDs: `stormParity.<feature>.<action>`; titles prefixed with category `Storm`.

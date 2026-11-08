@@ -1,7 +1,11 @@
 {
   "viewsContainers": {
     "activitybar": [
-      { "id": "stormParity", "title": "Storm", "icon": "media/storm.svg" }
+      {
+        "id": "stormParity",
+        "title": "Storm",
+        "icon": "media/storm.svg"
+      }
     ]
   },
   "configuration": [
@@ -15,6 +19,70 @@
           "description": "Enable the PhpStorm-style keybindings contributed by Storm Parity. Commands stay available in the Command Palette when off."
         }
       }
+    }
+  ],
+  "walkthroughs": [
+    {
+      "id": "stormParity.welcome",
+      "title": "Get Started with Storm Parity",
+      "description": "PhpStorm workflow features for VS Code.",
+      "steps": [
+        {
+          "id": "projects",
+          "title": "Open projects",
+          "description": "Open a folder with the where-to-open prompt.\n[Open Folder](command:stormParity.openFolder.openFolder)",
+          "media": {
+            "markdown": "media/walkthrough/projects.md"
+          },
+          "completionEvents": [
+            "onCommand:stormParity.openFolder.openFolder"
+          ]
+        },
+        {
+          "id": "navigation",
+          "title": "Bookmarks and navigation",
+          "description": "Mnemonic bookmarks, recent locations and Search Everywhere.\n[Search Everywhere](command:stormParity.searchEverywhere.open)",
+          "media": {
+            "markdown": "media/walkthrough/navigation.md"
+          },
+          "completionEvents": [
+            "onCommand:stormParity.searchEverywhere.open"
+          ]
+        },
+        {
+          "id": "editing",
+          "title": "Editing helpers",
+          "description": "Clipboard history, Surround With, case tools.\n[Paste from History](command:stormParity.clipboardHistory.pasteFromHistory)",
+          "media": {
+            "markdown": "media/walkthrough/editing.md"
+          },
+          "completionEvents": [
+            "onCommand:stormParity.clipboardHistory.pasteFromHistory"
+          ]
+        },
+        {
+          "id": "tools",
+          "title": "Scratches, changelists, shelf",
+          "description": "Tools that live outside your project files.\n[New Scratch File](command:stormParity.scratches.new)",
+          "media": {
+            "markdown": "media/walkthrough/tools.md"
+          },
+          "completionEvents": [
+            "onCommand:stormParity.scratches.new"
+          ]
+        },
+        {
+          "id": "keymap",
+          "title": "Keymap",
+          "description": "Review or disable the PhpStorm shortcuts.\n[Open Keymap Setting](command:workbench.action.openSettings?%5B%22stormParity.keymap.enabled%22%5D)",
+          "media": {
+            "markdown": "media/walkthrough/keymap.md"
+          },
+          "completionEvents": [
+            "onSettingChanged:stormParity.keymap.enabled"
+          ]
+        }
+      ]
     }
   ]
 }
