@@ -20,6 +20,8 @@ suite('shelf: temp repo round trip', () => {
     git(repo, 'config', 'user.email', 'test@example.com');
     git(repo, 'config', 'user.name', 'Test');
     git(repo, 'config', 'commit.gpgsign', 'false');
+    // Windows runners default to core.autocrlf=true, which would rewrite line endings on checkout.
+    git(repo, 'config', 'core.autocrlf', 'false');
     await fs.writeFile(path.join(repo, 'a.txt'), 'one\n');
     await fs.writeFile(path.join(repo, 'gone.txt'), 'bye\n');
     await fs.writeFile(path.join(repo, 'other.txt'), 'keep\n');
@@ -32,8 +34,14 @@ suite('shelf: temp repo round trip', () => {
   });
 
   teardown(() => {
-    rmSync(repo, { recursive: true, force: true });
-    rmSync(storage, { recursive: true, force: true });
+    // Windows can briefly hold locks on files git just touched; retry instead of failing the suite.
+    for (const dir of [repo, storage]) {
+      try {
+        rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+      } catch {
+        // Leftover temp dirs are harmless.
+      }
+    }
   });
 
   test('shelves only the selected files, reverts them, and unshelves them back', async () => {
