@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.3
 
 - **PHP include navigation**: Cmd+click on a `require` / `include` path opens the file, like PhpStorm. Handles plain relative paths, `__DIR__` / `dirname(__FILE__)`, `define()` constants (e.g. `RTCL_PRO_PATH . 'vendor/autoload.php'`) and WordPress `ABSPATH`.
 

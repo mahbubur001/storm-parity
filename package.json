@@ -2,7 +2,7 @@
   "name": "storm-parity",
   "displayName": "Storm Parity",
   "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent locations, Search Everywhere, clipboard history, surround with, PHP postfix completion, scratch files, external libraries (include paths), changelists, local history, run widget, Composer view and more.",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "publisher": "itemcoder",
   "license": "MIT",
   "repository": {
