@@ -22,7 +22,7 @@ Installed locally as a `.vsix` file; nothing is published to the marketplace.
 
 ## Phases
 
-### Phase 0: scaffold
+### Phase 0: scaffold (done 2026-11-08)
 - `bun`-based TypeScript extension (yo code layout), esbuild bundle, `@vscode/vsce` packaging.
 - Feature registry: each feature exports `activate(ctx)`, gated by its setting.
 - Scripts: `build`, `watch`, `package` (→ `.vsix`), `install:local` (`code --install-extension`).
