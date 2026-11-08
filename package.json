@@ -11,45 +11,55 @@
     "url": "local"
   },
   "engines": {
-    "vscode": "^1.145.0"
+    "vscode": "^1.95.0"
   },
-  "categories": ["Other"],
+  "categories": [
+    "Other"
+  ],
   "main": "./dist/extension.js",
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "contributes": {
-    "commands": [
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "stormParity",
+          "title": "Storm",
+          "icon": "media/storm.svg"
+        }
+      ]
+    },
+    "configuration": [
       {
-        "command": "stormParity.hello.sayHello",
-        "title": "Say Hello",
-        "category": "Storm"
-      }
-    ],
-    "configuration": {
-      "title": "Storm Parity",
-      "properties": {
-        "stormParity.hello.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable the Hello feature (scaffold smoke test)."
+        "title": "General",
+        "order": 1,
+        "properties": {
+          "stormParity.keymap.enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable the PhpStorm-style keybindings contributed by Storm Parity. Commands stay available in the Command Palette when off."
+          }
         }
       }
-    }
+    ]
   },
   "scripts": {
-    "build": "bun run typecheck && node esbuild.mjs --production",
-    "build:dev": "node esbuild.mjs",
+    "build": "bun run sync && bun run typecheck && node esbuild.mjs --production",
+    "build:dev": "bun run sync && node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
     "typecheck": "tsc --noEmit",
     "package": "bun run build && vsce package --no-dependencies --allow-missing-repository --skip-license",
     "install:local": "code --install-extension storm-parity-$(node -p \"require('./package.json').version\").vsix --force",
     "pretest": "bun run typecheck && node esbuild.mjs --tests",
     "test": "vscode-test",
-    "vscode:prepublish": "node esbuild.mjs --production"
+    "vscode:prepublish": "node esbuild.mjs --production",
+    "sync": "node scripts/sync-manifest.mjs"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.6.6",
-    "@types/vscode": "1.145.0",
+    "@types/vscode": "1.95.0",
     "@vscode/test-cli": "^0.0.15",
     "@vscode/test-electron": "^3.1.0",
     "@vscode/vsce": "^4.1.0",

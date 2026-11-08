@@ -1,0 +1,20 @@
+{
+  "viewsContainers": {
+    "activitybar": [
+      { "id": "stormParity", "title": "Storm", "icon": "media/storm.svg" }
+    ]
+  },
+  "configuration": [
+    {
+      "title": "General",
+      "order": 1,
+      "properties": {
+        "stormParity.keymap.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable the PhpStorm-style keybindings contributed by Storm Parity. Commands stay available in the Command Palette when off."
+        }
+      }
+    }
+  ]
+}
