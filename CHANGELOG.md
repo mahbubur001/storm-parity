@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.2
 
 - **Select In** (Opt+F1): *Warp* entry on macOS when Warp is installed; opens the file's folder in the Warp app.
 
