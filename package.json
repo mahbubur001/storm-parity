@@ -1,8 +1,8 @@
 {
   "name": "storm-parity",
   "displayName": "Storm Parity",
-  "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent projects, mnemonic bookmarks, recent locations, clipboard history, surround with, scratch files, changelists, shelf, local history and more.",
-  "version": "0.1.0",
+  "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent projects, mnemonic bookmarks, recent locations, clipboard history, surround with, scratch files, external libraries (include paths), changelists, shelf, local history and more.",
+  "version": "0.2.0",
   "publisher": "itemcoder",
   "license": "MIT",
   "repository": {
@@ -61,7 +61,10 @@
     "scratch",
     "recent projects",
     "shelf",
-    "local history"
+    "local history",
+    "include path",
+    "external libraries",
+    "intelephense"
   ],
   "bugs": {
     "url": "https://github.com/mahbubur001/storm-parity/issues"
@@ -235,6 +238,46 @@
       {
         "command": "stormParity.copyReference.copyReferenceAs",
         "title": "Copy Reference As...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.externalLibraries.add",
+        "title": "Add External Library...",
+        "category": "Storm",
+        "icon": "$(add)"
+      },
+      {
+        "command": "stormParity.externalLibraries.importPhpStorm",
+        "title": "Import Include Paths from PhpStorm",
+        "category": "Storm",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "stormParity.externalLibraries.remove",
+        "title": "Remove External Library",
+        "category": "Storm",
+        "icon": "$(close)"
+      },
+      {
+        "command": "stormParity.externalLibraries.refresh",
+        "title": "Refresh External Libraries",
+        "category": "Storm",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "stormParity.externalLibraries.configure",
+        "title": "Configure External Libraries",
+        "category": "Storm",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "stormParity.externalLibraries.revealInOS",
+        "title": "Reveal in File Manager",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.externalLibraries.copyPath",
+        "title": "Copy Path",
         "category": "Storm"
       },
       {
@@ -809,6 +852,18 @@
           "when": "editorIsOpen"
         },
         {
+          "command": "stormParity.externalLibraries.revealInOS",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.externalLibraries.copyPath",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.externalLibraries.refresh",
+          "when": "false"
+        },
+        {
           "command": "stormParity.localHistory.showHistory",
           "when": "resourceScheme == file"
         },
@@ -917,6 +972,26 @@
           "group": "navigation@2"
         },
         {
+          "command": "stormParity.externalLibraries.add",
+          "when": "view == stormParity.externalLibraries",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stormParity.externalLibraries.refresh",
+          "when": "view == stormParity.externalLibraries",
+          "group": "navigation@2"
+        },
+        {
+          "command": "stormParity.externalLibraries.importPhpStorm",
+          "when": "view == stormParity.externalLibraries && stormParity.externalLibraries.hasPhpStormProject",
+          "group": "more@1"
+        },
+        {
+          "command": "stormParity.externalLibraries.configure",
+          "when": "view == stormParity.externalLibraries",
+          "group": "more@2"
+        },
+        {
           "command": "stormParity.recentProjects.newGroup",
           "when": "view == stormParity.recentProjects",
           "group": "navigation@1"
@@ -997,6 +1072,26 @@
           "command": "stormParity.bookmarks.delete",
           "when": "view == stormParity.bookmarks && viewItem =~ /^stormParity\\.bookmark/",
           "group": "1_edit@2"
+        },
+        {
+          "command": "stormParity.externalLibraries.remove",
+          "when": "view == stormParity.externalLibraries && viewItem == library",
+          "group": "inline"
+        },
+        {
+          "command": "stormParity.externalLibraries.revealInOS",
+          "when": "view == stormParity.externalLibraries",
+          "group": "1_reveal@1"
+        },
+        {
+          "command": "stormParity.externalLibraries.copyPath",
+          "when": "view == stormParity.externalLibraries",
+          "group": "1_reveal@2"
+        },
+        {
+          "command": "stormParity.externalLibraries.remove",
+          "when": "view == stormParity.externalLibraries && viewItem == library",
+          "group": "2_remove@1"
         },
         {
           "command": "stormParity.recentProjects.openInNewWindow",
@@ -1280,9 +1375,33 @@
           "name": "TODO",
           "icon": "$(checklist)"
         }
+      ],
+      "explorer": [
+        {
+          "id": "stormParity.externalLibraries",
+          "name": "External Libraries",
+          "icon": "media/externalLibraries-view.svg",
+          "contextualTitle": "External Libraries",
+          "when": "config.stormParity.externalLibraries.enabled && !stormParity.externalLibraries.legacyInstalled"
+        }
       ]
     },
     "viewsWelcome": [
+      {
+        "view": "stormParity.externalLibraries",
+        "contents": "Folders outside the project (WordPress core, shared plugins, SDKs) indexed for completion and navigation, like PhpStorm's External Libraries.\n[Add External Library](command:stormParity.externalLibraries.add)",
+        "when": "workspaceFolderCount > 0 && !stormParity.externalLibraries.hasPhpStormProject"
+      },
+      {
+        "view": "stormParity.externalLibraries",
+        "contents": "Folders outside the project (WordPress core, shared plugins, SDKs) indexed for completion and navigation, like PhpStorm's External Libraries.\n[Add External Library](command:stormParity.externalLibraries.add)\nThis project has PhpStorm settings.\n[Import from PhpStorm](command:stormParity.externalLibraries.importPhpStorm)",
+        "when": "workspaceFolderCount > 0 && stormParity.externalLibraries.hasPhpStormProject"
+      },
+      {
+        "view": "stormParity.externalLibraries",
+        "contents": "Open a folder to add external libraries.\n[Open Folder](command:workbench.action.files.openFolder)",
+        "when": "workspaceFolderCount == 0"
+      },
       {
         "view": "stormParity.recentProjects",
         "contents": "No recent projects yet.\n[Open Folder](command:stormParity.openFolder.openFolder)",
@@ -1413,8 +1532,35 @@
         }
       },
       {
-        "title": "Local History",
+        "title": "External Libraries",
         "order": 15,
+        "properties": {
+          "stormParity.externalLibraries.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the External Libraries feature (reload required)."
+          },
+          "stormParity.externalLibraries.includePaths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "scope": "window",
+            "markdownDescription": "Folders outside the project shown under **External Libraries** and indexed for code intelligence (PhpStorm: *Settings > PHP > Include Path*). Absolute paths, `~/...`, or paths relative to the first workspace folder. While unset, `iextlibraries.includePaths` from the former iExternal Libraries extension is used."
+          },
+          "stormParity.externalLibraries.intelephenseSync": {
+            "type": "boolean",
+            "default": true,
+            "scope": "window",
+            "markdownDescription": "Keep `#intelephense.environment.includePaths#` in sync with the external libraries so Intelephense indexes them. Entries you add to Intelephense yourself are kept. While unset, `iextlibraries.intelephense.sync` is used."
+          }
+        }
+      },
+      {
+        "title": "Local History",
+        "order": 16,
         "properties": {
           "stormParity.localHistory.enabled": {
             "type": "boolean",
@@ -1455,7 +1601,7 @@
       },
       {
         "title": "Open Folder",
-        "order": 16,
+        "order": 17,
         "properties": {
           "stormParity.openFolder.enabled": {
             "type": "boolean",
@@ -1483,7 +1629,7 @@
       },
       {
         "title": "Recent Locations",
-        "order": 17,
+        "order": 18,
         "properties": {
           "stormParity.recentLocations.enabled": {
             "type": "boolean",
@@ -1509,7 +1655,7 @@
       },
       {
         "title": "recentProjects",
-        "order": 18,
+        "order": 19,
         "properties": {
           "stormParity.recentProjects.enabled": {
             "type": "boolean",
@@ -1521,7 +1667,7 @@
       },
       {
         "title": "Scratch Files",
-        "order": 19,
+        "order": 20,
         "properties": {
           "stormParity.scratches.enabled": {
             "type": "boolean",
@@ -1533,7 +1679,7 @@
       },
       {
         "title": "searchEverywhere",
-        "order": 20,
+        "order": 21,
         "properties": {
           "stormParity.searchEverywhere.enabled": {
             "type": "boolean",
@@ -1545,7 +1691,7 @@
       },
       {
         "title": "Shelf",
-        "order": 21,
+        "order": 22,
         "properties": {
           "stormParity.shelf.enabled": {
             "type": "boolean",
@@ -1562,7 +1708,7 @@
       },
       {
         "title": "Surround With",
-        "order": 22,
+        "order": 23,
         "properties": {
           "stormParity.surroundWith.enabled": {
             "type": "boolean",
@@ -1574,7 +1720,7 @@
       },
       {
         "title": "TODO",
-        "order": 23,
+        "order": 24,
         "properties": {
           "stormParity.todo.enabled": {
             "type": "boolean",
@@ -1628,7 +1774,7 @@
       },
       {
         "title": "toggleCase",
-        "order": 24,
+        "order": 25,
         "properties": {
           "stormParity.toggleCase.enabled": {
             "type": "boolean",

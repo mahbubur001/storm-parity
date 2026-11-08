@@ -11,6 +11,11 @@ Language support, the HTTP client and database tools are left to dedicated exten
 - **Open Recent (Ask Where)**: recent folders and workspaces with the same prompt.
 - **Recent Projects view**: groups, aliases, open in new window, reveal in Finder, remove.
 
+### External Libraries
+- **PhpStorm Include Paths**: add folders outside the project (WordPress core, shared plugins, SDKs, stubs), browse them in an *External Libraries* view in the Explorer, and have Intelephense index them for completion and Go to Definition. Nothing is written into the project tree.
+- **Import from PhpStorm**: reads include paths from `.idea/php.xml`.
+- Formerly the standalone *iExternal Libraries* extension. Existing `iextlibraries.*` settings keep working until you change the list here.
+
 ### Navigation
 - **Bookmarks with mnemonics**: anonymous or 0-9 / A-Z bookmarks, gutter icons, a Bookmarks view, and positions that follow your edits.
 - **Recent Locations**: recently viewed or edited spots with a code preview. Press the shortcut again to switch to *changed only*.

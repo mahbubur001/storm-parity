@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0
+
+- External Libraries (PhpStorm Include Paths): the iExternal Libraries extension is now a Storm Parity feature. `iextlibraries.includePaths` and `iextlibraries.intelephense.sync` are read as fallbacks, and Intelephense entries added by the old extension are cleaned up correctly. While the old extension is installed, this feature stays off and offers to uninstall it.
+
 ## 0.1.0
 
 First release.

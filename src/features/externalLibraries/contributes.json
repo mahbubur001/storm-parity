@@ -1,0 +1,76 @@
+{
+  "commands": [
+    { "command": "stormParity.externalLibraries.add", "title": "Add External Library...", "category": "Storm", "icon": "$(add)" },
+    { "command": "stormParity.externalLibraries.importPhpStorm", "title": "Import Include Paths from PhpStorm", "category": "Storm", "icon": "$(cloud-download)" },
+    { "command": "stormParity.externalLibraries.remove", "title": "Remove External Library", "category": "Storm", "icon": "$(close)" },
+    { "command": "stormParity.externalLibraries.refresh", "title": "Refresh External Libraries", "category": "Storm", "icon": "$(refresh)" },
+    { "command": "stormParity.externalLibraries.configure", "title": "Configure External Libraries", "category": "Storm", "icon": "$(gear)" },
+    { "command": "stormParity.externalLibraries.revealInOS", "title": "Reveal in File Manager", "category": "Storm" },
+    { "command": "stormParity.externalLibraries.copyPath", "title": "Copy Path", "category": "Storm" }
+  ],
+  "views": {
+    "explorer": [
+      {
+        "id": "stormParity.externalLibraries",
+        "name": "External Libraries",
+        "icon": "media/externalLibraries-view.svg",
+        "contextualTitle": "External Libraries",
+        "when": "config.stormParity.externalLibraries.enabled && !stormParity.externalLibraries.legacyInstalled"
+      }
+    ]
+  },
+  "viewsWelcome": [
+    {
+      "view": "stormParity.externalLibraries",
+      "contents": "Folders outside the project (WordPress core, shared plugins, SDKs) indexed for completion and navigation, like PhpStorm's External Libraries.\n[Add External Library](command:stormParity.externalLibraries.add)",
+      "when": "workspaceFolderCount > 0 && !stormParity.externalLibraries.hasPhpStormProject"
+    },
+    {
+      "view": "stormParity.externalLibraries",
+      "contents": "Folders outside the project (WordPress core, shared plugins, SDKs) indexed for completion and navigation, like PhpStorm's External Libraries.\n[Add External Library](command:stormParity.externalLibraries.add)\nThis project has PhpStorm settings.\n[Import from PhpStorm](command:stormParity.externalLibraries.importPhpStorm)",
+      "when": "workspaceFolderCount > 0 && stormParity.externalLibraries.hasPhpStormProject"
+    },
+    {
+      "view": "stormParity.externalLibraries",
+      "contents": "Open a folder to add external libraries.\n[Open Folder](command:workbench.action.files.openFolder)",
+      "when": "workspaceFolderCount == 0"
+    }
+  ],
+  "menus": {
+    "view/title": [
+      { "command": "stormParity.externalLibraries.add", "when": "view == stormParity.externalLibraries", "group": "navigation@1" },
+      { "command": "stormParity.externalLibraries.refresh", "when": "view == stormParity.externalLibraries", "group": "navigation@2" },
+      { "command": "stormParity.externalLibraries.importPhpStorm", "when": "view == stormParity.externalLibraries && stormParity.externalLibraries.hasPhpStormProject", "group": "more@1" },
+      { "command": "stormParity.externalLibraries.configure", "when": "view == stormParity.externalLibraries", "group": "more@2" }
+    ],
+    "view/item/context": [
+      { "command": "stormParity.externalLibraries.remove", "when": "view == stormParity.externalLibraries && viewItem == library", "group": "inline" },
+      { "command": "stormParity.externalLibraries.revealInOS", "when": "view == stormParity.externalLibraries", "group": "1_reveal@1" },
+      { "command": "stormParity.externalLibraries.copyPath", "when": "view == stormParity.externalLibraries", "group": "1_reveal@2" },
+      { "command": "stormParity.externalLibraries.remove", "when": "view == stormParity.externalLibraries && viewItem == library", "group": "2_remove@1" }
+    ],
+    "commandPalette": [
+      { "command": "stormParity.externalLibraries.revealInOS", "when": "false" },
+      { "command": "stormParity.externalLibraries.copyPath", "when": "false" },
+      { "command": "stormParity.externalLibraries.refresh", "when": "false" }
+    ]
+  },
+  "configuration": {
+    "title": "External Libraries",
+    "properties": {
+      "stormParity.externalLibraries.includePaths": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": [],
+        "scope": "window",
+        "markdownDescription": "Folders outside the project shown under **External Libraries** and indexed for code intelligence (PhpStorm: *Settings > PHP > Include Path*). Absolute paths, `~/...`, or paths relative to the first workspace folder. While unset, `iextlibraries.includePaths` from the former iExternal Libraries extension is used."
+      },
+      "stormParity.externalLibraries.intelephenseSync": {
+        "type": "boolean",
+        "default": true,
+        "scope": "window",
+        "markdownDescription": "Keep `#intelephense.environment.includePaths#` in sync with the external libraries so Intelephense indexes them. Entries you add to Intelephense yourself are kept. While unset, `iextlibraries.intelephense.sync` is used."
+      }
+    }
+  }
+}

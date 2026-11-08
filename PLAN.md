@@ -54,6 +54,9 @@ Installed locally as a `.vsix` file; nothing is published to the marketplace.
 4. **TODO tool window**: TODO/FIXME scan with patterns + filters (only if existing extensions disappoint).
 5. **Local History++**: label/put-label + "show history for selection" on top of VS Code's timeline.
 
+### Phase 4b: External Libraries (done 2026-11-08)
+- Ported the standalone iExternal Libraries extension (`itemcoder.iextlibraries`) as `src/features/externalLibraries`, reading `iextlibraries.*` settings as a fallback.
+
 ### Phase 5: polish (done 2026-11-08)
 - Settings UI section, walkthrough, README with keymap table, conflict check against default VS Code bindings.
 - Tests: `@vscode/test-electron` integration tests per feature.
