@@ -1,6 +1,5 @@
 import * as os from 'os';
 import * as vscode from 'vscode';
-import { ProjectMetaStore, aliasOf, groupOf } from '../recentProjects/store';
 import { RecentEntry, WORKSPACE_EXT, displayName, kindOf, tildify } from './mru';
 import { initMruStore, isCurrentProject, listRecent, openTarget, recordCurrentProject, removeRecent } from './open';
 import { openWithPrompt } from './prompt';
@@ -8,11 +7,10 @@ import { openWithPrompt } from './prompt';
 export function activate(ctx: vscode.ExtensionContext): void {
   initMruStore(ctx);
   void recordCurrentProject();
-  const meta = new ProjectMetaStore(ctx.globalState);
 
   ctx.subscriptions.push(
     vscode.commands.registerCommand('stormParity.openFolder.openFolder', openFolder),
-    vscode.commands.registerCommand('stormParity.openFolder.openRecent', () => openRecent(meta)),
+    vscode.commands.registerCommand('stormParity.openFolder.openRecent', openRecent),
   );
 }
 
@@ -46,20 +44,18 @@ interface RecentItem extends vscode.QuickPickItem {
 const newWindowButton: vscode.QuickInputButton = { iconPath: new vscode.ThemeIcon('empty-window'), tooltip: 'Open in New Window' };
 const removeButton: vscode.QuickInputButton = { iconPath: new vscode.ThemeIcon('close'), tooltip: 'Remove from Recent' };
 
-function toItem(entry: RecentEntry, meta: ProjectMetaStore): RecentItem {
-  const m = meta.get();
+function toItem(entry: RecentEntry): RecentItem {
   const uri = vscode.Uri.parse(entry.uri);
   const where = uri.scheme === 'file' ? tildify(uri.fsPath, os.homedir()) : entry.uri;
-  const group = groupOf(m, entry.uri);
   return {
     entry,
-    label: `${kindOf(uri.path) === 'workspace' ? '$(folder-library)' : '$(folder)'} ${aliasOf(m, entry.uri) ?? entry.label ?? displayName(entry.uri)}`,
-    description: group ? `[${group}]  ${where}` : where,
+    label: `${kindOf(uri.path) === 'workspace' ? '$(folder-library)' : '$(folder)'} ${entry.label ?? displayName(entry.uri)}`,
+    description: where,
     buttons: [newWindowButton, removeButton],
   };
 }
 
-async function openRecent(meta: ProjectMetaStore): Promise<void> {
+async function openRecent(): Promise<void> {
   const qp = vscode.window.createQuickPick<RecentItem>();
   qp.title = 'Open Recent Project';
   qp.placeholder = 'Type to filter recent folders and workspaces';
@@ -68,7 +64,7 @@ async function openRecent(meta: ProjectMetaStore): Promise<void> {
   qp.show();
 
   const entries = (await listRecent()).filter((e) => !isCurrentProject(e.uri));
-  qp.items = entries.map((e) => toItem(e, meta));
+  qp.items = entries.map(toItem);
   qp.busy = false;
 
   qp.onDidTriggerItemButton(async ({ item, button }) => {

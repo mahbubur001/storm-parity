@@ -1,13 +1,4 @@
 {
-  "viewsContainers": {
-    "activitybar": [
-      {
-        "id": "stormParity",
-        "title": "Storm",
-        "icon": "media/storm.svg"
-      }
-    ]
-  },
   "configuration": [
     {
       "title": "General",
@@ -41,7 +32,7 @@
         {
           "id": "navigation",
           "title": "Navigation",
-          "description": "Recent locations, Search Everywhere and Copy Reference.\n[Search Everywhere](command:stormParity.searchEverywhere.open)",
+          "description": "Recent locations, Search Everywhere, Select In and Copy Reference.\n[Search Everywhere](command:stormParity.searchEverywhere.open)",
           "media": {
             "markdown": "media/walkthrough/navigation.md"
           },
@@ -52,7 +43,7 @@
         {
           "id": "editing",
           "title": "Editing helpers",
-          "description": "Clipboard history, Surround With, case tools.\n[Paste from History](command:stormParity.clipboardHistory.pasteFromHistory)",
+          "description": "Clipboard history, Surround With, case tools and PHP postfix completion.\n[Paste from History](command:stormParity.clipboardHistory.pasteFromHistory)",
           "media": {
             "markdown": "media/walkthrough/editing.md"
           },
@@ -62,13 +53,24 @@
         },
         {
           "id": "tools",
-          "title": "Scratches and changelists",
-          "description": "Tools that live outside your project files.\n[New Scratch File](command:stormParity.scratches.new)",
+          "title": "Scratches, External Libraries, changelists",
+          "description": "Global scratch files, include paths and changelists.\n[New Scratch File](command:stormParity.scratches.new)",
           "media": {
             "markdown": "media/walkthrough/tools.md"
           },
           "completionEvents": [
             "onCommand:stormParity.scratches.new"
+          ]
+        },
+        {
+          "id": "run",
+          "title": "Run, Composer and terminal",
+          "description": "Run widget in the status bar, Composer view and PhpStorm-style terminal tabs.\n[Select Run Configuration](command:stormParity.run.select)",
+          "media": {
+            "markdown": "media/walkthrough/run.md"
+          },
+          "completionEvents": [
+            "onCommand:stormParity.run.select"
           ]
         },
         {

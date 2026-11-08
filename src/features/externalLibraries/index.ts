@@ -25,18 +25,21 @@ async function addPaths(store: LibraryStore, paths: readonly string[]): Promise<
   else await vscode.commands.executeCommand(`${VIEW_ID}.focus`);
 }
 
-async function addLibrary(store: LibraryStore): Promise<void> {
+/** `mode` 'browse' goes straight to the folder dialog (the link in the Include Paths setting). */
+async function addLibrary(store: LibraryStore, mode?: 'browse'): Promise<void> {
   if (!vscode.workspace.workspaceFolders?.length) {
     void vscode.window.showErrorMessage('Open a folder first: external libraries belong to a workspace.');
     return;
   }
-  const choice = await vscode.window.showQuickPick(
-    [
-      { label: '$(folder-opened) Choose Folders...', description: 'pick one or more folders', pick: 'browse' as const },
-      { label: '$(edit) Enter a Path...', description: 'absolute, ~/..., or relative to the workspace', pick: 'path' as const },
-    ],
-    { title: 'Add External Library', placeHolder: 'Folders outside the project to index for completion and navigation' },
-  );
+  const choice = mode
+    ? { pick: mode }
+    : await vscode.window.showQuickPick(
+        [
+          { label: '$(folder-opened) Choose Folders...', description: 'pick one or more folders', pick: 'browse' as const },
+          { label: '$(edit) Enter a Path...', description: 'absolute, ~/..., or relative to the workspace', pick: 'path' as const },
+        ],
+        { title: 'Add External Library', placeHolder: 'Folders outside the project to index for completion and navigation' },
+      );
   if (!choice) return;
   if (choice.pick === 'browse') {
     const uris = await vscode.window.showOpenDialog({ canSelectFolders: true, canSelectFiles: false, canSelectMany: true, openLabel: 'Add to External Libraries' });
@@ -117,7 +120,7 @@ export function activate(ctx: vscode.ExtensionContext): { store: LibraryStore; t
     tree,
     view,
     vscode.workspace.onDidChangeWorkspaceFolders(() => void updateContext()),
-    vscode.commands.registerCommand(`${CMD}.add`, () => addLibrary(store)),
+    vscode.commands.registerCommand(`${CMD}.add`, (arg?: unknown) => addLibrary(store, arg === 'browse' ? 'browse' : undefined)),
     vscode.commands.registerCommand(`${CMD}.importPhpStorm`, () => importPhpStorm(store)),
     vscode.commands.registerCommand(`${CMD}.refresh`, () => tree.refresh()),
     vscode.commands.registerCommand(`${CMD}.configure`, () => vscode.commands.executeCommand('workbench.action.openWorkspaceSettings', SECTION)),

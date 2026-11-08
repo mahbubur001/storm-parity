@@ -26,6 +26,46 @@ suite('terminal: commands', () => {
     await vscode.extensions.getExtension('itemcoder.storm-parity')?.activate();
   });
 
+  test('the activity bar Terminal icon brings up a terminal', async function () {
+    this.timeout(10000);
+    vscode.window.terminals.forEach((t) => t.dispose());
+    await vscode.commands.executeCommand('stormParity.terminal.button.focus');
+    const end = Date.now() + 5000;
+    while (!vscode.window.activeTerminal && Date.now() < end) await new Promise((r) => setTimeout(r, 50));
+    assert.ok(vscode.window.activeTerminal, 'a terminal is shown');
+    vscode.window.terminals.forEach((t) => t.dispose());
+  });
+
+  test('the Terminal icon toggles between a terminal tab and code in a shared group', async function () {
+    this.timeout(20000);
+    const terminalCfg = () => vscode.workspace.getConfiguration('stormParity.terminal');
+    const editorCfg = () => vscode.workspace.getConfiguration('workbench.editor');
+    await terminalCfg().update('tabsBelow', true, vscode.ConfigurationTarget.Global);
+    const doc = await vscode.workspace.openTextDocument({ content: 'code', language: 'plaintext' });
+    await vscode.window.showTextDocument(doc, vscode.ViewColumn.One);
+    const term = vscode.window.createTerminal({ name: 'storm-icon', location: { viewColumn: vscode.ViewColumn.One } });
+    term.show();
+    const front = () => vscode.window.tabGroups.activeTabGroup.activeTab?.input;
+    const waitFor = async (check: () => boolean) => {
+      const end = Date.now() + 5000;
+      while (!check() && Date.now() < end) await new Promise((r) => setTimeout(r, 50));
+      return check();
+    };
+    try {
+      assert.ok(await waitFor(() => front() instanceof vscode.TabInputTerminal), 'terminal tab in front');
+      assert.strictEqual(vscode.window.tabGroups.all.length, 1, 'one shared group');
+      await vscode.commands.executeCommand('stormParity.terminal.button.focus');
+      assert.ok(await waitFor(() => front() instanceof vscode.TabInputText), 'click hides the terminal: code tab in front');
+      await vscode.commands.executeCommand('stormParity.terminal.button.focus');
+      assert.ok(await waitFor(() => front() instanceof vscode.TabInputTerminal), 'click again shows the terminal');
+    } finally {
+      term.dispose();
+      await terminalCfg().update('tabsBelow', undefined, vscode.ConfigurationTarget.Global);
+      await editorCfg().update('showTabs', undefined, vscode.ConfigurationTarget.Global);
+      await vscode.commands.executeCommand('workbench.action.closeAllEditors');
+    }
+  });
+
   test('toggleCompactTabs flips terminal.integrated.tabs.enabled', async () => {
     const config = () => vscode.workspace.getConfiguration('terminal.integrated');
     const before = config().get<boolean>('tabs.enabled', true);

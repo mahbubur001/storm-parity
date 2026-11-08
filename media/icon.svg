@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2240"/><stop offset="1" stop-color="#0c1022"/></linearGradient>
+   <linearGradient id="beam" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#2ee6d6"/></linearGradient>
+   <radialGradient id="glow" cx="0.5" cy="0.6" r="0.5"><stop offset="0" stop-color="#7c5cff" stop-opacity="0.5"/><stop offset="1" stop-color="#7c5cff" stop-opacity="0"/></radialGradient></defs>
+<rect width="512" height="512" rx="112" fill="url(#bg)"/><rect width="512" height="512" rx="112" fill="url(#glow)"/>
+   <rect x="3" y="3" width="506" height="506" rx="110" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="6"/>
+<path d="M286 84 L150 284 H252 L226 428 L362 228 H260 Z" fill="url(#beam)" stroke="url(#beam)" stroke-width="24" stroke-linejoin="round"/>
+   <path d="M286 84 L150 284 H252" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

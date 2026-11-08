@@ -32,7 +32,7 @@ Installed locally as a `.vsix` file; nothing is published to the marketplace.
 ### Phase 1: project/window management (done 2026-11-08)
 1. **Open Folder (Ask)**: folder picker → quick pick *This Window / New Window / Attach to workspace*. Bound to Cmd+O.
 2. **Open Recent (Ask)**: recent folders/workspaces (`_workbench.getRecentlyOpened`, fallback own MRU in `globalState`) with the same prompt. Bound to Ctrl+R.
-3. **Recent Projects tool window**: sidebar tree, groups (user-defined), rename alias, remove, open-in-new-window inline action.
+3. ~~**Recent Projects tool window**~~: built, then removed in favour of the Project Manager extension; the Storm sidebar went with it (Composer moved to its own Secondary Side Bar container).
 4. Setting `stormParity.openFolder.defaultAction` = `ask | thisWindow | newWindow` (+ "remember my choice" checkbox in the prompt).
 
 ### Phase 2: navigation (done 2026-11-08)

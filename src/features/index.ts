@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
 import * as openFolder from './openFolder';
-import * as recentProjects from './recentProjects';
 import * as recentLocations from './recentLocations';
 import * as searchEverywhere from './searchEverywhere';
 import * as copyReference from './copyReference';
@@ -27,7 +26,6 @@ interface Feature {
 // `id` maps to the `stormParity.<id>.enabled` setting and the src/features/<id> folder.
 const features: Feature[] = [
   { id: 'openFolder', activate: openFolder.activate },
-  { id: 'recentProjects', activate: recentProjects.activate },
   { id: 'recentLocations', activate: recentLocations.activate },
   { id: 'searchEverywhere', activate: searchEverywhere.activate },
   { id: 'copyReference', activate: copyReference.activate },

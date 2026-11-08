@@ -1,4 +1,4 @@
-// Shared opening + recent-list plumbing, used by openFolder and recentProjects.
+// Opening with the where-to-open prompt, plus the recent-list plumbing behind Open Recent.
 import * as fs from 'fs';
 import * as vscode from 'vscode';
 import { RecentEntry, kindOf, mergeEntries, removeEntry, sameUri, touchEntry } from './mru';
@@ -7,10 +7,6 @@ export type OpenMode = 'thisWindow' | 'newWindow' | 'attach';
 
 const MRU_KEY = 'stormParity.openFolder.mru';
 const MRU_MAX = 50;
-
-const changeEmitter = new vscode.EventEmitter<void>();
-/** Fires whenever the recent list changes through this extension. */
-export const onDidChangeRecent = changeEmitter.event;
 
 /** Own MRU kept in globalState. Used as fallback and to remember opens VS Code may not know yet. */
 export class MruStore {
@@ -23,12 +19,10 @@ export class MruStore {
   async touch(uri: vscode.Uri): Promise<void> {
     const entry: RecentEntry = { uri: uri.toString(), kind: kindOf(uri.path), lastOpened: Date.now() };
     await this.memento.update(MRU_KEY, touchEntry(this.list(), entry, MRU_MAX));
-    changeEmitter.fire();
   }
 
   async remove(uri: string): Promise<void> {
     await this.memento.update(MRU_KEY, removeEntry(this.list(), uri));
-    changeEmitter.fire();
   }
 }
 
@@ -126,8 +120,7 @@ export async function removeRecent(uri: string): Promise<void> {
   } catch {
     // not in VS Code's list, or command unavailable
   }
-  if (store) await store.remove(uri);
-  else changeEmitter.fire();
+  await store?.remove(uri);
 }
 
 /** Opens a folder or .code-workspace file in the given mode. */

@@ -11,14 +11,16 @@
     { "command": "stormParity.composer.openPackagist", "title": "Open on Packagist", "category": "Storm", "icon": "$(link-external)" },
     { "command": "stormParity.composer.openManifest", "title": "Open composer.json", "category": "Storm", "icon": "$(go-to-file)" }
   ],
-  "views": {
-    "stormParity": [
-      { "id": "stormParity.composer", "name": "Composer", "icon": "$(package)", "contextualTitle": "Composer" }
+  "viewsContainers": {
+    "secondarySidebar": [
+      { "id": "stormParityComposer", "title": "Composer", "icon": "media/composer.svg" }
     ]
   },
-  "viewsWelcome": [
-    { "view": "stormParity.composer", "contents": "No composer.json in the open folders.", "when": "!stormParity.composer.hasProject" }
-  ],
+  "views": {
+    "stormParityComposer": [
+      { "id": "stormParity.composer", "name": "Composer", "icon": "media/composer.svg", "contextualTitle": "Composer", "when": "config.stormParity.composer.enabled && stormParity.composer.hasProject" }
+    ]
+  },
   "menus": {
     "view/title": [
       { "command": "stormParity.composer.require", "when": "view == stormParity.composer", "group": "navigation@1" },

@@ -12,6 +12,7 @@
     "explorer": [
       {
         "id": "stormParity.externalLibraries",
+        "order": 10,
         "name": "External Libraries",
         "icon": "media/externalLibraries-view.svg",
         "contextualTitle": "External Libraries",
@@ -63,7 +64,7 @@
         "items": { "type": "string" },
         "default": [],
         "scope": "window",
-        "markdownDescription": "Folders outside the project shown under **External Libraries** and indexed for code intelligence (PhpStorm: *Settings > PHP > Include Path*). Absolute paths, `~/...`, or paths relative to the first workspace folder. While unset, `iextlibraries.includePaths` from the former iExternal Libraries extension is used."
+        "markdownDescription": "Folders outside the project shown under **External Libraries** and indexed for code intelligence (PhpStorm: *Settings > PHP > Include Path*). Absolute paths, `~/...`, or paths relative to the first workspace folder. While unset, `iextlibraries.includePaths` from the former iExternal Libraries extension is used.\n\n[Add Folder...](command:stormParity.externalLibraries.add?%5B%22browse%22%5D) to pick folders with the file browser."
       },
       "stormParity.externalLibraries.intelephenseSync": {
         "type": "boolean",

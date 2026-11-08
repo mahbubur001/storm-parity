@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.0
+
+- **Requires VS Code 1.106 or later** (right Secondary Side Bar contributions).
+- **Terminal icon in the Activity Bar**: a toggle like PhpStorm's Terminal tool button. Each click shows or hides the terminal (the Tabs Below group, or the terminal panel); the sidebar stays on the Explorer.
+- External Libraries: the *Include Paths* setting now has an **Add Folder...** link that opens the folder browser (the Settings editor has no browse button for lists).
+- Removed the **Recent Projects** view: use the [Project Manager](https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager) extension. Cmd+O / Ctrl+R keep the where-to-open prompt. The Storm sidebar is gone with it: **Composer** now has its own icon in the right Secondary Side Bar (shown only in projects with a `composer.json`), like PhpStorm's right-hand tool strip.
+- New extension icon in the same style as iRemote (dark navy, purple-to-teal lightning bolt); Marketplace banner colour to match.
+- README: *Where to find things* and *Companion extensions* sections; walkthrough updated for Select In, PHP postfix, the Run widget, Composer, Project Color and global Scratches.
+
 ## 0.5.0
 
 - Removed **Bookmarks** (F3, Opt+F3, Ctrl+0..9, Cmd+F3 are back to VS Code's defaults) and **Shelf** (use Source Control → Stash, or GitLens). Their `stormParity.bookmarks.*` / `stormParity.shelf.*` settings no longer have any effect.

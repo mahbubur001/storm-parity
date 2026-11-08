@@ -12,7 +12,7 @@
   ],
   "views": {
     "explorer": [
-      { "id": "stormParity.scratches", "name": "Scratches", "icon": "$(notebook)", "contextualTitle": "Scratches", "when": "config.stormParity.scratches.enabled && !stormParity.externalLibraries.active" }
+      { "id": "stormParity.scratches", "name": "Scratches", "order": 20, "icon": "$(notebook)", "contextualTitle": "Scratches", "when": "config.stormParity.scratches.enabled && !stormParity.externalLibraries.active" }
     ]
   },
   "viewsWelcome": [

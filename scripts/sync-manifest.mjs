@@ -44,6 +44,7 @@ for (const id of featureIds) {
   out.taskDefinitions.push(...(f.taskDefinitions ?? []));
   mergeMap(out.menus, f.menus);
   mergeMap(out.views, f.views);
+  mergeMap(out.viewsContainers, f.viewsContainers);
   const cfg = f.configuration ?? {};
   out.configuration.push({
     title: cfg.title ?? id,
@@ -64,6 +65,12 @@ for (const id of featureIds) {
 for (const kb of out.keybindings) {
   const gate = 'config.stormParity.keymap.enabled';
   kb.when = kb.when ? `${gate} && (${kb.when})` : gate;
+}
+
+// Views may carry an `order` hint (lower first) so containers don't just follow feature names; it is not a manifest key.
+for (const views of Object.values(out.views)) {
+  views.sort((a, b) => (a.order ?? 100) - (b.order ?? 100));
+  for (const v of views) delete v.order;
 }
 
 for (const k of Object.keys(out)) {

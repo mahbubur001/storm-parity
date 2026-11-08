@@ -66,7 +66,6 @@ class ComposerTree implements vscode.TreeDataProvider<Node> {
   async getChildren(node?: Node): Promise<Node[]> {
     if (!node) {
       const roots = await composerRoots();
-      void vscode.commands.executeCommand('setContext', `${CMD}.hasProject`, roots.length > 0);
       return roots.length === 1 ? this.groups(roots[0]) : roots.map((root): Node => ({ kind: 'root', root }));
     }
     if (node.kind === 'root') return this.groups(node.root);
@@ -245,7 +244,15 @@ export function activate(ctx: vscode.ExtensionContext): void {
   };
 
   const watcher = vscode.workspace.createFileSystemWatcher('**/composer.{json,lock}');
-  const refresh = () => tree.refresh();
+  /** The view only shows in workspaces with a composer project, so the context is kept up to date from activation. */
+  const updateContext = async () => {
+    await vscode.commands.executeCommand('setContext', `${CMD}.hasProject`, (await composerRoots()).length > 0);
+  };
+  const refresh = () => {
+    void updateContext();
+    tree.refresh();
+  };
+  void updateContext();
 
   ctx.subscriptions.push(
     tree,

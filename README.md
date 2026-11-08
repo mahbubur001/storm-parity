@@ -1,15 +1,28 @@
+<p align="center"><img src="media/icon.png" width="128" alt="Storm Parity"></p>
+
 # Storm Parity
 
-PhpStorm workflow features for VS Code: the things you miss after switching, built on the public VS Code API.
+PhpStorm workflow features for VS Code: the things you miss after switching, built on the public VS Code API with PhpStorm's macOS shortcuts.
 
-Language support, the HTTP client and database tools are left to dedicated extensions (Intelephense, REST Client, SQLTools). Storm Parity fills the workflow gaps.
+Language support, debugging, the HTTP client and database tools are left to dedicated extensions (see [Companion extensions](#companion-extensions)). Storm Parity fills the workflow gaps.
+
+## Where to find things
+
+| Place | What |
+|---|---|
+| **Explorer** | External Libraries, with the global **Scratches** folder at the end |
+| **Secondary Side Bar** (right, Cmd+Opt+B) | Composer (in projects with a `composer.json`) |
+| **Source Control** | Changelists |
+| **Activity Bar** | Terminal icon (quick access to the terminal) |
+| **Status bar** | Run widget (run configuration, Run, Debug, Stop), active changelist |
+| **Command Palette** | every command, under the *Storm* category |
+| *Help > Get Started* | the Storm Parity walkthrough |
 
 ## Features
 
 ### Projects
 - **Open Folder (Ask Where)**: pick a folder or `.code-workspace`, then choose *This Window*, *New Window* or *Attach to Current Workspace*. Tick "remember my choice" or set `stormParity.openFolder.defaultAction`.
 - **Open Recent (Ask Where)**: recent folders and workspaces with the same prompt.
-- **Recent Projects view**: groups, aliases, open in new window, reveal in Finder, remove.
 - **Project Color**: *Set Project Color* tints this window's title bar (optionally the status bar with `stormParity.projectColor.statusBar`) so project windows are told apart at a glance. It is saved in the workspace settings (`workbench.colorCustomizations`, the only way VS Code applies colours); only its own keys are written and *Reset Project Color* removes them.
 
 ### External Libraries
@@ -20,6 +33,7 @@ Language support, the HTTP client and database tools are left to dedicated exten
 ### Terminal
 - **PhpStorm terminal keys**: Opt+F12 toggles the terminal, Cmd+T / Cmd+W open and close a session, Shift+F6 renames it, Cmd+Shift+] / [ switch sessions.
 - **Terminal Tabs Below (PhpStorm style)**: *Toggle Terminal Tabs Below* moves your terminals into a full-width editor group under the code, so they get a real tab strip with close buttons. Opt+F12 focuses the tabs, hides them (the code group is maximized) and brings them back; Cmd+T opens a new tab there; Cmd+Shift+] / [ switch tabs. While on, `workbench.editor.showTabs` is set to `multiple` (it is global, and `single` would collapse the terminal tabs into a dropdown); your previous value comes back when you turn the mode off. Run the command again to move everything back to the panel.
+- **Terminal icon in the Activity Bar**: each click shows or hides the terminal (the Tabs Below group, or the panel), like PhpStorm's Terminal tool button. The sidebar switches back to the Explorer, because VS Code opens a sidebar view on every activity bar click.
 - **Toggle Compact Terminal Tabs**: hides VS Code's side list of terminals and switches through a dropdown in the panel title, so the terminal uses the full width (closest to PhpStorm's tab row; the extension API can't add real tabs to the panel).
 
 ### Navigation
@@ -37,12 +51,28 @@ Language support, the HTTP client and database tools are left to dedicated exten
 
 ### Run
 - **Run widget**: the selected run configuration sits in the status bar with Run, Debug and Stop buttons, like PhpStorm's toolbar. Configurations are your launch.json configurations and compounds plus every task VS Code knows (tasks.json, npm scripts, composer scripts). *Run...* (Ctrl+Opt+R) and *Debug...* (Ctrl+Opt+D) pick and start one; Stop is Cmd+F2 while something runs.
-- **Composer**: a Composer view (Storm sidebar) with each project's scripts and direct `require` / `require-dev` packages, the installed version from composer.lock, *Check for Package Updates* (`composer outdated`), *Require Package* with live Packagist search, Install, Update, per-package Update / Remove / Open on Packagist. Commands run as tasks; scripts also appear in the Run widget. Set `stormParity.composer.executable` for a custom composer (e.g. `php composer.phar`).
+- **Composer**: a Composer view with its own icon in the right Secondary Side Bar (shown in projects with a `composer.json`) with each project's scripts and direct `require` / `require-dev` packages, the installed version from composer.lock, *Check for Package Updates* (`composer outdated`), *Require Package* with live Packagist search, Install, Update, per-package Update / Remove / Open on Packagist. Commands run as tasks; scripts also appear in the Run widget. Set `stormParity.composer.executable` for a custom composer (e.g. `php composer.phar`).
 
 ### Tools
 - **Scratch files**: files in any language, stored outside the project, listed in a **Scratches** folder at the end of the External Libraries view, like PhpStorm's Scratches and Consoles (a standalone Scratches view takes over when External Libraries is off).
 - **Changelists**: group working-tree changes into named lists in the Source Control view and commit one list at a time.
 - **Local History**: a snapshot on every save, *Put Label*, *Show History*, *Show History for Selection* and restore.
+
+## Companion extensions
+
+Storm Parity leaves these PhpStorm areas to extensions that already do them well:
+
+| PhpStorm | Extension |
+|---|---|
+| PHP code intelligence, refactoring | [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client) or [PHP Tools](https://marketplace.visualstudio.com/items?itemName=DEVSENSE.phptools-vscode) |
+| Deployment, Remote Host, SSH sessions | [iRemote](https://marketplace.visualstudio.com/items?itemName=itemcoder.iremote) |
+| Xdebug | [PHP Debug](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug) |
+| TODO tool window | [Todo Tree](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree) |
+| Git annotate, log, stash browser | [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) |
+| HTTP Client | [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) |
+| Saved projects, tags, project list sidebar | [Project Manager](https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager) |
+| Database tools | [SQLTools](https://marketplace.visualstudio.com/items?itemName=mtxr.vscode-sqltools) |
+| Laravel support | [Laravel](https://marketplace.visualstudio.com/items?itemName=laravel.vscode-laravel) |
 
 ## Keymap
 

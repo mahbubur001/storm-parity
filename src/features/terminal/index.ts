@@ -98,7 +98,35 @@ async function focusColumn(column: vscode.ViewColumn): Promise<void> {
 }
 
 /** Opt+F12 while tabs are visible: focus the terminal tabs, creating one if needed. */
+/**
+ * Whether the terminal tabs are hidden behind a maximized code group. The extension API exposes no "editor group
+ * maximized" state, so it is tracked here: every hide / restore goes through hideTabs / restoreTabs, and it is cleared
+ * whenever a terminal tab becomes active (the group is visible again however that happened).
+ */
+let tabsHidden = false;
+
+/** Panel mode: whether the icon last showed the terminal panel (resynced when a panel terminal opens). */
+let panelTerminalShown = false;
+
+/** Terminals in the panel: editor-area terminals are tabs, all others live in the panel. */
+const panelTerminalCount = (): number => vscode.window.terminals.length - terminalTabCount();
+
+/** The code tab that was in front most recently, so hiding the terminal returns to it. */
+let lastCodeTab: { label: string; uri?: string } | undefined;
+const tabUri = (t: vscode.Tab): string | undefined => {
+  const input = t.input;
+  if (input instanceof vscode.TabInputText || input instanceof vscode.TabInputCustom || input instanceof vscode.TabInputNotebook) return input.uri.toString();
+  if (input instanceof vscode.TabInputTextDiff) return input.modified.toString();
+  return undefined;
+};
+function rememberCodeTab(): void {
+  const tab = vscode.window.tabGroups.activeTabGroup.activeTab;
+  if (tab && !isTerminalTab(tab)) lastCodeTab = { label: tab.label, uri: tabUri(tab) };
+  else if (tab) tabsHidden = false;
+}
+
 async function showTabs(): Promise<void> {
+  tabsHidden = false;
   const group = terminalGroup();
   if (!group) {
     await newTerminalTab();
@@ -112,6 +140,7 @@ async function showTabs(): Promise<void> {
 async function hideTabs(): Promise<void> {
   await vscode.commands.executeCommand('workbench.action.focusFirstEditorGroup');
   await vscode.commands.executeCommand('workbench.action.toggleMaximizeEditorGroup');
+  tabsHidden = true;
 }
 
 /** Opt+F12 while the code group is maximized: restore the layout and focus the terminal. */
@@ -119,6 +148,55 @@ async function restoreTabs(): Promise<void> {
   await vscode.commands.executeCommand('workbench.action.toggleMaximizeEditorGroup');
   await new Promise((r) => setTimeout(r, 50));
   await showTabs();
+}
+
+/** Activates the tab at `index` of the group in `column` (openEditorAtIndex acts on the active group). */
+async function openTabAt(column: vscode.ViewColumn, index: number): Promise<void> {
+  await focusColumn(column);
+  await settle(() => vscode.window.tabGroups.activeTabGroup.viewColumn === column, 500);
+  await vscode.commands.executeCommand('workbench.action.openEditorAtIndex', index);
+}
+
+/**
+ * The Activity Bar Terminal icon: a show / hide toggle like PhpStorm's Terminal button. Terminal tabs may live in their
+ * own group (Tabs Below) or share a group with code; hiding maximizes the code group in the first case and switches
+ * the shared group back to a code tab in the second. Without Tabs Below it toggles the panel.
+ */
+async function toggleFromIcon(): Promise<void> {
+  if (!config().get<boolean>(MODE_SETTING, false)) {
+    // toggleTerminal only focuses a visible, unfocused terminal, and the activity bar click always takes the focus,
+    // so the panel is opened / closed directly. Its visibility is not in the API; panelTerminalShown tracks it.
+    // terminal.focus opens the panel's Terminal view (workbench.action.terminal.focus would focus the active terminal,
+    // which may be an editor-tab terminal that is already in front, so nothing visible happens).
+    const show = !panelTerminalShown || panelTerminalCount() === 0;
+    await vscode.commands.executeCommand(show ? 'terminal.focus' : 'workbench.action.closePanel');
+    panelTerminalShown = show;
+    return;
+  }
+  if (tabsHidden) {
+    await restoreTabs();
+    return;
+  }
+  const group = terminalGroup();
+  if (!group) {
+    await newTerminalTab();
+    return;
+  }
+  const { activeTabGroup, all } = vscode.window.tabGroups;
+  const terminalInFront = activeTabGroup === group && isTerminalTab(group.activeTab as vscode.Tab);
+  if (!terminalInFront) {
+    tabsHidden = false;
+    const index = group.activeTab && isTerminalTab(group.activeTab) ? -1 : group.tabs.findIndex(isTerminalTab);
+    if (index >= 0) await openTabAt(group.viewColumn, index);
+    else await focusColumn(group.viewColumn);
+    return;
+  }
+  const last = lastCodeTab;
+  const lastIndex = last ? group.tabs.findIndex((t) => !isTerminalTab(t) && t.label === last.label && tabUri(t) === last.uri) : -1;
+  const codeIndex = lastIndex >= 0 ? lastIndex : group.tabs.findIndex((t) => !isTerminalTab(t));
+  if (group.viewColumn !== all[0].viewColumn) await hideTabs();
+  else if (codeIndex >= 0) await openTabAt(group.viewColumn, codeIndex);
+  else await vscode.commands.executeCommand('workbench.action.focusFirstEditorGroup');
 }
 
 /**
@@ -146,6 +224,32 @@ async function restoreTabStrip(ctx: vscode.ExtensionContext): Promise<void> {
  * a full-width group at the bottom so they get a real tab strip like PhpStorm's.
  */
 export function activate(ctx: vscode.ExtensionContext): void {
+  // Activity bar Terminal icon, a toggle like PhpStorm's Terminal button. Activity bar icons can only open a sidebar
+  // view, so the (empty) button view hands the sidebar back to the Explorer as soon as it is shown. The ids were renamed
+  // from stormParityTerminal / stormParity.terminal.launcher, so layouts where that view had been dragged away reset.
+  const launcher = vscode.window.createTreeView('stormParity.terminal.button', { treeDataProvider: { getChildren: () => [], getTreeItem: (e: vscode.TreeItem) => e } });
+  ctx.subscriptions.push(
+    launcher,
+    launcher.onDidChangeVisibility(async ({ visible }) => {
+      if (!visible) return;
+      // Let VS Code finish opening this container first: switching away synchronously leaves the Terminal icon marked
+      // active, and the next click on an active icon only collapses the sidebar instead of reaching this handler.
+      await new Promise((r) => setTimeout(r, 100));
+      await vscode.commands.executeCommand('workbench.view.explorer');
+      await toggleFromIcon();
+    }),
+    vscode.window.onDidOpenTerminal((terminal) => {
+      // Only a terminal that landed in the panel shows the panel; editor-tab terminals (e.g. an AI CLI) do not.
+      // VS Code places the terminal asynchronously, hence the short delay before looking for its tab.
+      setTimeout(() => {
+        const isTab = vscode.window.tabGroups.all.some((g) => g.tabs.some((t) => isTerminalTab(t) && t.label === terminal.name));
+        if (!isTab && !config().get<boolean>(MODE_SETTING, false)) panelTerminalShown = true;
+      }, 300);
+    }),
+    vscode.window.tabGroups.onDidChangeTabGroups(rememberCodeTab),
+    vscode.window.tabGroups.onDidChangeTabs(rememberCodeTab),
+  );
+
   ctx.subscriptions.push(
     vscode.commands.registerCommand('stormParity.terminal.toggleCompactTabs', async () => {
       const integrated = vscode.workspace.getConfiguration('terminal.integrated');
