@@ -1,7 +1,7 @@
 # storm-parity: PhpStorm features for VS Code
 
 A personal VS Code extension that adds the PhpStorm workflow features VS Code lacks.
-Installed locally as a `.vsix` file; nothing is published to the marketplace.
+Published to the VS Code Marketplace as `itemcoder.storm-parity` (tag `vX.Y.Z` → `.github/workflows/release.yml`); also installable locally from the `.vsix`.
 
 ## Principles
 
@@ -67,6 +67,10 @@ Installed locally as a `.vsix` file; nothing is published to the marketplace.
 3. **Select In** (Opt+F1): Explorer, Finder, terminal, Outline, Timeline, Source Control.
 4. **Project Color**: title bar (and optional status bar) tint via workspace `workbench.colorCustomizations`.
 5. **Composer**: view with scripts and packages, outdated check, Packagist search, task provider (`storm-composer`).
+
+### Phase 7: terminal toggle (done 2026-11-08, 0.6.1)
+- Show / hide the terminal from a status bar button (`stormParity.terminal.toggle`), like PhpStorm's Terminal tool button. First built as an Activity Bar icon (0.6.0), but those can only open a sidebar view, so every click flashed the sidebar; replaced in 0.6.1.
+- CI pins Bun via `.bun-version`: unpinned `setup-bun` looks up tags on the GitHub API, which returned 504s.
 
 ## Backlog (to evaluate)
 - Distraction-free / presentation mode presets.

@@ -24,6 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version # exact version: skips the tag lookup on the GitHub API (504s) and gets cached
       - run: bun install --frozen-lockfile
       - name: Manifest is in sync with feature fragments
         shell: bash
