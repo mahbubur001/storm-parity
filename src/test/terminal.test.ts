@@ -26,17 +26,17 @@ suite('terminal: commands', () => {
     await vscode.extensions.getExtension('itemcoder.storm-parity')?.activate();
   });
 
-  test('the activity bar Terminal icon brings up a terminal', async function () {
+  test('the Terminal button brings up a terminal', async function () {
     this.timeout(10000);
     vscode.window.terminals.forEach((t) => t.dispose());
-    await vscode.commands.executeCommand('stormParity.terminal.button.focus');
+    await vscode.commands.executeCommand('stormParity.terminal.toggle');
     const end = Date.now() + 5000;
     while (!vscode.window.activeTerminal && Date.now() < end) await new Promise((r) => setTimeout(r, 50));
     assert.ok(vscode.window.activeTerminal, 'a terminal is shown');
     vscode.window.terminals.forEach((t) => t.dispose());
   });
 
-  test('the Terminal icon toggles between a terminal tab and code in a shared group', async function () {
+  test('the Terminal button toggles between a terminal tab and code in a shared group', async function () {
     this.timeout(20000);
     const terminalCfg = () => vscode.workspace.getConfiguration('stormParity.terminal');
     const editorCfg = () => vscode.workspace.getConfiguration('workbench.editor');
@@ -54,9 +54,9 @@ suite('terminal: commands', () => {
     try {
       assert.ok(await waitFor(() => front() instanceof vscode.TabInputTerminal), 'terminal tab in front');
       assert.strictEqual(vscode.window.tabGroups.all.length, 1, 'one shared group');
-      await vscode.commands.executeCommand('stormParity.terminal.button.focus');
+      await vscode.commands.executeCommand('stormParity.terminal.toggle');
       assert.ok(await waitFor(() => front() instanceof vscode.TabInputText), 'click hides the terminal: code tab in front');
-      await vscode.commands.executeCommand('stormParity.terminal.button.focus');
+      await vscode.commands.executeCommand('stormParity.terminal.toggle');
       assert.ok(await waitFor(() => front() instanceof vscode.TabInputTerminal), 'click again shows the terminal');
     } finally {
       term.dispose();

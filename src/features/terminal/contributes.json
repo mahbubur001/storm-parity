@@ -1,5 +1,6 @@
 {
   "commands": [
+    { "command": "stormParity.terminal.toggle", "title": "Show / Hide Terminal", "category": "Storm" },
     { "command": "stormParity.terminal.toggleCompactTabs", "title": "Toggle Compact Terminal Tabs", "category": "Storm" },
     { "command": "stormParity.terminal.toggleTabsBelow", "title": "Toggle Terminal Tabs Below (PhpStorm Style)", "category": "Storm" },
     { "command": "stormParity.terminal.newTab", "title": "New Terminal Tab Below", "category": "Storm" },
@@ -7,16 +8,6 @@
     { "command": "stormParity.terminal.hideTabs", "title": "Hide Terminal Tabs", "category": "Storm" },
     { "command": "stormParity.terminal.restoreTabs", "title": "Restore Terminal Tabs", "category": "Storm" }
   ],
-  "viewsContainers": {
-    "activitybar": [
-      { "id": "stormParityTerminalButton", "title": "Terminal", "icon": "media/terminal.svg" }
-    ]
-  },
-  "views": {
-    "stormParityTerminalButton": [
-      { "id": "stormParity.terminal.button", "name": "Terminal", "when": "config.stormParity.terminal.enabled" }
-    ]
-  },
   "keybindings": [
     { "command": "workbench.action.terminal.toggleTerminal", "mac": "alt+f12", "key": "alt+f12", "when": "!config.stormParity.terminal.tabsBelow" },
     { "command": "stormParity.terminal.restoreTabs", "mac": "alt+f12", "key": "alt+f12", "when": "config.stormParity.terminal.tabsBelow && editorPartMaximizedEditorGroup" },

@@ -13,8 +13,7 @@ Language support, debugging, the HTTP client and database tools are left to dedi
 | **Explorer** | External Libraries, with the global **Scratches** folder at the end |
 | **Secondary Side Bar** (right, Cmd+Opt+B) | Composer (in projects with a `composer.json`) |
 | **Source Control** | Changelists |
-| **Activity Bar** | Terminal icon (quick access to the terminal) |
-| **Status bar** | Run widget (run configuration, Run, Debug, Stop), active changelist |
+| **Status bar** | Terminal button, Run widget (run configuration, Run, Debug, Stop), active changelist |
 | **Command Palette** | every command, under the *Storm* category |
 | *Help > Get Started* | the Storm Parity walkthrough |
 
@@ -33,7 +32,7 @@ Language support, debugging, the HTTP client and database tools are left to dedi
 ### Terminal
 - **PhpStorm terminal keys**: Opt+F12 toggles the terminal, Cmd+T / Cmd+W open and close a session, Shift+F6 renames it, Cmd+Shift+] / [ switch sessions.
 - **Terminal Tabs Below (PhpStorm style)**: *Toggle Terminal Tabs Below* moves your terminals into a full-width editor group under the code, so they get a real tab strip with close buttons. Opt+F12 focuses the tabs, hides them (the code group is maximized) and brings them back; Cmd+T opens a new tab there; Cmd+Shift+] / [ switch tabs. While on, `workbench.editor.showTabs` is set to `multiple` (it is global, and `single` would collapse the terminal tabs into a dropdown); your previous value comes back when you turn the mode off. Run the command again to move everything back to the panel.
-- **Terminal icon in the Activity Bar**: each click shows or hides the terminal (the Tabs Below group, or the panel), like PhpStorm's Terminal tool button. The sidebar switches back to the Explorer, because VS Code opens a sidebar view on every activity bar click.
+- **Terminal button in the status bar**: each click shows or hides the terminal (the Tabs Below group, or the panel), like PhpStorm's Terminal tool button. Also *Storm: Show / Hide Terminal*.
 - **Toggle Compact Terminal Tabs**: hides VS Code's side list of terminals and switches through a dropdown in the panel title, so the terminal uses the full width (closest to PhpStorm's tab row; the extension API can't add real tabs to the panel).
 
 ### Navigation

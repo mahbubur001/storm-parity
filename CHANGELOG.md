@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1
+
+- The Terminal toggle moved from the Activity Bar to a **status bar button** (`$(terminal)`, bottom left), also *Storm: Show / Hide Terminal*. An Activity Bar icon can only open a sidebar view, so every click flashed the sidebar and reflowed the window.
+
 ## 0.6.0
 
 - **Requires VS Code 1.106 or later** (right Secondary Side Bar contributions).

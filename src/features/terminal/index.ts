@@ -158,14 +158,14 @@ async function openTabAt(column: vscode.ViewColumn, index: number): Promise<void
 }
 
 /**
- * The Activity Bar Terminal icon: a show / hide toggle like PhpStorm's Terminal button. Terminal tabs may live in their
+ * The status bar Terminal button: a show / hide toggle like PhpStorm's Terminal button. Terminal tabs may live in their
  * own group (Tabs Below) or share a group with code; hiding maximizes the code group in the first case and switches
  * the shared group back to a code tab in the second. Without Tabs Below it toggles the panel.
  */
-async function toggleFromIcon(): Promise<void> {
+async function toggleTerminal(): Promise<void> {
   if (!config().get<boolean>(MODE_SETTING, false)) {
-    // toggleTerminal only focuses a visible, unfocused terminal, and the activity bar click always takes the focus,
-    // so the panel is opened / closed directly. Its visibility is not in the API; panelTerminalShown tracks it.
+    // workbench.action.terminal.toggleTerminal only focuses a visible, unfocused terminal (the usual state after a
+    // click elsewhere), so the panel is opened / closed directly. Its visibility is not in the API; panelTerminalShown tracks it.
     // terminal.focus opens the panel's Terminal view (workbench.action.terminal.focus would focus the active terminal,
     // which may be an editor-tab terminal that is already in front, so nothing visible happens).
     const show = !panelTerminalShown || panelTerminalCount() === 0;
@@ -224,20 +224,16 @@ async function restoreTabStrip(ctx: vscode.ExtensionContext): Promise<void> {
  * a full-width group at the bottom so they get a real tab strip like PhpStorm's.
  */
 export function activate(ctx: vscode.ExtensionContext): void {
-  // Activity bar Terminal icon, a toggle like PhpStorm's Terminal button. Activity bar icons can only open a sidebar
-  // view, so the (empty) button view hands the sidebar back to the Explorer as soon as it is shown. The ids were renamed
-  // from stormParityTerminal / stormParity.terminal.launcher, so layouts where that view had been dragged away reset.
-  const launcher = vscode.window.createTreeView('stormParity.terminal.button', { treeDataProvider: { getChildren: () => [], getTreeItem: (e: vscode.TreeItem) => e } });
+  // Status bar Terminal button, a toggle like PhpStorm's Terminal tool button. A status bar item rather than an
+  // Activity Bar icon: those can only open a sidebar view, and switching the sidebar away and back again flickers.
+  const button = vscode.window.createStatusBarItem('stormParity.terminal.button', vscode.StatusBarAlignment.Left, 100);
+  button.name = 'Terminal';
+  button.text = '$(terminal)';
+  button.tooltip = 'Show / Hide Terminal';
+  button.command = 'stormParity.terminal.toggle';
+  button.show();
   ctx.subscriptions.push(
-    launcher,
-    launcher.onDidChangeVisibility(async ({ visible }) => {
-      if (!visible) return;
-      // Let VS Code finish opening this container first: switching away synchronously leaves the Terminal icon marked
-      // active, and the next click on an active icon only collapses the sidebar instead of reaching this handler.
-      await new Promise((r) => setTimeout(r, 100));
-      await vscode.commands.executeCommand('workbench.view.explorer');
-      await toggleFromIcon();
-    }),
+    button,
     vscode.window.onDidOpenTerminal((terminal) => {
       // Only a terminal that landed in the panel shows the panel; editor-tab terminals (e.g. an AI CLI) do not.
       // VS Code places the terminal asynchronously, hence the short delay before looking for its tab.
@@ -269,6 +265,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
       }
       void vscode.window.setStatusBarMessage(on ? 'Terminal: tabs below the editor' : 'Terminal: back in the panel', 3000);
     }),
+    vscode.commands.registerCommand('stormParity.terminal.toggle', toggleTerminal),
     vscode.commands.registerCommand('stormParity.terminal.newTab', newTerminalTab),
     vscode.commands.registerCommand('stormParity.terminal.showTabs', showTabs),
     vscode.commands.registerCommand('stormParity.terminal.hideTabs', hideTabs),

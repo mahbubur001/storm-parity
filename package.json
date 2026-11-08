@@ -2,7 +2,7 @@
   "name": "storm-parity",
   "displayName": "Storm Parity",
   "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent locations, Search Everywhere, clipboard history, surround with, PHP postfix completion, scratch files, external libraries (include paths), changelists, local history, run widget, Composer view and more.",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "publisher": "itemcoder",
   "license": "MIT",
   "repository": {
@@ -420,6 +420,11 @@
       {
         "command": "stormParity.surroundWith.surround",
         "title": "Surround With...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.terminal.toggle",
+        "title": "Show / Hide Terminal",
         "category": "Storm"
       },
       {
@@ -1103,13 +1108,6 @@
           "title": "Composer",
           "icon": "media/composer.svg"
         }
-      ],
-      "activitybar": [
-        {
-          "id": "stormParityTerminalButton",
-          "title": "Terminal",
-          "icon": "media/terminal.svg"
-        }
       ]
     },
     "views": {
@@ -1136,13 +1134,6 @@
           "icon": "$(notebook)",
           "contextualTitle": "Scratches",
           "when": "config.stormParity.scratches.enabled && !stormParity.externalLibraries.active"
-        }
-      ],
-      "stormParityTerminalButton": [
-        {
-          "id": "stormParity.terminal.button",
-          "name": "Terminal",
-          "when": "config.stormParity.terminal.enabled"
         }
       ]
     },
