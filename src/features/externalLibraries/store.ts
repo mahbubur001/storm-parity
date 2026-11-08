@@ -18,6 +18,14 @@ function storedPaths(): string[] {
   return effectivePaths(config.inspect('includePaths'), config.get<unknown>('includePaths'), legacy);
 }
 
+/** Absolute include paths (External Libraries), for features that resolve PHP paths. */
+export function includePaths(): string[] {
+  const base = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? '';
+  return storedPaths()
+    .filter((s) => s.trim())
+    .map((s) => expandPath(s, base));
+}
+
 function syncEnabled(): boolean {
   const current = vscode.workspace.getConfiguration(SECTION).inspect<boolean>('intelephenseSync');
   if (current?.globalValue !== undefined || current?.workspaceValue !== undefined || current?.workspaceFolderValue !== undefined) {

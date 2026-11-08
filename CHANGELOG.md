@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **PHP include navigation**: Cmd+click on a `require` / `include` path opens the file, like PhpStorm. Handles plain relative paths, `__DIR__` / `dirname(__FILE__)`, `define()` constants (e.g. `RTCL_PRO_PATH . 'vendor/autoload.php'`) and WordPress `ABSPATH`.
+
 ## 0.6.2
 
 - **Select In** (Opt+F1): *Warp* entry on macOS when Warp is installed; opens the file's folder in the Warp app.

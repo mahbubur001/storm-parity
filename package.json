@@ -1359,8 +1359,20 @@
         }
       },
       {
-        "title": "Postfix Completion (PHP)",
+        "title": "PHP Include Navigation",
         "order": 18,
+        "properties": {
+          "stormParity.phpIncludes.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the PHP Include Navigation feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "Postfix Completion (PHP)",
+        "order": 19,
         "properties": {
           "stormParity.postfix.enabled": {
             "type": "boolean",
@@ -1372,7 +1384,7 @@
       },
       {
         "title": "Project Color",
-        "order": 19,
+        "order": 20,
         "properties": {
           "stormParity.projectColor.enabled": {
             "type": "boolean",
@@ -1389,7 +1401,7 @@
       },
       {
         "title": "Recent Locations",
-        "order": 20,
+        "order": 21,
         "properties": {
           "stormParity.recentLocations.enabled": {
             "type": "boolean",
@@ -1415,7 +1427,7 @@
       },
       {
         "title": "Run Widget",
-        "order": 21,
+        "order": 22,
         "properties": {
           "stormParity.run.enabled": {
             "type": "boolean",
@@ -1427,7 +1439,7 @@
       },
       {
         "title": "Scratch Files",
-        "order": 22,
+        "order": 23,
         "properties": {
           "stormParity.scratches.enabled": {
             "type": "boolean",
@@ -1439,7 +1451,7 @@
       },
       {
         "title": "searchEverywhere",
-        "order": 23,
+        "order": 24,
         "properties": {
           "stormParity.searchEverywhere.enabled": {
             "type": "boolean",
@@ -1451,7 +1463,7 @@
       },
       {
         "title": "Select In",
-        "order": 24,
+        "order": 25,
         "properties": {
           "stormParity.selectIn.enabled": {
             "type": "boolean",
@@ -1463,7 +1475,7 @@
       },
       {
         "title": "Surround With",
-        "order": 25,
+        "order": 26,
         "properties": {
           "stormParity.surroundWith.enabled": {
             "type": "boolean",
@@ -1475,7 +1487,7 @@
       },
       {
         "title": "Terminal",
-        "order": 26,
+        "order": 27,
         "properties": {
           "stormParity.terminal.enabled": {
             "type": "boolean",
@@ -1492,7 +1504,7 @@
       },
       {
         "title": "toggleCase",
-        "order": 27,
+        "order": 28,
         "properties": {
           "stormParity.toggleCase.enabled": {
             "type": "boolean",
