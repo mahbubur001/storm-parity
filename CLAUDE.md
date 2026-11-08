@@ -30,7 +30,7 @@ bun run test
 
 Bump `version` in package.json + CHANGELOG.md, commit, then `git tag vX.Y.Z && git push --tags`.
 `.github/workflows/release.yml` tests, packages and publishes via Marketplace Trusted Publishing (`vsce publish --oidc`),
-plus Open VSX if the `OVSX_PAT` secret is set, plus a GitHub Release with the `.vsix`. Don't publish from a local machine.
+plus a GitHub Release with the `.vsix` (no Open VSX). Don't publish from a local machine.
 
 ## Layout & conventions
 

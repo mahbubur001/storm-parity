@@ -29,15 +29,6 @@ jobs:
       - run: bun run package
       - name: Publish to Visual Studio Marketplace
         run: bunx vsce publish --oidc --no-dependencies --packagePath storm-parity-*.vsix
-      - name: Publish to Open VSX
-        env:
-          OVSX_PAT: ${{ secrets.OVSX_PAT }}
-        run: |
-          if [ -z "$OVSX_PAT" ]; then
-            echo "::warning::OVSX_PAT secret not set; skipping Open VSX"
-            exit 0
-          fi
-          bunx --bun ovsx publish storm-parity-*.vsix -p "$OVSX_PAT"
       - name: GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
