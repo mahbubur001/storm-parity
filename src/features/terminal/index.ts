@@ -3,6 +3,8 @@ import { EditorLayout, withBottomGroup } from './layout';
 
 const TABS_SETTING = 'tabs.enabled';
 const MODE_SETTING = 'tabsBelow';
+const SHOW_TABS = 'showTabs';
+const PREV_SHOW_TABS_KEY = 'terminal.prevShowTabs';
 
 /** Resolves once `check` passes (VS Code applies terminal moves and reveals asynchronously), or after `timeoutMs`. */
 async function settle(check: () => boolean, timeoutMs = 2000): Promise<void> {
@@ -120,6 +122,25 @@ async function restoreTabs(): Promise<void> {
 }
 
 /**
+ * workbench.editor.showTabs is global (no per-group setting), and "single"/"none" collapse the terminal group into one
+ * tab plus a dropdown. Tabs Below needs a real strip, so force "multiple" and remember the user's value for later.
+ */
+async function ensureTabStrip(ctx: vscode.ExtensionContext): Promise<void> {
+  const workbench = vscode.workspace.getConfiguration('workbench.editor');
+  const current = workbench.get<string>(SHOW_TABS, 'multiple');
+  if (current === 'multiple') return;
+  await ctx.globalState.update(PREV_SHOW_TABS_KEY, workbench.inspect<string>(SHOW_TABS)?.globalValue ?? null);
+  await workbench.update(SHOW_TABS, 'multiple', vscode.ConfigurationTarget.Global);
+}
+
+async function restoreTabStrip(ctx: vscode.ExtensionContext): Promise<void> {
+  const prev = ctx.globalState.get<string | null>(PREV_SHOW_TABS_KEY);
+  if (prev === undefined) return;
+  await vscode.workspace.getConfiguration('workbench.editor').update(SHOW_TABS, prev ?? undefined, vscode.ConfigurationTarget.Global);
+  await ctx.globalState.update(PREV_SHOW_TABS_KEY, undefined);
+}
+
+/**
  * PhpStorm-like terminal. The panel shortcuts are plain keybindings to built-in commands (see contributes.json);
  * this module adds the compact-tabs toggle and the "Terminal Tabs Below" mode, which runs terminals as editor tabs in
  * a full-width group at the bottom so they get a real tab strip like PhpStorm's.
@@ -135,13 +156,23 @@ export function activate(ctx: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('stormParity.terminal.toggleTabsBelow', async () => {
       const on = !config().get<boolean>(MODE_SETTING, false);
       await config().update(MODE_SETTING, on, vscode.ConfigurationTarget.Global);
-      if (on) await moveAllToTabs();
-      else await moveAllToPanel();
+      if (on) {
+        await ensureTabStrip(ctx);
+        await moveAllToTabs();
+      } else {
+        await moveAllToPanel();
+        await restoreTabStrip(ctx);
+      }
       void vscode.window.setStatusBarMessage(on ? 'Terminal: tabs below the editor' : 'Terminal: back in the panel', 3000);
     }),
     vscode.commands.registerCommand('stormParity.terminal.newTab', newTerminalTab),
     vscode.commands.registerCommand('stormParity.terminal.showTabs', showTabs),
     vscode.commands.registerCommand('stormParity.terminal.hideTabs', hideTabs),
     vscode.commands.registerCommand('stormParity.terminal.restoreTabs', restoreTabs),
+    vscode.workspace.onDidChangeConfiguration((e) => {
+      if (!e.affectsConfiguration(`stormParity.terminal.${MODE_SETTING}`)) return;
+      void (config().get<boolean>(MODE_SETTING, false) ? ensureTabStrip(ctx) : restoreTabStrip(ctx));
+    }),
   );
+  if (config().get<boolean>(MODE_SETTING, false)) void ensureTabStrip(ctx);
 }

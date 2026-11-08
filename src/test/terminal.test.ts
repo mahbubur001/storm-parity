@@ -48,9 +48,12 @@ suite('terminal: commands', () => {
     const b = vscode.window.createTerminal({ name: 'storm-b' });
     a.show();
     b.show();
+    const editor = () => vscode.workspace.getConfiguration('workbench.editor');
+    await editor().update('showTabs', 'single', vscode.ConfigurationTarget.Global);
     try {
       await vscode.commands.executeCommand('stormParity.terminal.toggleTabsBelow');
       assert.strictEqual(vscode.workspace.getConfiguration('stormParity.terminal').get('tabsBelow'), true);
+      assert.strictEqual(editor().get('showTabs'), 'multiple', 'single-tab mode would hide terminal tabs in a dropdown');
       const columns = terminalTabs();
       assert.strictEqual(columns.length, 2, 'both terminals became tabs');
       assert.strictEqual(new Set(columns).size, 1, 'in one group: ' + JSON.stringify({ columns, groups: vscode.window.tabGroups.all.map((g) => [g.viewColumn, g.tabs.map((t) => t.label)]) }));
@@ -69,7 +72,9 @@ suite('terminal: commands', () => {
       assert.strictEqual(terminalTabs().length, 0, 'all terminals back in the panel');
       assert.strictEqual(vscode.window.tabGroups.all.length, 1, 'the bottom group is gone');
       assert.ok(vscode.window.tabGroups.all[0].tabs.some((t) => t.input instanceof vscode.TabInputText), 'the code editor stayed');
+      assert.strictEqual(editor().get('showTabs'), 'single', 'the previous tab mode is restored');
     } finally {
+      await editor().update('showTabs', undefined, vscode.ConfigurationTarget.Global);
       await vscode.workspace.getConfiguration('stormParity.terminal').update('tabsBelow', undefined, vscode.ConfigurationTarget.Global);
       vscode.window.terminals.forEach((t) => t.dispose());
       await vscode.commands.executeCommand('workbench.action.revertAndCloseActiveEditor');
