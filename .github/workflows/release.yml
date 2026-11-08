@@ -1,0 +1,44 @@
+name: Release
+
+# Push a tag like v1.0.0 (matching package.json "version") to publish.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # GitHub Release
+      id-token: write # Marketplace Trusted Publishing (vsce --oidc)
+    steps:
+      - uses: actions/checkout@v7
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Tag matches package.json version
+        run: |
+          version=$(node -p "require('./package.json').version")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $version"
+            exit 1
+          fi
+      - run: xvfb-run -a bun run test
+      - run: bun run package
+      - name: Publish to Visual Studio Marketplace
+        run: bunx vsce publish --oidc --no-dependencies --packagePath storm-parity-*.vsix
+      - name: Publish to Open VSX
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: |
+          if [ -z "$OVSX_PAT" ]; then
+            echo "::warning::OVSX_PAT secret not set; skipping Open VSX"
+            exit 0
+          fi
+          bunx --bun ovsx publish storm-parity-*.vsix -p "$OVSX_PAT"
+      - name: GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" storm-parity-*.vsix --title "Storm Parity $GITHUB_REF_NAME" --notes "See [CHANGELOG.md](https://github.com/mahbubur001/storm-parity/blob/main/CHANGELOG.md)."

@@ -2,8 +2,9 @@
 // src/features/<id>/contributes.json fragment. Run via `bun run sync`.
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = new URL('..', import.meta.url).pathname;
+const root = fileURLToPath(new URL('..', import.meta.url));
 const read = (p) => JSON.parse(readFileSync(join(root, p), 'utf8'));
 const pkg = read('package.json');
 const base = read('src/contributes.base.json');

@@ -31,8 +31,7 @@
     "pretest": "node -e \"require('fs').rmSync('out',{recursive:true,force:true})\" && bun run sync && bun run typecheck && node esbuild.mjs --tests",
     "test": "vscode-test",
     "vscode:prepublish": "node esbuild.mjs --production",
-    "sync": "node scripts/sync-manifest.mjs",
-    "publish": "bun run build && vsce publish --no-dependencies"
+    "sync": "node scripts/sync-manifest.mjs"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
