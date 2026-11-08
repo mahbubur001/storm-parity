@@ -2,8 +2,12 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { contractPath, isDirectory, listDirectory } from './core';
 import { LibraryStore } from './store';
+import { onDidChangeSections, treeSections, type TreeSection } from './sections';
 
-export type Node = { kind: 'library'; path: string; missing: boolean } | { kind: 'entry'; path: string; isDirectory: boolean };
+export type Node =
+  | { kind: 'library'; path: string; missing: boolean }
+  | { kind: 'entry'; path: string; isDirectory: boolean }
+  | { kind: 'section'; section: TreeSection; element: unknown };
 
 /**
  * The "External Libraries" view in the Explorer, PhpStorm's External Libraries node: one root per include path,
@@ -16,7 +20,7 @@ export class LibraryTree implements vscode.TreeDataProvider<Node>, vscode.Dispos
   private readonly disposables: vscode.Disposable[];
 
   constructor(private readonly store: LibraryStore) {
-    this.disposables = [this.emitter, store.onDidChange(() => this.refresh())];
+    this.disposables = [this.emitter, store.onDidChange(() => this.refresh()), onDidChangeSections(() => this.emitter.fire(undefined))];
     this.watch();
   }
 
@@ -41,16 +45,27 @@ export class LibraryTree implements vscode.TreeDataProvider<Node>, vscode.Dispos
     });
   }
 
+  private async sectionChildren(section: TreeSection, element?: unknown): Promise<Node[]> {
+    const children = (await section.getChildren(element)) ?? [];
+    return children.map((e): Node => ({ kind: 'section', section, element: e }));
+  }
+
   async getChildren(node?: Node): Promise<Node[]> {
     if (!node) {
-      return Promise.all(this.store.libraries.map(async (l): Promise<Node> => ({ kind: 'library', path: l.path, missing: !(await isDirectory(l.path)) })));
+      const libraries = await Promise.all(
+        this.store.libraries.map(async (l): Promise<Node> => ({ kind: 'library', path: l.path, missing: !(await isDirectory(l.path)) })),
+      );
+      const sections = await Promise.all(treeSections().map((s) => this.sectionChildren(s)));
+      return [...libraries, ...sections.flat()];
     }
+    if (node.kind === 'section') return this.sectionChildren(node.section, node.element);
     if (node.kind === 'library' && node.missing) return [];
     const entries = await listDirectory(node.path).catch(() => []);
     return entries.map((e): Node => ({ kind: 'entry', path: e.path, isDirectory: e.isDirectory }));
   }
 
-  getTreeItem(node: Node): vscode.TreeItem {
+  getTreeItem(node: Node): vscode.TreeItem | Thenable<vscode.TreeItem> {
+    if (node.kind === 'section') return node.section.getTreeItem(node.element);
     const uri = vscode.Uri.file(node.path);
     if (node.kind === 'library') {
       const item = new vscode.TreeItem(

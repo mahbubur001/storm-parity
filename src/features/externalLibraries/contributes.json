@@ -45,8 +45,8 @@
     ],
     "view/item/context": [
       { "command": "stormParity.externalLibraries.remove", "when": "view == stormParity.externalLibraries && viewItem == library", "group": "inline" },
-      { "command": "stormParity.externalLibraries.revealInOS", "when": "view == stormParity.externalLibraries", "group": "1_reveal@1" },
-      { "command": "stormParity.externalLibraries.copyPath", "when": "view == stormParity.externalLibraries", "group": "1_reveal@2" },
+      { "command": "stormParity.externalLibraries.revealInOS", "when": "view == stormParity.externalLibraries && viewItem =~ /^library/", "group": "1_reveal@1" },
+      { "command": "stormParity.externalLibraries.copyPath", "when": "view == stormParity.externalLibraries && viewItem =~ /^library/", "group": "1_reveal@2" },
       { "command": "stormParity.externalLibraries.remove", "when": "view == stormParity.externalLibraries && viewItem == library", "group": "2_remove@1" }
     ],
     "commandPalette": [

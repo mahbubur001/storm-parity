@@ -23,6 +23,7 @@ const out = {
   colors: [...(base.colors ?? [])],
   configuration: [...(base.configuration ?? [])],
   walkthroughs: [...(base.walkthroughs ?? [])],
+  taskDefinitions: [...(base.taskDefinitions ?? [])],
 };
 
 const mergeMap = (target, src) => {
@@ -40,6 +41,7 @@ for (const id of featureIds) {
   out.keybindings.push(...(f.keybindings ?? []).map((kb) => ({ ...kb, when: kb.when ? `${gate} && (${kb.when})` : gate })));
   out.viewsWelcome.push(...(f.viewsWelcome ?? []));
   out.colors.push(...(f.colors ?? []));
+  out.taskDefinitions.push(...(f.taskDefinitions ?? []));
   mergeMap(out.menus, f.menus);
   mergeMap(out.views, f.views);
   const cfg = f.configuration ?? {};

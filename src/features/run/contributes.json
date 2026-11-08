@@ -1,0 +1,19 @@
+{
+  "commands": [
+    { "command": "stormParity.run.select", "title": "Select Run Configuration...", "category": "Storm" },
+    { "command": "stormParity.run.run", "title": "Run Selected Configuration", "category": "Storm", "icon": "$(play)" },
+    { "command": "stormParity.run.debug", "title": "Debug Selected Configuration", "category": "Storm", "icon": "$(debug-alt)" },
+    { "command": "stormParity.run.runAny", "title": "Run...", "category": "Storm" },
+    { "command": "stormParity.run.debugAny", "title": "Debug...", "category": "Storm" },
+    { "command": "stormParity.run.stop", "title": "Stop", "category": "Storm", "icon": "$(debug-stop)" }
+  ],
+  "keybindings": [
+    { "command": "stormParity.run.runAny", "key": "alt+shift+f10", "mac": "ctrl+alt+r" },
+    { "command": "stormParity.run.debugAny", "key": "alt+shift+f9", "mac": "ctrl+alt+d" },
+    { "command": "stormParity.run.stop", "key": "ctrl+f2", "mac": "cmd+f2", "when": "stormParity.run.running" }
+  ],
+  "configuration": {
+    "title": "Run Widget",
+    "properties": {}
+  }
+}

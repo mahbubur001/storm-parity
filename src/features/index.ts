@@ -16,6 +16,11 @@ import * as todo from './todo';
 import * as localHistory from './localHistory';
 import * as externalLibraries from './externalLibraries';
 import * as terminal from './terminal';
+import * as run from './run';
+import * as postfix from './postfix';
+import * as selectIn from './selectIn';
+import * as projectColor from './projectColor';
+import * as composer from './composer';
 
 interface Feature {
   id: string;
@@ -41,6 +46,11 @@ const features: Feature[] = [
   { id: 'localHistory', activate: localHistory.activate },
   { id: 'externalLibraries', activate: externalLibraries.activate },
   { id: 'terminal', activate: terminal.activate },
+  { id: 'run', activate: run.activate },
+  { id: 'postfix', activate: postfix.activate },
+  { id: 'selectIn', activate: selectIn.activate },
+  { id: 'projectColor', activate: projectColor.activate },
+  { id: 'composer', activate: composer.activate },
 ];
 
 export async function activateFeatures(ctx: vscode.ExtensionContext): Promise<void> {

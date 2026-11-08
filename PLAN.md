@@ -61,11 +61,15 @@ Installed locally as a `.vsix` file; nothing is published to the marketplace.
 - Settings UI section, walkthrough, README with keymap table, conflict check against default VS Code bindings.
 - Tests: `@vscode/test-electron` integration tests per feature.
 
+### Phase 6: migration gaps (done 2026-11-08)
+1. **Run widget**: status bar run configuration selector (launch.json, compounds, all tasks) with Run / Debug / Stop.
+2. **Postfix completion (PHP)**: `$x.if`, `.foreach`, `.return`, `Foo.new`, ... via a completion provider on `.`.
+3. **Select In** (Opt+F1): Explorer, Finder, terminal, Outline, Timeline, Source Control.
+4. **Project Color**: title bar (and optional status bar) tint via workspace `workbench.colorCustomizations`.
+5. **Composer**: view with scripts and packages, outdated check, Packagist search, task provider (`storm-composer`).
+
 ## Backlog (to evaluate)
-- Run configurations dropdown in the status bar.
-- "Select In" (Opt+F1) target picker.
 - Distraction-free / presentation mode presets.
-- Per-project color/title (PhpStorm project icons) via `workbench.colorCustomizations`.
 
 ## Order of work
 Phase 0 → Phase 1 (ship and use daily) → pick Phase 2/3 items by annoyance, one PR-sized feature at a time.

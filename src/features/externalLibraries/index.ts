@@ -129,6 +129,8 @@ export function activate(ctx: vscode.ExtensionContext): { store: LibraryStore; t
     vscode.commands.registerCommand(`${CMD}.copyPath`, (node: { path: string }) => vscode.env.clipboard.writeText(node.path)),
   );
   void updateContext();
+  // Other features (Scratches) show inside this view instead of their own while it is available.
+  void vscode.commands.executeCommand('setContext', `${CMD}.active`, true);
   void store.syncIntelephense();
   return { store, tree };
 }

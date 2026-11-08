@@ -1,0 +1,66 @@
+{
+  "commands": [
+    { "command": "stormParity.composer.refresh", "title": "Refresh Composer", "category": "Storm", "icon": "$(refresh)" },
+    { "command": "stormParity.composer.install", "title": "Composer Install", "category": "Storm", "icon": "$(cloud-download)" },
+    { "command": "stormParity.composer.update", "title": "Composer Update", "category": "Storm", "icon": "$(sync)" },
+    { "command": "stormParity.composer.require", "title": "Composer Require Package...", "category": "Storm", "icon": "$(add)" },
+    { "command": "stormParity.composer.checkOutdated", "title": "Composer: Check for Package Updates", "category": "Storm", "icon": "$(arrow-circle-up)" },
+    { "command": "stormParity.composer.runScript", "title": "Run Composer Script", "category": "Storm", "icon": "$(play)" },
+    { "command": "stormParity.composer.updatePackage", "title": "Update Package", "category": "Storm", "icon": "$(arrow-circle-up)" },
+    { "command": "stormParity.composer.removePackage", "title": "Remove Package", "category": "Storm", "icon": "$(trash)" },
+    { "command": "stormParity.composer.openPackagist", "title": "Open on Packagist", "category": "Storm", "icon": "$(link-external)" },
+    { "command": "stormParity.composer.openManifest", "title": "Open composer.json", "category": "Storm", "icon": "$(go-to-file)" }
+  ],
+  "views": {
+    "stormParity": [
+      { "id": "stormParity.composer", "name": "Composer", "icon": "$(package)", "contextualTitle": "Composer" }
+    ]
+  },
+  "viewsWelcome": [
+    { "view": "stormParity.composer", "contents": "No composer.json in the open folders.", "when": "!stormParity.composer.hasProject" }
+  ],
+  "menus": {
+    "view/title": [
+      { "command": "stormParity.composer.require", "when": "view == stormParity.composer", "group": "navigation@1" },
+      { "command": "stormParity.composer.checkOutdated", "when": "view == stormParity.composer", "group": "navigation@2" },
+      { "command": "stormParity.composer.refresh", "when": "view == stormParity.composer", "group": "navigation@3" },
+      { "command": "stormParity.composer.install", "when": "view == stormParity.composer", "group": "more@1" },
+      { "command": "stormParity.composer.update", "when": "view == stormParity.composer", "group": "more@2" },
+      { "command": "stormParity.composer.openManifest", "when": "view == stormParity.composer", "group": "more@3" }
+    ],
+    "view/item/context": [
+      { "command": "stormParity.composer.runScript", "when": "view == stormParity.composer && viewItem == composerScript", "group": "inline" },
+      { "command": "stormParity.composer.updatePackage", "when": "view == stormParity.composer && viewItem == composerPackage", "group": "inline@1" },
+      { "command": "stormParity.composer.openPackagist", "when": "view == stormParity.composer && viewItem == composerPackage", "group": "1_open@1" },
+      { "command": "stormParity.composer.updatePackage", "when": "view == stormParity.composer && viewItem == composerPackage", "group": "2_edit@1" },
+      { "command": "stormParity.composer.removePackage", "when": "view == stormParity.composer && viewItem == composerPackage", "group": "2_edit@2" },
+      { "command": "stormParity.composer.install", "when": "view == stormParity.composer && viewItem == composerRoot", "group": "1_run@1" },
+      { "command": "stormParity.composer.update", "when": "view == stormParity.composer && viewItem == composerRoot", "group": "1_run@2" },
+      { "command": "stormParity.composer.require", "when": "view == stormParity.composer && viewItem == composerRoot", "group": "1_run@3" },
+      { "command": "stormParity.composer.checkOutdated", "when": "view == stormParity.composer && viewItem == composerRoot", "group": "1_run@4" }
+    ],
+    "commandPalette": [
+      { "command": "stormParity.composer.runScript", "when": "false" },
+      { "command": "stormParity.composer.updatePackage", "when": "false" },
+      { "command": "stormParity.composer.removePackage", "when": "false" },
+      { "command": "stormParity.composer.openPackagist", "when": "false" }
+    ]
+  },
+  "taskDefinitions": [
+    {
+      "type": "storm-composer",
+      "required": ["args"],
+      "properties": { "args": { "type": "array", "items": { "type": "string" }, "description": "Composer arguments, e.g. [\"run-script\", \"test\"]." } }
+    }
+  ],
+  "configuration": {
+    "title": "Composer",
+    "properties": {
+      "stormParity.composer.executable": {
+        "type": "string",
+        "default": "composer",
+        "markdownDescription": "Composer command: a name on PATH, a path without spaces, or e.g. `php composer.phar`."
+      }
+    }
+  }
+}

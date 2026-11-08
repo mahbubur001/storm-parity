@@ -10,6 +10,7 @@ Language support, the HTTP client and database tools are left to dedicated exten
 - **Open Folder (Ask Where)**: pick a folder or `.code-workspace`, then choose *This Window*, *New Window* or *Attach to Current Workspace*. Tick "remember my choice" or set `stormParity.openFolder.defaultAction`.
 - **Open Recent (Ask Where)**: recent folders and workspaces with the same prompt.
 - **Recent Projects view**: groups, aliases, open in new window, reveal in Finder, remove.
+- **Project Color**: *Set Project Color* tints this window's title bar (optionally the status bar with `stormParity.projectColor.statusBar`) so project windows are told apart at a glance. It is saved in the workspace settings (`workbench.colorCustomizations`, the only way VS Code applies colours); only its own keys are written and *Reset Project Color* removes them.
 
 ### External Libraries
 - **PhpStorm Include Paths**: add folders outside the project (WordPress core, shared plugins, SDKs, stubs), browse them in an *External Libraries* view in the Explorer, and have Intelephense index them for completion and Go to Definition. Nothing is written into the project tree.
@@ -25,6 +26,7 @@ Language support, the HTTP client and database tools are left to dedicated exten
 - **Bookmarks with mnemonics**: anonymous or 0-9 / A-Z bookmarks, gutter icons, a Bookmarks view, and positions that follow your edits.
 - **Recent Locations**: recently viewed or edited spots with a code preview. Press the shortcut again to switch to *changed only*.
 - **Search Everywhere**: files, symbols, actions and settings in one picker. Prefixes: `f ` files, `#` symbols, `>` actions, `@set ` settings.
+- **Select In** (Opt+F1): reveal the current file in the Explorer, Finder, a new terminal at its folder, Outline, Timeline or Source Control.
 - **Copy Reference**: copies a PHP FQN (`App\Http\Foo::bar`), a symbol path (`Class.method`) or `path/to/file:42`. *Copy Reference As...* offers every form.
 
 ### Editing
@@ -32,9 +34,14 @@ Language support, the HTTP client and database tools are left to dedicated exten
 - **Surround With**: language-aware templates (if, foreach, try/catch, function, region, HTML tag, ...) with PhpStorm-style number keys.
 - **Toggle Case / Cycle Case**: lower and UPPER, or cycle camelCase, snake_case, kebab-case, PascalCase, SCREAMING_SNAKE.
 - **Compare with Clipboard**: diffs the selection or the whole file against the clipboard.
+- **Postfix completion (PHP)**: type a dot right after an expression: `$user.if`, `$items.foreach` / `.forek`, `$x.return`, `.echo`, `.var`, `.isset`, `.empty`, `.notnull`, `.null`, `.not`, `.inst`, `.par`, `.throw`, `.unset`, `.count`, `.vd`, `.dd`, `User.new`. Concatenation with spaces (`$a . $b`), strings and comments are left alone.
+
+### Run
+- **Run widget**: the selected run configuration sits in the status bar with Run, Debug and Stop buttons, like PhpStorm's toolbar. Configurations are your launch.json configurations and compounds plus every task VS Code knows (tasks.json, npm scripts, composer scripts). *Run...* (Ctrl+Opt+R) and *Debug...* (Ctrl+Opt+D) pick and start one; Stop is Cmd+F2 while something runs.
+- **Composer**: a Composer view (Storm sidebar) with each project's scripts and direct `require` / `require-dev` packages, the installed version from composer.lock, *Check for Package Updates* (`composer outdated`), *Require Package* with live Packagist search, Install, Update, per-package Update / Remove / Open on Packagist. Commands run as tasks; scripts also appear in the Run widget. Set `stormParity.composer.executable` for a custom composer (e.g. `php composer.phar`).
 
 ### Tools
-- **Scratch files**: files in any language, stored outside the project, with a Scratches view in the Explorer, under External Libraries (like PhpStorm's Scratches and Consoles).
+- **Scratch files**: files in any language, stored outside the project, listed in a **Scratches** folder at the end of the External Libraries view, like PhpStorm's Scratches and Consoles (a standalone Scratches view takes over when External Libraries is off).
 - **Changelists**: group working-tree changes into named lists in the Source Control view and commit one list at a time.
 - **Shelf**: shelve a changelist or chosen files as a patch and unshelve it later, independent of `git stash`.
 - **TODO view**: TODO/FIXME/HACK/XXX across the workspace, with filters for the current file and by tag.
@@ -55,6 +62,10 @@ The keys follow PhpStorm on macOS. On Windows and Linux they are the closest Ctr
 | Toggle Numeric Mnemonic 0-9 | Ctrl+Shift+0..9 | Ctrl+Shift+0..9 | - |
 | Recent Locations | Cmd+Shift+E | Ctrl+Shift+E | Show Explorer |
 | Search Everywhere | Cmd+Shift+A | Ctrl+Shift+A | Toggle Block Comment (linux) |
+| Select In | Opt+F1 | Alt+F1 | Accessibility Help (only outside screen reader mode) |
+| Run... (pick and run) | Ctrl+Opt+R | Alt+Shift+F10 | - |
+| Debug... (pick and debug) | Ctrl+Opt+D | Alt+Shift+F9 | - |
+| Stop (while something runs) | Cmd+F2 | Ctrl+F2 | Change All Occurrences (only while running) |
 | Copy Reference | Cmd+Opt+Shift+C | Ctrl+Alt+Shift+C | Copy Relative Path |
 | Copy / Cut (records history) | Cmd+C / Cmd+X | Ctrl+C / Ctrl+X | none: calls the native copy/cut |
 | Paste from History | Cmd+Shift+V | Ctrl+Shift+V | Markdown: Open Preview |

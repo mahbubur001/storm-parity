@@ -112,3 +112,37 @@ suite('externalLibraries: commands', () => {
     }
   });
 });
+
+suite('externalLibraries: sections', () => {
+  test('registered sections follow the libraries and are browsable through the view', async () => {
+    const { LibraryStore } = await import('../features/externalLibraries/store');
+    const { LibraryTree } = await import('../features/externalLibraries/tree');
+    const { registerTreeSection, sectionElement } = await import('../features/externalLibraries/sections');
+    const memento = { get: (_k: string, d?: unknown) => d, update: async () => undefined, keys: () => [] } as unknown as vscode.Memento;
+    const store = new LibraryStore(memento);
+    const tree = new LibraryTree(store);
+    const changed = new vscode.EventEmitter<void>();
+    const reg = registerTreeSection({
+      onDidChange: changed.event,
+      getChildren: (e?: unknown) => (e === undefined ? ['folder'] : e === 'folder' ? ['a.php', 'b.txt'] : []),
+      getTreeItem: (e: unknown) => new vscode.TreeItem(String(e)),
+    });
+    try {
+      const roots = await tree.getChildren();
+      const last = roots[roots.length - 1];
+      assert.strictEqual(last.kind, 'section');
+      assert.strictEqual(sectionElement(last), 'folder');
+      assert.strictEqual(((await tree.getTreeItem(last)) as vscode.TreeItem).label, 'folder');
+      const files = await tree.getChildren(last);
+      assert.deepStrictEqual(files.map(sectionElement), ['a.php', 'b.txt']);
+      assert.strictEqual(sectionElement('plain'), 'plain');
+    } finally {
+      reg.dispose();
+      changed.dispose();
+      tree.dispose();
+      store.dispose();
+    }
+    const after = await tree.getChildren();
+    assert.ok(after.every((n) => n.kind !== 'section'), 'disposed sections are removed');
+  });
+});

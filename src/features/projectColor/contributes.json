@@ -1,0 +1,16 @@
+{
+  "commands": [
+    { "command": "stormParity.projectColor.set", "title": "Set Project Color...", "category": "Storm" },
+    { "command": "stormParity.projectColor.reset", "title": "Reset Project Color", "category": "Storm" }
+  ],
+  "configuration": {
+    "title": "Project Color",
+    "properties": {
+      "stormParity.projectColor.statusBar": {
+        "type": "boolean",
+        "default": false,
+        "description": "Also tint the status bar with the project colour (the title bar is always tinted)."
+      }
+    }
+  }
+}

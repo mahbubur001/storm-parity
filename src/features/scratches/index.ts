@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { nextScratchName, orderByRecent, touchRecent, validateFileName } from './names';
+import { registerTreeSection, sectionElement } from '../externalLibraries/sections';
 
 const RECENT_KEY = 'stormParity.scratches.recentLanguages';
 const VIEW_ID = 'stormParity.scratches';
@@ -74,11 +75,19 @@ class ScratchFolder extends vscode.TreeItem {
 
 type ScratchNode = ScratchFolder | ScratchItem;
 
+/**
+ * Scratch files for two places: nested under a "Scratches" folder at the end of the External Libraries view (like
+ * PhpStorm's project tree), or flat in the own Scratches view, shown only while External Libraries is unavailable.
+ */
 class ScratchesProvider implements vscode.TreeDataProvider<ScratchNode> {
   private readonly emitter = new vscode.EventEmitter<void>();
   readonly onDidChangeTreeData = this.emitter.event;
+  readonly onDidChange = this.emitter.event;
 
-  constructor(private readonly dir: vscode.Uri) {}
+  constructor(
+    private readonly dir: vscode.Uri,
+    private readonly nested: boolean,
+  ) {}
 
   refresh(): void {
     this.emitter.fire();
@@ -88,11 +97,10 @@ class ScratchesProvider implements vscode.TreeDataProvider<ScratchNode> {
     return item;
   }
 
-  /** Root: the Scratches folder, or nothing while it is empty so the welcome text shows. */
   async getChildren(parent?: ScratchNode): Promise<ScratchNode[]> {
     if (parent instanceof ScratchItem) return [];
+    if (!parent && this.nested) return [new ScratchFolder(this.dir)];
     const names = await listScratches(this.dir);
-    if (!parent) return names.length ? [new ScratchFolder(this.dir)] : [];
     return names.map((n) => new ScratchItem(vscode.Uri.joinPath(this.dir, n), n));
   }
 
@@ -117,10 +125,14 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
   const dir = vscode.Uri.joinPath(ctx.globalStorageUri, 'scratches');
   await vscode.workspace.fs.createDirectory(dir);
 
-  const provider = new ScratchesProvider(dir);
+  const provider = new ScratchesProvider(dir, false);
+  const section = new ScratchesProvider(dir, true);
   const view = vscode.window.createTreeView(VIEW_ID, { treeDataProvider: provider, showCollapseAll: false });
   const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(dir, '*'));
-  const refresh = (): void => provider.refresh();
+  const refresh = (): void => {
+    provider.refresh();
+    section.refresh();
+  };
 
   const pickLanguage = async (): Promise<LanguageInfo | undefined> => {
     const recent = ctx.globalState.get<string[]>(RECENT_KEY, []);
@@ -148,7 +160,8 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
   };
 
   /** The scratch file a command acts on: the clicked or selected file, else the active scratch editor. */
-  const targetUri = (item?: ScratchNode): vscode.Uri | undefined => {
+  const targetUri = (arg?: unknown): vscode.Uri | undefined => {
+    const item = sectionElement(arg);
     if (item instanceof ScratchItem) return item.uri;
     const selected = view.selection[0];
     if (selected instanceof ScratchItem) return selected.uri;
@@ -158,7 +171,9 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
 
   ctx.subscriptions.push(
     provider,
+    section,
     view,
+    registerTreeSection(section),
     watcher,
     watcher.onDidCreate(refresh),
     watcher.onDidDelete(refresh),
@@ -182,7 +197,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
       if (lang) await createScratch(lang, content);
     }),
     vscode.commands.registerCommand('stormParity.scratches.refresh', refresh),
-    vscode.commands.registerCommand('stormParity.scratches.rename', async (item?: ScratchNode) => {
+    vscode.commands.registerCommand('stormParity.scratches.rename', async (item?: unknown) => {
       const uri = targetUri(item);
       if (!uri) return;
       const oldName = uri.path.split('/').pop() ?? '';
@@ -202,7 +217,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
       }
       refresh();
     }),
-    vscode.commands.registerCommand('stormParity.scratches.delete', async (item?: ScratchNode) => {
+    vscode.commands.registerCommand('stormParity.scratches.delete', async (item?: unknown) => {
       const uri = targetUri(item);
       if (!uri) return;
       const name = uri.path.split('/').pop();
@@ -211,8 +226,8 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
       await vscode.workspace.fs.delete(uri, { useTrash: false });
       refresh();
     }),
-    vscode.commands.registerCommand('stormParity.scratches.reveal', async (item?: ScratchNode) => {
-      const uri = item instanceof ScratchFolder ? dir : (targetUri(item) ?? dir);
+    vscode.commands.registerCommand('stormParity.scratches.reveal', async (item?: unknown) => {
+      const uri = sectionElement(item) instanceof ScratchFolder ? dir : (targetUri(item) ?? dir);
       await vscode.commands.executeCommand('revealFileInOS', uri);
     }),
   );

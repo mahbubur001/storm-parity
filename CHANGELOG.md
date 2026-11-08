@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0
+
+- **Run widget**: status bar selector of run configurations (launch.json, compounds, tasks, npm and composer scripts) with Run, Debug and Stop buttons; *Run...* Ctrl+Opt+R, *Debug...* Ctrl+Opt+D, Stop Cmd+F2 while running.
+- **Postfix completion for PHP**: `$x.if`, `.foreach`, `.forek`, `.return`, `.echo`, `.var`, `.isset`, `.notnull`, `.inst`, `User.new` and more.
+- **Select In** (Opt+F1): reveal the current file in the Explorer, Finder, a terminal, Outline, Timeline or Source Control.
+- **Project Color**: tint the window title bar (optionally the status bar) per project.
+- **Composer view**: scripts and packages with installed versions, update check, Packagist search for *Require*, install / update / remove as tasks; composer scripts appear in the Run widget.
+
+- Scratches is now a **Scratches** folder at the end of the External Libraries tree (files indented under it, no second "Scratches" header), like PhpStorm's project tree. The folder has inline **New Scratch File**; rename / delete / reveal work as before. The standalone Scratches view only appears when External Libraries is turned off.
+
 ## 0.3.1
 
 - Scratches moved from the Storm sidebar to the Explorer, right under External Libraries, with the files under a collapsible "Scratches" folder (like PhpStorm's Scratches and Consoles).

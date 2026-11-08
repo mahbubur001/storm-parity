@@ -1,0 +1,17 @@
+{
+  "commands": [
+    { "command": "stormParity.selectIn.show", "title": "Select In...", "category": "Storm" }
+  ],
+  "keybindings": [
+    { "command": "stormParity.selectIn.show", "key": "alt+f1", "mac": "alt+f1", "when": "!accessibilityModeEnabled" }
+  ],
+  "menus": {
+    "editor/title/context": [
+      { "command": "stormParity.selectIn.show", "group": "2_files@9" }
+    ]
+  },
+  "configuration": {
+    "title": "Select In",
+    "properties": {}
+  }
+}

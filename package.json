@@ -2,7 +2,7 @@
   "name": "storm-parity",
   "displayName": "Storm Parity",
   "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent projects, mnemonic bookmarks, recent locations, clipboard history, surround with, scratch files, external libraries (include paths), changelists, shelf, local history and more.",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "publisher": "itemcoder",
   "license": "MIT",
   "repository": {
@@ -231,6 +231,66 @@
         "icon": "$(diff)"
       },
       {
+        "command": "stormParity.composer.refresh",
+        "title": "Refresh Composer",
+        "category": "Storm",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "stormParity.composer.install",
+        "title": "Composer Install",
+        "category": "Storm",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "stormParity.composer.update",
+        "title": "Composer Update",
+        "category": "Storm",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "stormParity.composer.require",
+        "title": "Composer Require Package...",
+        "category": "Storm",
+        "icon": "$(add)"
+      },
+      {
+        "command": "stormParity.composer.checkOutdated",
+        "title": "Composer: Check for Package Updates",
+        "category": "Storm",
+        "icon": "$(arrow-circle-up)"
+      },
+      {
+        "command": "stormParity.composer.runScript",
+        "title": "Run Composer Script",
+        "category": "Storm",
+        "icon": "$(play)"
+      },
+      {
+        "command": "stormParity.composer.updatePackage",
+        "title": "Update Package",
+        "category": "Storm",
+        "icon": "$(arrow-circle-up)"
+      },
+      {
+        "command": "stormParity.composer.removePackage",
+        "title": "Remove Package",
+        "category": "Storm",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "stormParity.composer.openPackagist",
+        "title": "Open on Packagist",
+        "category": "Storm",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "stormParity.composer.openManifest",
+        "title": "Open composer.json",
+        "category": "Storm",
+        "icon": "$(go-to-file)"
+      },
+      {
         "command": "stormParity.copyReference.copyReference",
         "title": "Copy Reference",
         "category": "Storm"
@@ -316,6 +376,16 @@
         "icon": "$(history)"
       },
       {
+        "command": "stormParity.projectColor.set",
+        "title": "Set Project Color...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.projectColor.reset",
+        "title": "Reset Project Color",
+        "category": "Storm"
+      },
+      {
         "command": "stormParity.recentLocations.show",
         "title": "Recent Locations",
         "category": "Storm"
@@ -392,6 +462,39 @@
         "icon": "$(trash)"
       },
       {
+        "command": "stormParity.run.select",
+        "title": "Select Run Configuration...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.run.run",
+        "title": "Run Selected Configuration",
+        "category": "Storm",
+        "icon": "$(play)"
+      },
+      {
+        "command": "stormParity.run.debug",
+        "title": "Debug Selected Configuration",
+        "category": "Storm",
+        "icon": "$(debug-alt)"
+      },
+      {
+        "command": "stormParity.run.runAny",
+        "title": "Run...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.run.debugAny",
+        "title": "Debug...",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.run.stop",
+        "title": "Stop",
+        "category": "Storm",
+        "icon": "$(debug-stop)"
+      },
+      {
         "command": "stormParity.scratches.new",
         "title": "New Scratch File...",
         "category": "Storm",
@@ -429,6 +532,11 @@
         "title": "Search Everywhere",
         "category": "Storm",
         "icon": "$(search)"
+      },
+      {
+        "command": "stormParity.selectIn.show",
+        "title": "Select In...",
+        "category": "Storm"
       },
       {
         "command": "stormParity.shelf.shelve",
@@ -797,6 +905,24 @@
         "when": "config.stormParity.keymap.enabled && (config.stormParity.recentLocations.enabled && (inQuickOpen && stormParity.recentLocations.pickerOpen))"
       },
       {
+        "command": "stormParity.run.runAny",
+        "key": "alt+shift+f10",
+        "mac": "ctrl+alt+r",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.run.enabled)"
+      },
+      {
+        "command": "stormParity.run.debugAny",
+        "key": "alt+shift+f9",
+        "mac": "ctrl+alt+d",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.run.enabled)"
+      },
+      {
+        "command": "stormParity.run.stop",
+        "key": "ctrl+f2",
+        "mac": "cmd+f2",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.run.enabled && (stormParity.run.running))"
+      },
+      {
         "command": "stormParity.scratches.new",
         "key": "ctrl+shift+n",
         "mac": "cmd+shift+n",
@@ -807,6 +933,12 @@
         "mac": "cmd+shift+a",
         "key": "ctrl+shift+a",
         "when": "config.stormParity.keymap.enabled && (config.stormParity.searchEverywhere.enabled && (!inQuickOpen))"
+      },
+      {
+        "command": "stormParity.selectIn.show",
+        "key": "alt+f1",
+        "mac": "alt+f1",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.selectIn.enabled && (!accessibilityModeEnabled))"
       },
       {
         "command": "stormParity.surroundWith.surround",
@@ -944,6 +1076,22 @@
         {
           "command": "stormParity.compareClipboard.compare",
           "when": "editorIsOpen"
+        },
+        {
+          "command": "stormParity.composer.runScript",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.composer.updatePackage",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.composer.removePackage",
+          "when": "false"
+        },
+        {
+          "command": "stormParity.composer.openPackagist",
+          "when": "false"
         },
         {
           "command": "stormParity.copyReference.copyReference",
@@ -1090,6 +1238,36 @@
           "group": "navigation@2"
         },
         {
+          "command": "stormParity.composer.require",
+          "when": "view == stormParity.composer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stormParity.composer.checkOutdated",
+          "when": "view == stormParity.composer",
+          "group": "navigation@2"
+        },
+        {
+          "command": "stormParity.composer.refresh",
+          "when": "view == stormParity.composer",
+          "group": "navigation@3"
+        },
+        {
+          "command": "stormParity.composer.install",
+          "when": "view == stormParity.composer",
+          "group": "more@1"
+        },
+        {
+          "command": "stormParity.composer.update",
+          "when": "view == stormParity.composer",
+          "group": "more@2"
+        },
+        {
+          "command": "stormParity.composer.openManifest",
+          "when": "view == stormParity.composer",
+          "group": "more@3"
+        },
+        {
           "command": "stormParity.externalLibraries.add",
           "when": "view == stormParity.externalLibraries",
           "group": "navigation@1"
@@ -1192,18 +1370,63 @@
           "group": "1_edit@2"
         },
         {
+          "command": "stormParity.composer.runScript",
+          "when": "view == stormParity.composer && viewItem == composerScript",
+          "group": "inline"
+        },
+        {
+          "command": "stormParity.composer.updatePackage",
+          "when": "view == stormParity.composer && viewItem == composerPackage",
+          "group": "inline@1"
+        },
+        {
+          "command": "stormParity.composer.openPackagist",
+          "when": "view == stormParity.composer && viewItem == composerPackage",
+          "group": "1_open@1"
+        },
+        {
+          "command": "stormParity.composer.updatePackage",
+          "when": "view == stormParity.composer && viewItem == composerPackage",
+          "group": "2_edit@1"
+        },
+        {
+          "command": "stormParity.composer.removePackage",
+          "when": "view == stormParity.composer && viewItem == composerPackage",
+          "group": "2_edit@2"
+        },
+        {
+          "command": "stormParity.composer.install",
+          "when": "view == stormParity.composer && viewItem == composerRoot",
+          "group": "1_run@1"
+        },
+        {
+          "command": "stormParity.composer.update",
+          "when": "view == stormParity.composer && viewItem == composerRoot",
+          "group": "1_run@2"
+        },
+        {
+          "command": "stormParity.composer.require",
+          "when": "view == stormParity.composer && viewItem == composerRoot",
+          "group": "1_run@3"
+        },
+        {
+          "command": "stormParity.composer.checkOutdated",
+          "when": "view == stormParity.composer && viewItem == composerRoot",
+          "group": "1_run@4"
+        },
+        {
           "command": "stormParity.externalLibraries.remove",
           "when": "view == stormParity.externalLibraries && viewItem == library",
           "group": "inline"
         },
         {
           "command": "stormParity.externalLibraries.revealInOS",
-          "when": "view == stormParity.externalLibraries",
+          "when": "view == stormParity.externalLibraries && viewItem =~ /^library/",
           "group": "1_reveal@1"
         },
         {
           "command": "stormParity.externalLibraries.copyPath",
-          "when": "view == stormParity.externalLibraries",
+          "when": "view == stormParity.externalLibraries && viewItem =~ /^library/",
           "group": "1_reveal@2"
         },
         {
@@ -1258,32 +1481,37 @@
         },
         {
           "command": "stormParity.scratches.delete",
-          "when": "view == stormParity.scratches && viewItem == scratchFile",
+          "when": "view =~ /^stormParity\\.(scratches|externalLibraries)$/ && viewItem == scratchFile",
           "group": "inline"
         },
         {
           "command": "stormParity.scratches.rename",
-          "when": "view == stormParity.scratches && viewItem == scratchFile",
+          "when": "view =~ /^stormParity\\.(scratches|externalLibraries)$/ && viewItem == scratchFile",
           "group": "1_edit@1"
         },
         {
           "command": "stormParity.scratches.delete",
-          "when": "view == stormParity.scratches && viewItem == scratchFile",
+          "when": "view =~ /^stormParity\\.(scratches|externalLibraries)$/ && viewItem == scratchFile",
           "group": "1_edit@2"
         },
         {
           "command": "stormParity.scratches.reveal",
-          "when": "view == stormParity.scratches && viewItem == scratchFile",
+          "when": "view =~ /^stormParity\\.(scratches|externalLibraries)$/ && viewItem == scratchFile",
           "group": "2_reveal@1"
         },
         {
           "command": "stormParity.scratches.new",
-          "when": "view == stormParity.scratches && viewItem == scratchFolder",
+          "when": "view == stormParity.externalLibraries && viewItem == scratchFolder",
+          "group": "inline"
+        },
+        {
+          "command": "stormParity.scratches.new",
+          "when": "view == stormParity.externalLibraries && viewItem == scratchFolder",
           "group": "1_new@1"
         },
         {
           "command": "stormParity.scratches.reveal",
-          "when": "view == stormParity.scratches && viewItem == scratchFolder",
+          "when": "view == stormParity.externalLibraries && viewItem == scratchFolder",
           "group": "2_reveal@1"
         },
         {
@@ -1463,6 +1691,12 @@
           "when": "resourceScheme == file && !explorerResourceIsFolder",
           "group": "z_storm@10"
         }
+      ],
+      "editor/title/context": [
+        {
+          "command": "stormParity.selectIn.show",
+          "group": "2_files@9"
+        }
       ]
     },
     "viewsContainers": {
@@ -1480,6 +1714,12 @@
           "id": "stormParity.bookmarks",
           "name": "Bookmarks",
           "icon": "$(bookmark)"
+        },
+        {
+          "id": "stormParity.composer",
+          "name": "Composer",
+          "icon": "$(package)",
+          "contextualTitle": "Composer"
         },
         {
           "id": "stormParity.recentProjects",
@@ -1512,11 +1752,16 @@
           "name": "Scratches",
           "icon": "$(notebook)",
           "contextualTitle": "Scratches",
-          "when": "config.stormParity.scratches.enabled"
+          "when": "config.stormParity.scratches.enabled && !stormParity.externalLibraries.active"
         }
       ]
     },
     "viewsWelcome": [
+      {
+        "view": "stormParity.composer",
+        "contents": "No composer.json in the open folders.",
+        "when": "!stormParity.composer.hasProject"
+      },
       {
         "view": "stormParity.externalLibraries",
         "contents": "Folders outside the project (WordPress core, shared plugins, SDKs) indexed for completion and navigation, like PhpStorm's External Libraries.\n[Add External Library](command:stormParity.externalLibraries.add)",
@@ -1650,8 +1895,25 @@
         }
       },
       {
-        "title": "copyReference",
+        "title": "Composer",
         "order": 14,
+        "properties": {
+          "stormParity.composer.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Composer feature (reload required)."
+          },
+          "stormParity.composer.executable": {
+            "type": "string",
+            "default": "composer",
+            "markdownDescription": "Composer command: a name on PATH, a path without spaces, or e.g. `php composer.phar`."
+          }
+        }
+      },
+      {
+        "title": "copyReference",
+        "order": 15,
         "properties": {
           "stormParity.copyReference.enabled": {
             "type": "boolean",
@@ -1663,7 +1925,7 @@
       },
       {
         "title": "External Libraries",
-        "order": 15,
+        "order": 16,
         "properties": {
           "stormParity.externalLibraries.enabled": {
             "type": "boolean",
@@ -1690,7 +1952,7 @@
       },
       {
         "title": "Local History",
-        "order": 16,
+        "order": 17,
         "properties": {
           "stormParity.localHistory.enabled": {
             "type": "boolean",
@@ -1731,7 +1993,7 @@
       },
       {
         "title": "Open Folder",
-        "order": 17,
+        "order": 18,
         "properties": {
           "stormParity.openFolder.enabled": {
             "type": "boolean",
@@ -1758,8 +2020,37 @@
         }
       },
       {
+        "title": "Postfix Completion (PHP)",
+        "order": 19,
+        "properties": {
+          "stormParity.postfix.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Postfix Completion (PHP) feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "Project Color",
+        "order": 20,
+        "properties": {
+          "stormParity.projectColor.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Project Color feature (reload required)."
+          },
+          "stormParity.projectColor.statusBar": {
+            "type": "boolean",
+            "default": false,
+            "description": "Also tint the status bar with the project colour (the title bar is always tinted)."
+          }
+        }
+      },
+      {
         "title": "Recent Locations",
-        "order": 18,
+        "order": 21,
         "properties": {
           "stormParity.recentLocations.enabled": {
             "type": "boolean",
@@ -1785,7 +2076,7 @@
       },
       {
         "title": "recentProjects",
-        "order": 19,
+        "order": 22,
         "properties": {
           "stormParity.recentProjects.enabled": {
             "type": "boolean",
@@ -1796,8 +2087,20 @@
         }
       },
       {
+        "title": "Run Widget",
+        "order": 23,
+        "properties": {
+          "stormParity.run.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Run Widget feature (reload required)."
+          }
+        }
+      },
+      {
         "title": "Scratch Files",
-        "order": 20,
+        "order": 24,
         "properties": {
           "stormParity.scratches.enabled": {
             "type": "boolean",
@@ -1809,7 +2112,7 @@
       },
       {
         "title": "searchEverywhere",
-        "order": 21,
+        "order": 25,
         "properties": {
           "stormParity.searchEverywhere.enabled": {
             "type": "boolean",
@@ -1820,8 +2123,20 @@
         }
       },
       {
+        "title": "Select In",
+        "order": 26,
+        "properties": {
+          "stormParity.selectIn.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Select In feature (reload required)."
+          }
+        }
+      },
+      {
         "title": "Shelf",
-        "order": 22,
+        "order": 27,
         "properties": {
           "stormParity.shelf.enabled": {
             "type": "boolean",
@@ -1838,7 +2153,7 @@
       },
       {
         "title": "Surround With",
-        "order": 23,
+        "order": 28,
         "properties": {
           "stormParity.surroundWith.enabled": {
             "type": "boolean",
@@ -1850,7 +2165,7 @@
       },
       {
         "title": "Terminal",
-        "order": 24,
+        "order": 29,
         "properties": {
           "stormParity.terminal.enabled": {
             "type": "boolean",
@@ -1867,7 +2182,7 @@
       },
       {
         "title": "TODO",
-        "order": 25,
+        "order": 30,
         "properties": {
           "stormParity.todo.enabled": {
             "type": "boolean",
@@ -1921,7 +2236,7 @@
       },
       {
         "title": "toggleCase",
-        "order": 26,
+        "order": 31,
         "properties": {
           "stormParity.toggleCase.enabled": {
             "type": "boolean",
@@ -1994,6 +2309,23 @@
             ]
           }
         ]
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "storm-composer",
+        "required": [
+          "args"
+        ],
+        "properties": {
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Composer arguments, e.g. [\"run-script\", \"test\"]."
+          }
+        }
       }
     ]
   }
