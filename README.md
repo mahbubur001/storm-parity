@@ -34,7 +34,7 @@ Language support, the HTTP client and database tools are left to dedicated exten
 - **Compare with Clipboard**: diffs the selection or the whole file against the clipboard.
 
 ### Tools
-- **Scratch files**: files in any language, stored outside the project, with a Scratches view.
+- **Scratch files**: files in any language, stored outside the project, with a Scratches view in the Explorer, under External Libraries (like PhpStorm's Scratches and Consoles).
 - **Changelists**: group working-tree changes into named lists in the Source Control view and commit one list at a time.
 - **Shelf**: shelve a changelist or chosen files as a patch and unshelve it later, independent of `git stash`.
 - **TODO view**: TODO/FIXME/HACK/XXX across the workspace, with filters for the current file and by tag.

@@ -11,8 +11,8 @@
     { "command": "stormParity.scratches.new", "key": "ctrl+shift+n", "mac": "cmd+shift+n" }
   ],
   "views": {
-    "stormParity": [
-      { "id": "stormParity.scratches", "name": "Scratches", "icon": "$(notebook)" }
+    "explorer": [
+      { "id": "stormParity.scratches", "name": "Scratches", "icon": "$(notebook)", "contextualTitle": "Scratches", "when": "config.stormParity.scratches.enabled" }
     ]
   },
   "viewsWelcome": [
@@ -28,7 +28,9 @@
       { "command": "stormParity.scratches.delete", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "inline" },
       { "command": "stormParity.scratches.rename", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "1_edit@1" },
       { "command": "stormParity.scratches.delete", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "1_edit@2" },
-      { "command": "stormParity.scratches.reveal", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "2_reveal@1" }
+      { "command": "stormParity.scratches.reveal", "when": "view == stormParity.scratches && viewItem == scratchFile", "group": "2_reveal@1" },
+      { "command": "stormParity.scratches.new", "when": "view == stormParity.scratches && viewItem == scratchFolder", "group": "1_new@1" },
+      { "command": "stormParity.scratches.reveal", "when": "view == stormParity.scratches && viewItem == scratchFolder", "group": "2_reveal@1" }
     ],
     "editor/context": [
       { "command": "stormParity.scratches.newFromSelection", "when": "editorHasSelection", "group": "9_cutcopypaste@9" }

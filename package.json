@@ -2,7 +2,7 @@
   "name": "storm-parity",
   "displayName": "Storm Parity",
   "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent projects, mnemonic bookmarks, recent locations, clipboard history, surround with, scratch files, external libraries (include paths), changelists, shelf, local history and more.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "publisher": "itemcoder",
   "license": "MIT",
   "repository": {
@@ -1277,6 +1277,16 @@
           "group": "2_reveal@1"
         },
         {
+          "command": "stormParity.scratches.new",
+          "when": "view == stormParity.scratches && viewItem == scratchFolder",
+          "group": "1_new@1"
+        },
+        {
+          "command": "stormParity.scratches.reveal",
+          "when": "view == stormParity.scratches && viewItem == scratchFolder",
+          "group": "2_reveal@1"
+        },
+        {
           "command": "stormParity.shelf.unshelve",
           "group": "inline@1",
           "when": "view == stormParity.shelf && viewItem == shelf"
@@ -1478,11 +1488,6 @@
           "contextualTitle": "Storm"
         },
         {
-          "id": "stormParity.scratches",
-          "name": "Scratches",
-          "icon": "$(notebook)"
-        },
-        {
           "id": "stormParity.shelf",
           "name": "Shelf",
           "icon": "$(archive)",
@@ -1501,6 +1506,13 @@
           "icon": "media/externalLibraries-view.svg",
           "contextualTitle": "External Libraries",
           "when": "config.stormParity.externalLibraries.enabled && !stormParity.externalLibraries.legacyInstalled"
+        },
+        {
+          "id": "stormParity.scratches",
+          "name": "Scratches",
+          "icon": "$(notebook)",
+          "contextualTitle": "Scratches",
+          "when": "config.stormParity.scratches.enabled"
         }
       ]
     },

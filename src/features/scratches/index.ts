@@ -60,7 +60,21 @@ class ScratchItem extends vscode.TreeItem {
   }
 }
 
-class ScratchesProvider implements vscode.TreeDataProvider<ScratchItem> {
+/** The root "Scratches" folder node, like PhpStorm's Scratches and Consoles entry in the project tree. */
+class ScratchFolder extends vscode.TreeItem {
+  constructor(public readonly uri: vscode.Uri) {
+    super('Scratches', vscode.TreeItemCollapsibleState.Expanded);
+    this.id = 'stormParity.scratches.root';
+    this.resourceUri = uri;
+    this.iconPath = vscode.ThemeIcon.Folder;
+    this.contextValue = 'scratchFolder';
+    this.tooltip = uri.fsPath;
+  }
+}
+
+type ScratchNode = ScratchFolder | ScratchItem;
+
+class ScratchesProvider implements vscode.TreeDataProvider<ScratchNode> {
   private readonly emitter = new vscode.EventEmitter<void>();
   readonly onDidChangeTreeData = this.emitter.event;
 
@@ -70,12 +84,15 @@ class ScratchesProvider implements vscode.TreeDataProvider<ScratchItem> {
     this.emitter.fire();
   }
 
-  getTreeItem(item: ScratchItem): vscode.TreeItem {
+  getTreeItem(item: ScratchNode): vscode.TreeItem {
     return item;
   }
 
-  async getChildren(): Promise<ScratchItem[]> {
+  /** Root: the Scratches folder, or nothing while it is empty so the welcome text shows. */
+  async getChildren(parent?: ScratchNode): Promise<ScratchNode[]> {
+    if (parent instanceof ScratchItem) return [];
     const names = await listScratches(this.dir);
+    if (!parent) return names.length ? [new ScratchFolder(this.dir)] : [];
     return names.map((n) => new ScratchItem(vscode.Uri.joinPath(this.dir, n), n));
   }
 
@@ -130,10 +147,11 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
     refresh();
   };
 
-  const targetUri = (item?: ScratchItem): vscode.Uri | undefined => {
-    if (item) return item.uri;
+  /** The scratch file a command acts on: the clicked or selected file, else the active scratch editor. */
+  const targetUri = (item?: ScratchNode): vscode.Uri | undefined => {
+    if (item instanceof ScratchItem) return item.uri;
     const selected = view.selection[0];
-    if (selected) return selected.uri;
+    if (selected instanceof ScratchItem) return selected.uri;
     const active = vscode.window.activeTextEditor?.document.uri;
     return active && active.toString().startsWith(dir.toString() + '/') ? active : undefined;
   };
@@ -164,7 +182,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
       if (lang) await createScratch(lang, content);
     }),
     vscode.commands.registerCommand('stormParity.scratches.refresh', refresh),
-    vscode.commands.registerCommand('stormParity.scratches.rename', async (item?: ScratchItem) => {
+    vscode.commands.registerCommand('stormParity.scratches.rename', async (item?: ScratchNode) => {
       const uri = targetUri(item);
       if (!uri) return;
       const oldName = uri.path.split('/').pop() ?? '';
@@ -184,7 +202,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
       }
       refresh();
     }),
-    vscode.commands.registerCommand('stormParity.scratches.delete', async (item?: ScratchItem) => {
+    vscode.commands.registerCommand('stormParity.scratches.delete', async (item?: ScratchNode) => {
       const uri = targetUri(item);
       if (!uri) return;
       const name = uri.path.split('/').pop();
@@ -193,8 +211,8 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
       await vscode.workspace.fs.delete(uri, { useTrash: false });
       refresh();
     }),
-    vscode.commands.registerCommand('stormParity.scratches.reveal', async (item?: ScratchItem) => {
-      const uri = targetUri(item) ?? dir;
+    vscode.commands.registerCommand('stormParity.scratches.reveal', async (item?: ScratchNode) => {
+      const uri = item instanceof ScratchFolder ? dir : (targetUri(item) ?? dir);
       await vscode.commands.executeCommand('revealFileInOS', uri);
     }),
   );

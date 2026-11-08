@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+- Scratches moved from the Storm sidebar to the Explorer, right under External Libraries, with the files under a collapsible "Scratches" folder (like PhpStorm's Scratches and Consoles).
+
 ## 0.3.0
 
 - Terminal Tabs Below: terminals as real tabs in a full-width group under the code (PhpStorm-style tab strip), with Opt+F12 to focus, hide and restore them. Forces `workbench.editor.showTabs: multiple` while on so terminal tabs are not hidden in a dropdown.
