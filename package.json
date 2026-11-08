@@ -493,6 +493,31 @@
         "category": "Storm"
       },
       {
+        "command": "stormParity.terminal.toggleTabsBelow",
+        "title": "Toggle Terminal Tabs Below (PhpStorm Style)",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.terminal.newTab",
+        "title": "New Terminal Tab Below",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.terminal.showTabs",
+        "title": "Show Terminal Tabs",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.terminal.hideTabs",
+        "title": "Hide Terminal Tabs",
+        "category": "Storm"
+      },
+      {
+        "command": "stormParity.terminal.restoreTabs",
+        "title": "Restore Terminal Tabs",
+        "category": "Storm"
+      },
+      {
         "command": "stormParity.todo.refresh",
         "title": "Rescan TODO Items",
         "category": "Storm",
@@ -793,19 +818,43 @@
         "command": "workbench.action.terminal.toggleTerminal",
         "mac": "alt+f12",
         "key": "alt+f12",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled)"
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (!config.stormParity.terminal.tabsBelow))"
+      },
+      {
+        "command": "stormParity.terminal.restoreTabs",
+        "mac": "alt+f12",
+        "key": "alt+f12",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (config.stormParity.terminal.tabsBelow && editorPartMaximizedEditorGroup))"
+      },
+      {
+        "command": "stormParity.terminal.hideTabs",
+        "mac": "alt+f12",
+        "key": "alt+f12",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (config.stormParity.terminal.tabsBelow && terminalEditorFocus && !editorPartMaximizedEditorGroup))"
+      },
+      {
+        "command": "stormParity.terminal.showTabs",
+        "mac": "alt+f12",
+        "key": "alt+f12",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (config.stormParity.terminal.tabsBelow && !terminalEditorFocus && !editorPartMaximizedEditorGroup))"
       },
       {
         "command": "workbench.action.terminal.new",
         "mac": "cmd+t",
         "key": "ctrl+shift+t",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus))"
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus && !config.stormParity.terminal.tabsBelow))"
+      },
+      {
+        "command": "stormParity.terminal.newTab",
+        "mac": "cmd+t",
+        "key": "ctrl+shift+t",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus && config.stormParity.terminal.tabsBelow))"
       },
       {
         "command": "workbench.action.terminal.kill",
         "mac": "cmd+w",
         "key": "ctrl+f4",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus && terminalEditorFocus == false))"
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus && !terminalEditorFocus))"
       },
       {
         "command": "workbench.action.terminal.rename",
@@ -817,13 +866,25 @@
         "command": "workbench.action.terminal.focusNext",
         "mac": "cmd+shift+]",
         "key": "alt+right",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus))"
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus && !terminalEditorFocus))"
       },
       {
         "command": "workbench.action.terminal.focusPrevious",
         "mac": "cmd+shift+[",
         "key": "alt+left",
-        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus))"
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalFocus && !terminalEditorFocus))"
+      },
+      {
+        "command": "workbench.action.nextEditorInGroup",
+        "mac": "cmd+shift+]",
+        "key": "alt+right",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalEditorFocus))"
+      },
+      {
+        "command": "workbench.action.previousEditorInGroup",
+        "mac": "cmd+shift+[",
+        "key": "alt+left",
+        "when": "config.stormParity.keymap.enabled && (config.stormParity.terminal.enabled && (terminalEditorFocus))"
       },
       {
         "command": "stormParity.toggleCase.toggleCase",
@@ -971,6 +1032,22 @@
         {
           "command": "stormParity.surroundWith.surround",
           "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.terminal.newTab",
+          "when": "config.stormParity.terminal.tabsBelow"
+        },
+        {
+          "command": "stormParity.terminal.showTabs",
+          "when": "config.stormParity.terminal.tabsBelow"
+        },
+        {
+          "command": "stormParity.terminal.hideTabs",
+          "when": "config.stormParity.terminal.tabsBelow"
+        },
+        {
+          "command": "stormParity.terminal.restoreTabs",
+          "when": "config.stormParity.terminal.tabsBelow && editorPartMaximizedEditorGroup"
         },
         {
           "command": "stormParity.toggleCase.toggleCase",
@@ -1768,6 +1845,11 @@
             "default": true,
             "order": 0,
             "description": "Enable the Terminal feature (reload required)."
+          },
+          "stormParity.terminal.tabsBelow": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Run terminals as tabs in a full-width editor group below the code (PhpStorm-style tab strip). Turn on or off with **Storm: Toggle Terminal Tabs Below**, which also moves open terminals. Opt+F12 then shows, focuses and hides that group."
           }
         }
       },

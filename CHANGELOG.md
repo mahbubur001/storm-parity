@@ -2,6 +2,7 @@
 
 ## 0.3.0
 
+- Terminal Tabs Below: terminals as real tabs in a full-width group under the code (PhpStorm-style tab strip), with Opt+F12 to focus, hide and restore them.
 - Terminal: PhpStorm keys (Opt+F12 toggle, Cmd+T new, Cmd+W close, Shift+F6 rename, Cmd+Shift+] / [ switch) and *Toggle Compact Terminal Tabs*, which swaps the side tab list for the title-bar dropdown.
 - Disabling a feature now also removes its keyboard shortcuts.
 

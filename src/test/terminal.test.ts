@@ -1,9 +1,32 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
+import { withBottomGroup } from '../features/terminal/layout';
 
-suite('terminal', () => {
-  test('toggleCompactTabs flips terminal.integrated.tabs.enabled', async () => {
+suite('terminal: layout', () => {
+  test('side-by-side groups are nested in a top row above a full-width bottom group', () => {
+    const next = withBottomGroup({ orientation: 0, groups: [{ size: 0.5 }, { size: 0.5 }] });
+    assert.deepStrictEqual(next, { orientation: 1, groups: [{ size: 0.7, groups: [{ size: 0.5 }, { size: 0.5 }] }, { size: 0.3 }] });
+  });
+
+  test('stacked groups keep their sizes and get a bottom group worth 30% of the area', () => {
+    const next = withBottomGroup({ orientation: 1, groups: [{ size: 400 }, { size: 300 }] });
+    assert.strictEqual(next.orientation, 1);
+    assert.deepStrictEqual(next.groups.slice(0, 2), [{ size: 400 }, { size: 300 }]);
+    const bottom = next.groups[2].size ?? 0;
+    assert.ok(Math.abs(bottom / (700 + bottom) - 0.3) < 1e-9);
+  });
+
+  test('a single group becomes a two-row layout', () => {
+    assert.deepStrictEqual(withBottomGroup({ orientation: 0, groups: [{}] }), { orientation: 1, groups: [{ size: 0.7, groups: [{}] }, { size: 0.3 }] });
+  });
+});
+
+suite('terminal: commands', () => {
+  suiteSetup(async () => {
     await vscode.extensions.getExtension('itemcoder.storm-parity')?.activate();
+  });
+
+  test('toggleCompactTabs flips terminal.integrated.tabs.enabled', async () => {
     const config = () => vscode.workspace.getConfiguration('terminal.integrated');
     const before = config().get<boolean>('tabs.enabled', true);
     try {
@@ -13,6 +36,43 @@ suite('terminal', () => {
       assert.strictEqual(config().get<boolean>('tabs.enabled'), before);
     } finally {
       await config().update('tabs.enabled', undefined, vscode.ConfigurationTarget.Global);
+    }
+  });
+
+  test('tabs below moves panel terminals into a bottom group and back', async function () {
+    this.timeout(30000);
+    const terminalTabs = () => vscode.window.tabGroups.all.flatMap((g) => g.tabs.filter((t) => t.input instanceof vscode.TabInputTerminal).map(() => g.viewColumn));
+    const doc = await vscode.workspace.openTextDocument({ content: 'code', language: 'plaintext' });
+    await vscode.window.showTextDocument(doc);
+    const a = vscode.window.createTerminal({ name: 'storm-a' });
+    const b = vscode.window.createTerminal({ name: 'storm-b' });
+    a.show();
+    b.show();
+    try {
+      await vscode.commands.executeCommand('stormParity.terminal.toggleTabsBelow');
+      assert.strictEqual(vscode.workspace.getConfiguration('stormParity.terminal').get('tabsBelow'), true);
+      const columns = terminalTabs();
+      assert.strictEqual(columns.length, 2, 'both terminals became tabs');
+      assert.strictEqual(new Set(columns).size, 1, 'in one group: ' + JSON.stringify({ columns, groups: vscode.window.tabGroups.all.map((g) => [g.viewColumn, g.tabs.map((t) => t.label)]) }));
+      assert.ok(vscode.window.tabGroups.all[0].tabs.some((t) => t.input instanceof vscode.TabInputText), 'code stays in the top group');
+      assert.strictEqual(columns[0], Math.max(...vscode.window.tabGroups.all.map((g) => g.viewColumn)), 'the last (bottom) group');
+
+      await vscode.commands.executeCommand('stormParity.terminal.newTab');
+      assert.strictEqual(terminalTabs().length, 3, 'new tabs open in the same group');
+
+      await vscode.commands.executeCommand('stormParity.terminal.hideTabs');
+      await vscode.commands.executeCommand('stormParity.terminal.restoreTabs');
+      assert.strictEqual(terminalTabs().length, 3, 'hide and restore keep the terminal tabs');
+      assert.strictEqual(vscode.window.tabGroups.activeTabGroup.viewColumn, columns[0], 'restore focuses the terminal group');
+
+      await vscode.commands.executeCommand('stormParity.terminal.toggleTabsBelow');
+      assert.strictEqual(terminalTabs().length, 0, 'all terminals back in the panel');
+      assert.strictEqual(vscode.window.tabGroups.all.length, 1, 'the bottom group is gone');
+      assert.ok(vscode.window.tabGroups.all[0].tabs.some((t) => t.input instanceof vscode.TabInputText), 'the code editor stayed');
+    } finally {
+      await vscode.workspace.getConfiguration('stormParity.terminal').update('tabsBelow', undefined, vscode.ConfigurationTarget.Global);
+      vscode.window.terminals.forEach((t) => t.dispose());
+      await vscode.commands.executeCommand('workbench.action.revertAndCloseActiveEditor');
     }
   });
 });

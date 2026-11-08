@@ -18,6 +18,7 @@ Language support, the HTTP client and database tools are left to dedicated exten
 
 ### Terminal
 - **PhpStorm terminal keys**: Opt+F12 toggles the terminal, Cmd+T / Cmd+W open and close a session, Shift+F6 renames it, Cmd+Shift+] / [ switch sessions.
+- **Terminal Tabs Below (PhpStorm style)**: *Toggle Terminal Tabs Below* moves your terminals into a full-width editor group under the code, so they get a real tab strip with close buttons. Opt+F12 focuses the tabs, hides them (the code group is maximized) and brings them back; Cmd+T opens a new tab there; Cmd+Shift+] / [ switch tabs. Run the command again to move everything back to the panel.
 - **Toggle Compact Terminal Tabs**: hides VS Code's side list of terminals and switches through a dropdown in the panel title, so the terminal uses the full width (closest to PhpStorm's tab row; the extension API can't add real tabs to the panel).
 
 ### Navigation
@@ -62,7 +63,7 @@ The keys follow PhpStorm on macOS. On Windows and Linux they are the closest Ctr
 | Cycle Case | Ctrl+Opt+U | Ctrl+Alt+U | - |
 | New Scratch File | Cmd+Shift+N | Ctrl+Shift+N | New Window |
 | Move to Another Changelist | Opt+Shift+M | Alt+Shift+M | - |
-| Toggle Terminal | Opt+F12 | Alt+F12 | Peek Definition |
+| Toggle Terminal (Tabs Below: focus / hide / show) | Opt+F12 | Alt+F12 | Peek Definition |
 | New Terminal (terminal focused) | Cmd+T | Ctrl+Shift+T | Go to Symbol in Workspace (only while the terminal is focused) |
 | Close Terminal (terminal focused) | Cmd+W | Ctrl+F4 | - |
 | Rename Terminal (terminal focused) | Shift+F6 | Shift+F6 | - |
