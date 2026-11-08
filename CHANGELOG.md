@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **Select In** (Opt+F1): *Warp* entry on macOS when Warp is installed; opens the file's folder in the Warp app.
+
 ## 0.6.1
 
 - The Terminal toggle moved from the Activity Bar to a **status bar button** (`$(terminal)`, bottom left), also *Storm: Show / Hide Terminal*. An Activity Bar icon can only open a sidebar view, so every click flashed the sidebar and reflowed the window.

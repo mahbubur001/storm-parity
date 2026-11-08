@@ -38,7 +38,7 @@ Language support, debugging, the HTTP client and database tools are left to dedi
 ### Navigation
 - **Recent Locations**: recently viewed or edited spots with a code preview. Press the shortcut again to switch to *changed only*.
 - **Search Everywhere**: files, symbols, actions and settings in one picker. Prefixes: `f ` files, `#` symbols, `>` actions, `@set ` settings.
-- **Select In** (Opt+F1): reveal the current file in the Explorer, Finder, a new terminal at its folder, Outline, Timeline or Source Control.
+- **Select In** (Opt+F1): reveal the current file in the Explorer, Finder, a new terminal at its folder, Warp (macOS, when installed; it can't run inside VS Code, so its folder opens in the Warp app), Outline, Timeline or Source Control.
 - **Copy Reference**: copies a PHP FQN (`App\Http\Foo::bar`), a symbol path (`Class.method`) or `path/to/file:42`. *Copy Reference As...* offers every form.
 
 ### Editing

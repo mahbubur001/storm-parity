@@ -1,3 +1,6 @@
+import { execFile } from 'child_process';
+import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import * as vscode from 'vscode';
 
@@ -22,9 +25,19 @@ function terminalLocation(): vscode.TerminalOptions['location'] {
   return group ? { viewColumn: group.viewColumn } : undefined;
 }
 
+/** Warp (warp.dev) is a separate app that can't run inside VS Code; on macOS, offer to open the folder in it. */
+const hasWarp = (): boolean =>
+  process.platform === 'darwin' && ['/Applications/Warp.app', path.join(os.homedir(), 'Applications/Warp.app')].some((p) => fs.existsSync(p));
+
+function openInWarp(dir: string): void {
+  execFile('open', ['-a', 'Warp', dir], (err) => {
+    if (err) void vscode.window.showErrorMessage(`Storm: could not open Warp: ${err.message}`);
+  });
+}
+
 /**
  * PhpStorm's Select In (Opt+F1): one popup to reveal the current file in the Explorer, Finder, a terminal at its
- * folder, Outline, Timeline or Source Control. Entries are numbered like PhpStorm's; typing the number selects one.
+ * folder (or in Warp), Outline, Timeline or Source Control. Entries are numbered like PhpStorm's; typing the number selects one.
  */
 export function activate(ctx: vscode.ExtensionContext): void {
   ctx.subscriptions.push(
@@ -49,6 +62,7 @@ export function activate(ctx: vscode.ExtensionContext): void {
               },
             ]
           : []),
+        ...(isFile && hasWarp() ? [{ label: '$(terminal) Warp', description: 'file folder in the Warp app', run: (u: vscode.Uri) => openInWarp(path.dirname(u.fsPath)) }] : []),
         { label: '$(symbol-class) File Structure', description: 'Outline', run: () => vscode.commands.executeCommand('outline.focus') },
         { label: '$(history) Timeline', description: 'local history and commits', run: () => vscode.commands.executeCommand('timeline.focus') },
         ...(inWorkspace ? [{ label: '$(source-control) Commit', description: 'Source Control', run: () => vscode.commands.executeCommand('workbench.view.scm') }] : []),
