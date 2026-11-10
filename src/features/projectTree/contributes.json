@@ -1,0 +1,75 @@
+{
+  "colors": [
+    {
+      "id": "stormParity.projectTree.excludedForeground",
+      "description": "Explorer colour of excluded folders and library roots (PhpStorm style).",
+      "defaults": {
+        "dark": "#D9925B",
+        "light": "#B0581C",
+        "highContrast": "#F0A060",
+        "highContrastLight": "#8A4210"
+      }
+    }
+  ],
+  "configuration": {
+    "title": "Project Tree",
+    "properties": {
+      "stormParity.projectTree.excluded": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": [
+          ".next",
+          ".nuxt",
+          ".svelte-kit",
+          ".turbo",
+          ".cache",
+          ".idea",
+          "coverage"
+        ],
+        "markdownDescription": "Folders the Explorer shows as excluded, like PhpStorm's *Mark Directory as > Excluded*. A plain name matches at any depth, a path with `/` matches relative to the workspace folder. Only the colour changes; use `files.exclude` to hide them."
+      },
+      "stormParity.projectTree.libraryRoots": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": [
+          "node_modules",
+          "vendor"
+        ],
+        "markdownDescription": "Folders the Explorer marks as library roots: excluded colour plus an `L` badge and a *library root* tooltip. Same matching as `#stormParity.projectTree.excluded#`."
+      },
+      "stormParity.projectTree.openWithRootPath": {
+        "type": "boolean",
+        "default": false,
+        "markdownDescription": "Storm's *Open Folder* and *Open Recent* open local folders with the project path on the Explorer root row (`name ~/path`), like PhpStorm. Same as running *Show Project Path in Explorer* after opening: the folder becomes a one-folder workspace stored in Storm's own storage, so window-level settings in the project's `.vscode/settings.json` (e.g. `workbench.colorCustomizations`) no longer apply."
+      }
+    }
+  },
+  "commands": [
+    {
+      "command": "stormParity.projectTree.showRootPath",
+      "title": "Show Project Path in Explorer",
+      "category": "Storm"
+    },
+    {
+      "command": "stormParity.projectTree.hideRootPath",
+      "title": "Hide Project Path in Explorer",
+      "category": "Storm"
+    }
+  ],
+  "menus": {
+    "commandPalette": [
+      {
+        "command": "stormParity.projectTree.showRootPath",
+        "when": "!stormParity.projectTree.rootPath"
+      },
+      {
+        "command": "stormParity.projectTree.hideRootPath",
+        "when": "stormParity.projectTree.rootPath"
+      }
+    ]
+  }
+}

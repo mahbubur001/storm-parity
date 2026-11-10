@@ -1,6 +1,7 @@
 // Opening with the where-to-open prompt, plus the recent-list plumbing behind Open Recent.
 import * as fs from 'fs';
 import * as vscode from 'vscode';
+import { openTargetFor } from '../projectTree/rootPath';
 import { RecentEntry, kindOf, mergeEntries, removeEntry, sameUri, touchEntry } from './mru';
 
 export type OpenMode = 'thisWindow' | 'newWindow' | 'attach';
@@ -137,5 +138,6 @@ export async function openTarget(uri: vscode.Uri, mode: OpenMode): Promise<void>
     return;
   }
   await store?.touch(uri);
-  await vscode.commands.executeCommand('vscode.openFolder', uri, { forceNewWindow: mode === 'newWindow' });
+  const target = kindOf(uri.path) === 'folder' ? await openTargetFor(uri) : uri;
+  await vscode.commands.executeCommand('vscode.openFolder', target, { forceNewWindow: mode === 'newWindow' });
 }

@@ -18,6 +18,7 @@ import * as selectIn from './selectIn';
 import * as projectColor from './projectColor';
 import * as composer from './composer';
 import * as phpIncludes from './phpIncludes';
+import * as projectTree from './projectTree';
 
 interface Feature {
   id: string;
@@ -45,6 +46,7 @@ const features: Feature[] = [
   { id: 'projectColor', activate: projectColor.activate },
   { id: 'composer', activate: composer.activate },
   { id: 'phpIncludes', activate: phpIncludes.activate },
+  { id: 'projectTree', activate: projectTree.activate },
 ];
 
 export async function activateFeatures(ctx: vscode.ExtensionContext): Promise<void> {
