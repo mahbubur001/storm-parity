@@ -501,6 +501,12 @@
         "command": "stormParity.toggleCase.toScreamingSnakeCase",
         "title": "Convert to SCREAMING_SNAKE_CASE",
         "category": "Storm"
+      },
+      {
+        "command": "stormParity.toolbar.checkout",
+        "title": "Checkout Branch...",
+        "category": "Storm",
+        "icon": "$(git-branch)"
       }
     ],
     "keybindings": [
@@ -814,6 +820,10 @@
         {
           "command": "stormParity.toggleCase.toScreamingSnakeCase",
           "when": "editorIsOpen && !editorReadonly"
+        },
+        {
+          "command": "stormParity.toolbar.checkout",
+          "when": "false"
         }
       ],
       "scm/title": [
@@ -1116,6 +1126,43 @@
         {
           "command": "stormParity.selectIn.show",
           "group": "2_files@9"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "stormParity.openFolder.openRecent",
+          "group": "navigation@1",
+          "when": "config.stormParity.toolbar.enabled && config.workbench.editor.editorActionsLocation == titleBar && config.stormParity.toolbar.showProject && config.stormParity.openFolder.enabled"
+        },
+        {
+          "command": "stormParity.toolbar.checkout",
+          "group": "navigation@2",
+          "when": "config.stormParity.toolbar.enabled && config.workbench.editor.editorActionsLocation == titleBar && config.stormParity.toolbar.showBranch && gitOpenRepositoryCount != 0"
+        },
+        {
+          "command": "stormParity.changelists.commitActive",
+          "group": "navigation@3",
+          "when": "config.stormParity.toolbar.enabled && config.workbench.editor.editorActionsLocation == titleBar && config.stormParity.toolbar.showCommit && config.stormParity.changelists.enabled"
+        },
+        {
+          "command": "stormParity.run.run",
+          "group": "navigation@4",
+          "when": "config.stormParity.toolbar.enabled && config.workbench.editor.editorActionsLocation == titleBar && config.stormParity.toolbar.showRun && config.stormParity.run.enabled"
+        },
+        {
+          "command": "stormParity.run.debug",
+          "group": "navigation@5",
+          "when": "config.stormParity.toolbar.enabled && config.workbench.editor.editorActionsLocation == titleBar && config.stormParity.toolbar.showRun && config.stormParity.run.enabled"
+        },
+        {
+          "command": "stormParity.run.stop",
+          "group": "navigation@6",
+          "when": "config.stormParity.toolbar.enabled && config.workbench.editor.editorActionsLocation == titleBar && config.stormParity.toolbar.showRun && config.stormParity.run.enabled && stormParity.run.running"
+        },
+        {
+          "command": "stormParity.searchEverywhere.open",
+          "group": "navigation@7",
+          "when": "config.stormParity.toolbar.enabled && config.workbench.editor.editorActionsLocation == titleBar && config.stormParity.toolbar.showSearch && config.stormParity.searchEverywhere.enabled"
         }
       ]
     },
@@ -1585,6 +1632,48 @@
             "default": true,
             "order": 0,
             "description": "Enable the toggleCase feature (reload required)."
+          }
+        }
+      },
+      {
+        "title": "Title Bar Toolbar",
+        "order": 30,
+        "properties": {
+          "stormParity.toolbar.enabled": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Enable the Title Bar Toolbar feature (reload required)."
+          },
+          "stormParity.toolbar.showProject": {
+            "type": "boolean",
+            "default": true,
+            "order": 1,
+            "description": "Recent Projects button, like PhpStorm's project widget."
+          },
+          "stormParity.toolbar.showBranch": {
+            "type": "boolean",
+            "default": true,
+            "order": 2,
+            "description": "Checkout Branch button, like PhpStorm's branch widget."
+          },
+          "stormParity.toolbar.showCommit": {
+            "type": "boolean",
+            "default": true,
+            "order": 3,
+            "description": "Commit Active Changelist button."
+          },
+          "stormParity.toolbar.showRun": {
+            "type": "boolean",
+            "default": true,
+            "order": 4,
+            "description": "Run, Debug and Stop buttons for the selected run configuration."
+          },
+          "stormParity.toolbar.showSearch": {
+            "type": "boolean",
+            "default": true,
+            "order": 5,
+            "description": "Search Everywhere button."
           }
         }
       }

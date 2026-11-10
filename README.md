@@ -13,6 +13,7 @@ Language support, debugging, the HTTP client and database tools are left to dedi
 | **Explorer** | External Libraries, with the global **Scratches** folder at the end |
 | **Secondary Side Bar** (right, Cmd+Opt+B) | Composer (in projects with a `composer.json`) |
 | **Source Control** | Changelists |
+| **Title bar** | Recent Projects, Checkout Branch, Commit, Run, Debug, Stop, Search Everywhere (see [Title bar toolbar](#title-bar-toolbar)) |
 | **Status bar** | Terminal button, Run widget (run configuration, Run, Debug, Stop), active changelist |
 | **Command Palette** | every command, under the *Storm* category |
 | *Help > Get Started* | the Storm Parity walkthrough |
@@ -26,6 +27,18 @@ Language support, debugging, the HTTP client and database tools are left to dedi
 - **Project tree markers**: in the Explorer, excluded folders (`.next`, `.nuxt`, `.turbo`, `.cache`, `.idea`, `coverage`, ...) take PhpStorm's excluded orange and library roots (`node_modules`, `vendor`) also get an `L` badge with a *library root* tooltip. Edit the lists with `stormParity.projectTree.excluded` / `libraryRoots`; recolour with `stormParity.projectTree.excludedForeground` in `workbench.colorCustomizations`. For PhpStorm's folder icons and expand arrows, use a JetBrains icon theme (e.g. *JetBrains Icon Theme*).
 - **Project path on the root**: *Show Project Path in Explorer* gives the Explorer a root row reading `my-app ~/dev/my-app`, like PhpStorm's project view. VS Code shows a single folder only as the section header, so the window reopens the folder as a one-folder workspace (the `.code-workspace` file is kept in Storm's own storage, not the project). Window-level settings in the project's `.vscode/settings.json` (e.g. `workbench.colorCustomizations`) then no longer apply. *Hide Project Path in Explorer* reopens the plain folder. Set `stormParity.projectTree.openWithRootPath` to have Storm's Open Folder / Open Recent do this on every open.
 
+### Title bar toolbar
+PhpStorm's main toolbar as title bar buttons: **Recent Projects**, **Checkout Branch**, **Commit** (active changelist), **Run** / **Debug** / **Stop** (the selected run configuration) and **Search Everywhere**. VS Code has no title bar API for extensions, so they are editor actions that only show with these settings:
+
+```jsonc
+"window.titleBarStyle": "custom",                          // VS Code's title bar instead of the macOS one
+"workbench.editor.editorActionsLocation": "titleBar",      // editor actions (and these buttons) move to it
+"window.commandCenter": false,                             // optional: keep the bar as bare as the macOS one
+"workbench.layoutControl.enabled": false
+```
+
+They show while an editor is open. Hide single buttons with `stormParity.toolbar.showProject` / `showBranch` / `showCommit` / `showRun` / `showSearch`. The custom title bar also brings VS Code's own Command Center, Back / Forward and layout toggles (right-click the title bar to pick them), and `"workbench.activityBar.location": "top"` adds the Accounts and Settings icons.
+
 ### External Libraries
 - **PhpStorm Include Paths**: add folders outside the project (WordPress core, shared plugins, SDKs, stubs), browse them in an *External Libraries* view in the Explorer, and have Intelephense index them for completion and Go to Definition. Nothing is written into the project tree.
 - **Import from PhpStorm**: reads include paths from `.idea/php.xml`.
@@ -34,7 +47,7 @@ Language support, debugging, the HTTP client and database tools are left to dedi
 ### Terminal
 - **PhpStorm terminal keys**: Opt+F12 toggles the terminal, Cmd+T / Cmd+W open and close a session, Shift+F6 renames it, Cmd+Shift+] / [ switch sessions.
 - **Terminal Tabs Below (PhpStorm style)**: *Toggle Terminal Tabs Below* moves your terminals into a full-width editor group under the code, so they get a real tab strip with close buttons. Opt+F12 focuses the tabs, hides them (the code group is maximized) and brings them back; Cmd+T opens a new tab there; Cmd+Shift+] / [ switch tabs. While on, `workbench.editor.showTabs` is set to `multiple` (it is global, and `single` would collapse the terminal tabs into a dropdown); your previous value comes back when you turn the mode off. Run the command again to move everything back to the panel.
-- **Terminal button in the status bar**: each click shows or hides the terminal (the Tabs Below group, or the panel), like PhpStorm's Terminal tool button. Also *Storm: Show / Hide Terminal*.
+- **Terminal button in the status bar** (right side, next to Claude Code): each click shows or hides the terminal (the Tabs Below group, or the panel), like PhpStorm's Terminal tool button. Also *Storm: Show / Hide Terminal*.
 - **Toggle Compact Terminal Tabs**: hides VS Code's side list of terminals and switches through a dropdown in the panel title, so the terminal uses the full width (closest to PhpStorm's tab row; the extension API can't add real tabs to the panel).
 
 ### Navigation
