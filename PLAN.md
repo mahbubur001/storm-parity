@@ -72,11 +72,10 @@ Published to the VS Code Marketplace as `itemcoder.storm-parity` (tag `vX.Y.Z` â
 - Show / hide the terminal from a status bar button (`stormParity.terminal.toggle`), like PhpStorm's Terminal tool button. First built as an Activity Bar icon (0.6.0), but those can only open a sidebar view, so every click flashed the sidebar; replaced in 0.6.1.
 - CI pins Bun via `.bun-version`: unpinned `setup-bun` looks up tags on the GitHub API, which returned 504s.
 
-### Phase 8: title bar toolbar (done 2026-11-10, unreleased)
+### Phase 8: title bar toolbar + project tree markers (done 2026-11-10, released 0.7.0 2026-11-11)
 - `toolbar` feature: Recent Projects, Checkout Branch, Commit, Run / Debug / Stop, Search Everywhere as `editor/title` actions, shown only with `workbench.editor.editorActionsLocation: titleBar` (no title bar API). Per-button `stormParity.toolbar.show*` settings.
 - Terminal status bar button moved to the right, next to Claude Code (priority 0.1).
 - The native macOS title bar can't host icons; the user wants the bare look, so the custom bar runs with `window.commandCenter` and `workbench.layoutControl.enabled` off.
-- Resume: user checks the look after a VS Code restart; then bump version + CHANGELOG and release.
 
 ## Backlog (to evaluate)
 - Distraction-free / presentation mode presets.

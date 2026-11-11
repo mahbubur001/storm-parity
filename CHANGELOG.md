@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0
+
+- **Title bar toolbar**: PhpStorm's main toolbar as title bar buttons: Recent Projects, Checkout Branch, Commit (active changelist), Run / Debug / Stop (the selected run configuration) and Search Everywhere. They show with `"window.titleBarStyle": "custom"` and `"workbench.editor.editorActionsLocation": "titleBar"`; hide single buttons with `stormParity.toolbar.show*`.
+- The **Terminal** status bar button moved to the right, next to Claude Code.
+- **Project tree markers**: excluded folders (`.next`, `.cache`, `.idea`, `coverage`, ...) take PhpStorm's excluded orange in the Explorer; library roots (`node_modules`, `vendor`) also get an `L` badge. Configure with `stormParity.projectTree.excluded` / `libraryRoots`.
+- **Project path on the root**: *Show Project Path in Explorer* gives the Explorer a root row reading `my-app ~/dev/my-app`, like PhpStorm's project view. `stormParity.projectTree.openWithRootPath` applies it on every Storm Open Folder / Open Recent.
+
 ## 0.6.3
 
 - **PHP include navigation**: Cmd+click on a `require` / `include` path opens the file, like PhpStorm. Handles plain relative paths, `__DIR__` / `dirname(__FILE__)`, `define()` constants (e.g. `RTCL_PRO_PATH . 'vendor/autoload.php'`) and WordPress `ABSPATH`.
