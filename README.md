@@ -39,6 +39,8 @@ PhpStorm's main toolbar as title bar buttons: **Recent Projects**, **Checkout Br
 
 They show while an editor is open. Hide single buttons with `stormParity.toolbar.showProject` / `showBranch` / `showCommit` / `showRun` / `showSearch`. The custom title bar also brings VS Code's own Command Center, Back / Forward and layout toggles (right-click the title bar to pick them), and `"workbench.activityBar.location": "top"` adds the Accounts and Settings icons.
 
+The title bar always centres the window title and has no left-hand slot for extensions, so PhpStorm's top-left **project** and **branch** widgets sit at the far left of the status bar instead (`stormParity.toolbar.showStatusBarProject`): click the name for Recent Projects, the branch for Checkout. To keep the centred title short, set `"window.title": "${rootName}"`, or `" "` (a single space) to blank it; an empty string falls back to "Visual Studio Code". VS Code's own branch item can be hidden by right-clicking the status bar.
+
 ### External Libraries
 - **PhpStorm Include Paths**: add folders outside the project (WordPress core, shared plugins, SDKs, stubs), browse them in an *External Libraries* view in the Explorer, and have Intelephense index them for completion and Go to Definition. Nothing is written into the project tree.
 - **Import from PhpStorm**: reads include paths from `.idea/php.xml`.

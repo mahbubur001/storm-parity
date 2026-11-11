@@ -75,6 +75,7 @@ Published to the VS Code Marketplace as `itemcoder.storm-parity` (tag `vX.Y.Z` â
 ### Phase 8: title bar toolbar + project tree markers (done 2026-11-10, released 0.7.0 2026-11-11)
 - `toolbar` feature: Recent Projects, Checkout Branch, Commit, Run / Debug / Stop, Search Everywhere as `editor/title` actions, shown only with `workbench.editor.editorActionsLocation: titleBar` (no title bar API). Per-button `stormParity.toolbar.show*` settings.
 - Terminal status bar button moved to the right, next to Claude Code (priority 0.1).
+- 0.7.1: project + branch widgets at the far left of the status bar (no left-hand title bar slot, title is always centred).
 - The native macOS title bar can't host icons; the user wants the bare look, so the custom bar runs with `window.commandCenter` and `workbench.layoutControl.enabled` off.
 
 ## Backlog (to evaluate)

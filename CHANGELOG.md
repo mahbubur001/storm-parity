@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1
+
+- **Project and branch widgets** at the far left of the status bar, like PhpStorm's top-left widgets: click the project name for Recent Projects, the branch for Checkout. The branch follows the active file's repository. VS Code centres the window title and gives extensions no left-hand title bar slot, hence the status bar. Hide with `stormParity.toolbar.showStatusBarProject`.
+
 ## 0.7.0
 
 - **Title bar toolbar**: PhpStorm's main toolbar as title bar buttons: Recent Projects, Checkout Branch, Commit (active changelist), Run / Debug / Stop (the selected run configuration) and Search Everywhere. They show with `"window.titleBarStyle": "custom"` and `"workbench.editor.editorActionsLocation": "titleBar"`; hide single buttons with `stormParity.toolbar.show*`.

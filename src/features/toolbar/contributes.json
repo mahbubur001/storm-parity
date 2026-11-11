@@ -47,6 +47,12 @@
   "configuration": {
     "title": "Title Bar Toolbar",
     "properties": {
+      "stormParity.toolbar.showStatusBarProject": {
+        "type": "boolean",
+        "default": true,
+        "order": 0,
+        "description": "Project name and current branch at the far left of the status bar, like PhpStorm's top-left project and branch widgets (VS Code centres the window title and has no left-hand title bar slot)."
+      },
       "stormParity.toolbar.showProject": {
         "type": "boolean",
         "default": true,

@@ -2,7 +2,7 @@
   "name": "storm-parity",
   "displayName": "Storm Parity",
   "description": "PhpStorm-style workflow for VS Code: open-folder prompt, recent locations, Search Everywhere, clipboard history, surround with, PHP postfix completion, scratch files, external libraries (include paths), changelists, local history, run widget, Composer view and more.",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "publisher": "itemcoder",
   "license": "MIT",
   "repository": {
@@ -1644,6 +1644,12 @@
             "default": true,
             "order": 0,
             "description": "Enable the Title Bar Toolbar feature (reload required)."
+          },
+          "stormParity.toolbar.showStatusBarProject": {
+            "type": "boolean",
+            "default": true,
+            "order": 0,
+            "description": "Project name and current branch at the far left of the status bar, like PhpStorm's top-left project and branch widgets (VS Code centres the window title and has no left-hand title bar slot)."
           },
           "stormParity.toolbar.showProject": {
             "type": "boolean",

@@ -10,6 +10,7 @@ import * as path from 'path';
 // ---------------------------------------------------------------------------
 
 export interface GitRepositoryState {
+  readonly HEAD?: { readonly name?: string; readonly commit?: string };
   readonly onDidChange: vscode.Event<void>;
 }
 
