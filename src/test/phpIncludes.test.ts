@@ -77,8 +77,8 @@ suite('phpIncludes', () => {
         const link = links?.[0];
         return link && ('targetUri' in link ? link.targetUri : link.uri).fsPath;
       };
-      assert.strictEqual(await target(3), path.join(dir, 'app', 'Pro.php'));
-      assert.strictEqual(await target(4), path.join(dir, 'vendor', 'autoload.php'));
+      assert.strictEqual(await target(3), vscode.Uri.file(path.join(dir, 'app', 'Pro.php')).fsPath);
+      assert.strictEqual(await target(4), vscode.Uri.file(path.join(dir, 'vendor', 'autoload.php')).fsPath);
       assert.strictEqual(await target(5), undefined, 'missing files give no link');
     } finally {
       fs.rmSync(dir, { recursive: true, force: true });
