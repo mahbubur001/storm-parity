@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.2
+
+- The **Terminal** status bar button moved to the left, after the project and branch widgets, so it no longer disappears when the window is narrow.
+
 ## 0.7.1
 
 - **Project and branch widgets** at the far left of the status bar, like PhpStorm's top-left widgets: click the project name for Recent Projects, the branch for Checkout. The branch follows the active file's repository. VS Code centres the window title and gives extensions no left-hand title bar slot, hence the status bar. Hide with `stormParity.toolbar.showStatusBarProject`.

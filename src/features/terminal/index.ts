@@ -226,7 +226,8 @@ async function restoreTabStrip(ctx: vscode.ExtensionContext): Promise<void> {
 export function activate(ctx: vscode.ExtensionContext): void {
   // Status bar Terminal button, a toggle like PhpStorm's Terminal tool button. A status bar item rather than an
   // Activity Bar icon: those can only open a sidebar view, and switching the sidebar away and back again flickers.
-  const button = vscode.window.createStatusBarItem('stormParity.terminal.button', vscode.StatusBarAlignment.Right, 0.1);
+  // Left side, just after the project and branch widgets, so a narrow window does not push it out of view.
+  const button = vscode.window.createStatusBarItem('stormParity.terminal.button', vscode.StatusBarAlignment.Left, 9998);
   button.name = 'Terminal';
   button.text = '$(terminal)';
   button.tooltip = 'Show / Hide Terminal';
