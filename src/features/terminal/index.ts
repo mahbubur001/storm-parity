@@ -158,7 +158,7 @@ async function openTabAt(column: vscode.ViewColumn, index: number): Promise<void
 }
 
 /**
- * The status bar Terminal button: a show / hide toggle like PhpStorm's Terminal button. Terminal tabs may live in their
+ * Show / Hide Terminal: a toggle like PhpStorm's Terminal button. Terminal tabs may live in their
  * own group (Tabs Below) or share a group with code; hiding maximizes the code group in the first case and switches
  * the shared group back to a code tab in the second. Without Tabs Below it toggles the panel.
  */
@@ -224,17 +224,7 @@ async function restoreTabStrip(ctx: vscode.ExtensionContext): Promise<void> {
  * a full-width group at the bottom so they get a real tab strip like PhpStorm's.
  */
 export function activate(ctx: vscode.ExtensionContext): void {
-  // Status bar Terminal button, a toggle like PhpStorm's Terminal tool button. A status bar item rather than an
-  // Activity Bar icon: those can only open a sidebar view, and switching the sidebar away and back again flickers.
-  // Left side, just after the project and branch widgets, so a narrow window does not push it out of view.
-  const button = vscode.window.createStatusBarItem('stormParity.terminal.button', vscode.StatusBarAlignment.Left, 9998);
-  button.name = 'Terminal';
-  button.text = '$(terminal)';
-  button.tooltip = 'Show / Hide Terminal';
-  button.command = 'stormParity.terminal.toggle';
-  button.show();
   ctx.subscriptions.push(
-    button,
     vscode.window.onDidOpenTerminal((terminal) => {
       // Only a terminal that landed in the panel shows the panel; editor-tab terminals (e.g. an AI CLI) do not.
       // VS Code places the terminal asynchronously, hence the short delay before looking for its tab.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.3
+
+- Removed the **Terminal** button from the status bar. *Storm: Show / Hide Terminal* and Opt+F12 still toggle the terminal.
+
 ## 0.7.2
 
 - The **Terminal** status bar button moved to the left, after the project and branch widgets, so it no longer disappears when the window is narrow.

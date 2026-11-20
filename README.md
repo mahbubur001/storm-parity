@@ -14,7 +14,7 @@ Language support, debugging, the HTTP client and database tools are left to dedi
 | **Secondary Side Bar** (right, Cmd+Opt+B) | Composer (in projects with a `composer.json`) |
 | **Source Control** | Changelists |
 | **Title bar** | Recent Projects, Checkout Branch, Commit, Run, Debug, Stop, Search Everywhere (see [Title bar toolbar](#title-bar-toolbar)) |
-| **Status bar** | Terminal button, Run widget (run configuration, Run, Debug, Stop), active changelist |
+| **Status bar** | Run widget (run configuration, Run, Debug, Stop), active changelist |
 | **Command Palette** | every command, under the *Storm* category |
 | *Help > Get Started* | the Storm Parity walkthrough |
 
@@ -49,7 +49,7 @@ The title bar always centres the window title and has no left-hand slot for exte
 ### Terminal
 - **PhpStorm terminal keys**: Opt+F12 toggles the terminal, Cmd+T / Cmd+W open and close a session, Shift+F6 renames it, Cmd+Shift+] / [ switch sessions.
 - **Terminal Tabs Below (PhpStorm style)**: *Toggle Terminal Tabs Below* moves your terminals into a full-width editor group under the code, so they get a real tab strip with close buttons. Opt+F12 focuses the tabs, hides them (the code group is maximized) and brings them back; Cmd+T opens a new tab there; Cmd+Shift+] / [ switch tabs. While on, `workbench.editor.showTabs` is set to `multiple` (it is global, and `single` would collapse the terminal tabs into a dropdown); your previous value comes back when you turn the mode off. Run the command again to move everything back to the panel.
-- **Terminal button in the status bar** (left side, after the project and branch widgets, so it stays visible in a narrow window): each click shows or hides the terminal (the Tabs Below group, or the panel), like PhpStorm's Terminal tool button. Also *Storm: Show / Hide Terminal*.
+- ***Storm: Show / Hide Terminal***: each run shows or hides the terminal (the Tabs Below group, or the panel), like PhpStorm's Terminal tool button.
 - **Toggle Compact Terminal Tabs**: hides VS Code's side list of terminals and switches through a dropdown in the panel title, so the terminal uses the full width (closest to PhpStorm's tab row; the extension API can't add real tabs to the panel).
 
 ### Navigation
